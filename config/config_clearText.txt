@@ -235,6 +235,7 @@ Woods plan map
 -- Technical --		|| Others, Building, Electronics, Energy, Flammable, Tools, Special Equipment
 42 Signature Blend English
 Advanced current converter
+Apollo Soyuz cigarettes
 BEAR Buddy plush toy
 Broken GPhone X smartphone
 Can of Dr. Lupo's coffee beans
@@ -250,6 +251,7 @@ Far-forward GPS Signal Amplifier Unit
 Golden 1GPhone smartphone
 Graphics card
 Iridium military thermal vision module
+Malboro Cigarettes
 Microcontroller board
 Military COFDM Wireless Signal Transmitter
 Military circuit board
@@ -267,6 +269,7 @@ Radio repeater
 RAM
 Single-axis Fiber Optic Gyroscope #1
 Soap
+Strike Cigarettes
 Tetriz portable game console
 Toilet paper
 Toothpaste
@@ -274,6 +277,7 @@ UHF RFID Reader
 UZRGM grenade fuze
 VPX Flash Storage Module
 Virtex programmable processor
+Wilston cigarettes
 ==================================================
 -- Rations --
 Canister with purified water
