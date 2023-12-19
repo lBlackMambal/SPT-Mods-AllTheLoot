@@ -114,7 +114,6 @@ Armband (Green)
 Armband (Red)
 Armband (White)
 Armband (Yellow)
-Ars Arma CPC MOD.1 plate carrier
 Balaclava_dev
 Bars A-2607 Damascus knife
 Bars A-2607 95Kh18 knife
@@ -335,49 +334,100 @@ Dollars
 Euros
 ==================================================
 -- Shturman's Stash Content (add stuff here) --
+6B13 M modified assault armor (Tan)
 Alpha Armband
+Big Pipe's bandana
+Big Pipe's smoking pipe
+BOSS cap
+Crye Precision AVS plate carrier (Tagilla Edition)
+Crye Precision CPC plate carrier (Goons Edition)
+Cultist knife
 DEADSKUL armband
+Death Knight mask
 GP-34 40mm underbarrel grenade launcher
+Jack-o'-lantern tactical pumpkin helmet
 KAC QDC 6.5x35 sound suppressor
 Kalashnikov PKM 7.62x54R machine gun
 Kalashnikov PKP 7.62x54R infantry machine gun
 Kiba Arms armband
+LBT-1961A Load Bearing Chest Rig (Goons Edition)
 Maska-1SCh bulletproof helmet (Killa)
+Pumpkin with sweets
 RFARMY armband
+S&S Precision PlateFrame plate carrier (Goons Edition)
 SilencerCo Sparrow 22 sound suppressor
+Tagilla's welding mask "Gorilla"
+Tagilla's welding mask "UBEY"
 Terragroup Armband
 Train Hard armband
+TT-33 7.62x25 TT pistol (Golden)
 UNTAR Armband
+Zryachiy's balaclava
+Zryachiy's balaclava (folded)
 ==================================================
 -- Weapon Box 5x5 --
+6B13 M modified assault armor (Tan)
 Alpha Armband
+Big Pipe's bandana
+Big Pipe's smoking pipe
+BOSS cap
+Crye Precision AVS plate carrier (Tagilla Edition)
+Crye Precision CPC plate carrier (Goons Edition)
+Cultist knife
 DEADSKUL armband
+Death Knight mask
 GP-34 40mm underbarrel grenade launcher
+Jack-o'-lantern tactical pumpkin helmet
 KAC QDC 6.5x35 sound suppressor
 Kalashnikov PKM 7.62x54R machine gun
 Kalashnikov PKP 7.62x54R infantry machine gun
 Kiba Arms armband
+LBT-1961A Load Bearing Chest Rig (Goons Edition)
 Maska-1SCh bulletproof helmet (Killa)
+Pumpkin with sweets
 RFARMY armband
+S&S Precision PlateFrame plate carrier (Goons Edition)
 SilencerCo Sparrow 22 sound suppressor
+Tagilla's welding mask "Gorilla"
+Tagilla's welding mask "UBEY"
 Terragroup Armband
 Train Hard armband
+TT-33 7.62x25 TT pistol (Golden)
 UNTAR Armband
+Zryachiy's balaclava
+Zryachiy's balaclava (folded)
 ==================================================
 -- Weapon Box 6x3 --
+6B13 M modified assault armor (Tan)
 Alpha Armband
+Big Pipe's bandana
+Big Pipe's smoking pipe
+BOSS cap
+Crye Precision AVS plate carrier (Tagilla Edition)
+Crye Precision CPC plate carrier (Goons Edition)
+Cultist knife
 DEADSKUL armband
+Death Knight mask
 GP-34 40mm underbarrel grenade launcher
+Jack-o'-lantern tactical pumpkin helmet
 KAC QDC 6.5x35 sound suppressor
 Kalashnikov PKM 7.62x54R machine gun
 Kalashnikov PKP 7.62x54R infantry machine gun
 Kiba Arms armband
+LBT-1961A Load Bearing Chest Rig (Goons Edition)
 Maska-1SCh bulletproof helmet (Killa)
+Pumpkin with sweets
 RFARMY armband
+S&S Precision PlateFrame plate carrier (Goons Edition)
 SilencerCo Sparrow 22 sound suppressor
+Tagilla's welding mask "Gorilla"
+Tagilla's welding mask "UBEY"
 Terragroup Armband
 Train Hard armband
+TT-33 7.62x25 TT pistol (Golden)
 UNTAR Armband
+Zryachiy's balaclava
+Zryachiy's balaclava (folded)
 ==================================================
 ==================================================
 ==================================================
