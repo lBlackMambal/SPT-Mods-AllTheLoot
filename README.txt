@@ -3,13 +3,13 @@ Hello there and thanks for trying out my first mod, AllTheLoot :)
 Background:
 In SPT the loot which can spawn in containers is defined in the following file:
 "Aki_Data\Server\database\loot\staticLoot.json".
-This file is derived from dumps of offline raids (as far as I know).
-Depending on how BSG is setting up the container loot tables (for Live Tarkov), you end up with a certain variety of items and spawns in SPT.
+This file is created from dumps of offline raids (as far as I know).
+Depending on how BSG was setting up the container loot tables (for Live Tarkov), you end up with a certain variety of items and spawns in SPT.
 
 If you wanted to change something yourself you first had to go to
 https://db.sp-tarkov.com/search
 to find out the item ID of interest and then open (that big chunk of unreadable data) staticLoot.json, parse and adjust it.
-What a tedious process.
+Somehow a quite tedious process.
 
 
 ===== AllTheLoot =====
@@ -21,10 +21,10 @@ The intention behind AllTheLoot was:
 - being able to easily adjust the spawn rate of those distributions (i.e. how likely it is that e.g. 2 or 3 items spawn)
 
 The mod works with the item prices stored in the handbook.
-Based on its value, it will get a spawn rate assigned.
-Since I was struggling hard to implement a "per-item-price-spawn-logic" (e.g. inverse of the price for each item)
-I used a value range condition.
-The conditions are currently as following:
+Based on its value, each item will get a spawn rate assigned.
+Since I was struggling hard to implement a "per-item-price-spawn-logic" (e.g. inverse of the price for each item plus some fancy magic)
+I used a simple value range condition approach.
+The conditions (item value above/below) and the resulting spawn rate are currently set as following:
 0 - 2000        -> 25000	// to avoid super low value items (but mainly ammo rounds) spawning all over
 2000 - 20000    -> 50000
 20000 - 30000   -> 40000
@@ -33,6 +33,9 @@ The conditions are currently as following:
 100000 - 300000 -> 15000
 300000 - 600000 -> 7500
 600000 -        -> 3750
+
+Each item category, e.g. Barters/Electronics can be tuned via the config file (see below).
+If you want to tweak on an item basis, that's also possible via the config file.
 
 
 All in all there are 32 different containers in EFT. You can find them here:
@@ -52,7 +55,7 @@ Those categories are as following:
 -- PC Block --
 -- Safe --
 -- Ammo --
--- Shturman's Stash Content --
+-- Shturman's Stash --
 -- Weapon Box 5x5 --
 -- Weapon Box 6x3 --
 
@@ -67,8 +70,7 @@ clearNames.json basically is a copy of the en.json translation file that holds t
 Regarding the mod this file is only used to retrieve the clear name of an item/ID.
 
 config.json holds all the necessary information to modify the behavior of the mod.
-config_clearText.txt is for the "human observer", i.e. somebody that doesn't immediately know
-what item lies behind an ID of "5c0530ee86f774697952d952" (btw, that's a LEDX) :)
+config_clearText.txt is for the "human observer", i.e. somebody that doesn't immediately know what item lies behind an ID of "5c0530ee86f774697952d952" (btw, that's a LEDX) :)
 
 config.json and config_clearText.txt are intented to be used in parallel.
 I recommend to use Notepad++ to edit those files.
@@ -76,6 +78,8 @@ The principle would be to first load "config.json" into Notepad++, afterwards lo
 Via "Move Document->Move to Other View" have the files side by side.
 To guarantee modifying the files at the correct location (line) finally activate "View->Synchronize Vertical Scrolling".
 (make sure that each scrollbar is at the top before activating that synchronize funtion)
+
+config_clearText.txt also contains the info about what item category actually is assigned to the main categories mentioned above.
 
 IMPORTANT:
 Any changes in "config_clearText.txt" WON'T have any effect on the mod's behavior. This file is simply to keep track of any adjustments.
