@@ -25,14 +25,14 @@ Based on its value, it will get a spawn rate assigned.
 Since I was struggling hard to implement a "per-item-price-spawn-logic" (e.g. inverse of the price for each item)
 I used a value range condition.
 The conditions are currently as following:
-0 - 2000		-> 25000	// specifically to avoid super low value items (but mainly ammo rounds) spawning all over
-2000 - 20000	-> 50000
+0 - 2000        -> 25000	// specifically to avoid super low value items (but mainly ammo rounds) spawning all over
+2000 - 20000    -> 50000
 20000 - 30000   -> 40000
 30000 - 50000   -> 30000
 50000 - 100000  -> 20000
 100000 - 300000 -> 15000
 300000 - 600000 -> 7500
-600000 - 		-> 3750
+600000 -        -> 3750
 
 
 All in all there are 32 different containers in EFT. You can find them here:
