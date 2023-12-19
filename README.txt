@@ -94,8 +94,7 @@ Within the file config.json you have different options:
 
 
 Additional info:
-Shturman's Stash, Weapon Box 5x5 and Weapon Box 6x3 have items assigned based on a specified value range. Like such chances are
-much higher that less "garbage" and more "big guns" spawn in those.
+Shturman's Stash, Weapon Box 5x5 and Weapon Box 6x3 have items assigned based on a specified value range. Like such chances are much higher that less "garbage" and more "big guns" spawn in those.
 In addition to value ranges for those 3 container types I globally removed some of the weapon mods categories (e.g. Iron sights, Charging Handles, etc.).
 
 The items are currently assigned so it's not really "breaking" some of the game principles, i.e items specific to bosses (e.g. Tagilla, Killa, Kaban, etc.) are blacklisted
