@@ -20,7 +20,7 @@ The intention behind AllTheLoot was:
 - being able to easily adjust the item distribution of each container type (i.e. how many items can spawn per type)
 - being able to easily adjust the spawn rate of those distributions (i.e. how likely it is that e.g. 2 or 3 items spawn)
 
-The mod works based on the item prices stored in the handbook.
+The mod works with the item prices stored in the handbook.
 Based on its value, it will get a spawn rate assigned.
 Since I was struggling hard to implement a "per-item-price-spawn-logic" (e.g. inverse of the price for each item)
 I used a value range condition.
