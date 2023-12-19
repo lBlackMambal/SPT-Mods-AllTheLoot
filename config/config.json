@@ -579,7 +579,6 @@
 		"0","0","0","0","0","0","0","80","80","80",
 		"80","80","80","80","80","80","80"
 	],
-	"rate_SELECTED_ITEMS": 1.0,
 	"rate_BARTER_OTHERS": 1.0,
 	"rate_BARTER_BUILDINGMATERIALS": 1.0,
 	"rate_BARTER_ELECTRONICS": 1.0,
@@ -651,8 +650,8 @@
 	"rate_MAPS": 0.3,
 	"rate_MONEY": 5.0,
 	"removeBackpackRestrictions": true,
-	"showItemListing": true,
-	"debugMode": true,
+	"showItemListing": false,
+	"debugMode": false,
 	"selectedItems_IncreaseSpawnChance":[
 		"5c0126f40db834002a125382",
 		"5b057b4f5acfc4771e1bd3e9",
