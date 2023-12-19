@@ -88,7 +88,7 @@ Within the file config.json you have different options:
 - container_xx_ItemsDistributionProbabilities to define the probabilities for the distributions
 - rate_xx is a multiplier for each of the 71 (Tarkov) item categories
 - removeBackpackRestrictions, self explanatory if you find an item of type storageContainer that you can pick it up
-- showItemListing allows to see all the items, corresponding IDs and prices - so you don't need to search for them on spt.db
+- showItemListing allows to see all the items, corresponding IDs and prices - so you don't need to search for them on db.sp-tarkov
 - debugMode allows to see all the items and adjusted spawn rates (higher value, more likely to spawn)
 - selectedItems_IncreaseSpawnChance allows to increasae the spawn rate of defined items
 
