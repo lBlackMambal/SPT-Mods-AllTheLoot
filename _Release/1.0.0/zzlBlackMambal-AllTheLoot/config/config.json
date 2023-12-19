@@ -1,0 +1,666 @@
+{
+	"blacklistedItems_Drawer":[
+        "5d03794386f77420415576f5",
+		"6389c85357baa773a825b356",
+		"5d1b32c186f774252167a530",
+		"62a08f4c4f842e1bd12d9d62",
+		"5733279d245977289b77ec24",
+		"59e35cbb86f7741778269d83",
+		"5798a2832459774b53341029",
+		"5e2aee0a86f774755a234b62",
+		"62e910aaf957f2915e0a5e36",
+		"59f32bb586f774757e1e8442",
+		"59f32c3b86f77472a31742f0",		
+		"59e35de086f7741778269d84",
+        "5d1b2fa286f77425227d1674",
+		"6389c7f115805221fb410466",
+		"5bc9b720d4351e450201234b",
+		"57347ca924597744596b4e71",
+		"5be4038986f774527d3fae60",
+		"5d0377ce86f774186372f689",
+		"5937ee6486f77408994ba448",
+		"6389c7750ef44505c87f5996",
+		"5d0375ff86f774186372f685",
+		"5d0376a486f7747d8050965c",
+		"5c052f6886f7746b1e3db148",
+		"619cbf476b8a1b37a54eebf8",
+		"5d03784a86f774203e7e0c4d",
+		"5d0378d486f77420421a5ff4",
+		"5af04c0b86f774138708f78e",
+		"5d0379a886f77420407aa271",
+		"6389c6463485cf0eeb260715",
+		"5d03775b86f774203e7e0c4b",
+		"57347c2e24597744902c94a1",
+		"5d1b327086f7742525194449",
+		"63a0b2eabea67a6d93009e52",
+		"5a80a29286f7742b25692012",
+		"5a8036fb86f77407252ddc02",
+		"5d08d21286f774736e7c94c3",
+		"590c35a486f774273531c822",
+		"5af04e0a86f7743a532b79e2",
+		"5c052fb986f7746b2101e909",
+		"5c05308086f7746b2101e90b",
+		"5c05300686f7746dce784e5d",
+		"5d1b385e86f774252167b98a",
+		"5900b89686f7744e704a8747",
+		"590c346786f77423e50ed342"
+    ],
+	"blacklistedItems_Jacket":[
+		"5bc9be8fd4351e00334cae6e",
+		"5d03794386f77420415576f5",
+		"6389c85357baa773a825b356",
+		"5d1b32c186f774252167a530",
+		"5e2af4d286f7746d4159f07a",
+		"62a08f4c4f842e1bd12d9d62",
+		"5733279d245977289b77ec24",
+		"5e2af41e86f774755a234b67",
+		"59e35cbb86f7741778269d83",
+		"5798a2832459774b53341029",
+		"5e2aee0a86f774755a234b62",
+		"590a386e86f77429692b27ab",
+		"62e910aaf957f2915e0a5e36",
+		"59f32bb586f774757e1e8442",
+		"59f32c3b86f77472a31742f0",
+		"5734781f24597737e04bf32a",
+		"59e35de086f7741778269d84",
+        "5d1b2fa286f77425227d1674",
+		"5d1b371186f774253763a656",
+		"6389c7f115805221fb410466",
+		"63a0b208f444d32d6f03ea1e",
+		"5e2af47786f7746d404f3aaa",
+		"5d1b2f3f86f774252167a52c",
+		"5b43575a86f77424f443fe62",
+		"5bc9b720d4351e450201234b",
+		"57347ca924597744596b4e71",
+		"5be4038986f774527d3fae60",
+		"5d0377ce86f774186372f689",
+		"5d1b36a186f7742523398433",
+		"6389c7750ef44505c87f5996",
+		"5d0375ff86f774186372f685",
+		"5d0376a486f7747d8050965c",
+		"5c052f6886f7746b1e3db148",
+		"619cbf476b8a1b37a54eebf8",
+		"5d0378d486f77420421a5ff4",
+		"5af04c0b86f774138708f78e",
+		"5d0379a886f77420407aa271",
+		"6389c6463485cf0eeb260715",
+		"5d03775b86f774203e7e0c4b",
+		"57347c2e24597744902c94a1",
+		"5d1b327086f7742525194449",
+		"59fafb5d86f774067a6f2084",
+		"63a0b2eabea67a6d93009e52",
+		"5e2af4a786f7746d3f3c3400",
+		"62a0a0bb621468534a797ad5",
+		"5a80a29286f7742b25692012",
+		"5a8036fb86f77407252ddc02",
+		"5d08d21286f774736e7c94c3",
+		"590c35a486f774273531c822",
+		"5af04e0a86f7743a532b79e2",
+		"5c052fb986f7746b2101e909",
+		"5c05308086f7746b2101e90b",
+		"5c05300686f7746dce784e5d",
+		"5d1b385e86f774252167b98a",
+		"5d1c819a86f774771b0acd6c",
+		"5900b89686f7744e704a8747",
+		"590c346786f77423e50ed342"
+	],
+	"blacklistedItems_WeaponBoxGlobal":[
+		"5c0e541586f7747fa54205c9",
+		"5cde8864d7f00c0010373be1",
+		"5d2f2ab648f03550091993ca",
+		"619bc61e86e01e16f839a999",
+		"5b3f3af486f774679e752c1f",
+		"5b3f3b0186f774021a2afef7",
+		"5b3f3ade86f7746b6b790d8e",
+		"5b3f16c486f7747c327f55f7",
+		"5b3f3b0e86f7746752107cda",
+		"5e4ac41886f77406a511c9a8",
+		"58ac60eb86f77401897560ff",
+		"57e26ea924597715ca604a09",
+		"57e26fc7245977162a14b800",
+		"628e4dd1f477aa12234918aa",
+		"62a61bbf8ec41a51b34758d2",
+		"60a7acf20c5cb24b01346648",
+		"609e860ebd219504d8507525",
+		"628b9c7d45122232a872358f",
+		"5fc64ea372b0dd78d51159dc",
+		"619bddc6c9546643a67df6ee",
+		"5a43943586f77416ad2f06e2",
+		"62963c18dbc8ab5f0d382d0b",
+		"5c1a1e3f2e221602b66cc4c2",
+		"5648b62b4bdc2d9d488b4585",
+		"59ef13ca86f77445fd0e2483",
+		"55d617094bdc2d89028b4568",
+		"64637076203536ad5600c990",
+		"64ca3d3954fc657e230529cc",
+		"619bde3dc9546643a67df6f2",
+		"628baf0b967de16aab5a4f36",
+		"5996f6fc86f7745e585b4de3",
+		"5c0e874186f7745dc7616606",
+		"5ae083b25acfc4001a5fc702",
+		"5996f6d686f77467977ba6cc",
+		"5d53f4b7a4b936793d58c780",
+		"5c0126f40db834002a125382",
+		"5996f6cb86f774678763a6ca",
+		"628b9784bcf6e2659e09b8a2",
+		"5a43957686f7742a2c2f11b0",
+		"5943d9c186f7745a13413ac9",
+		"54490a4d4bdc2dbc018b4573",
+		"60a7ad3a0c5cb24b0134664a",
+		"60a7ad2a2198820d95707a2e",
+		"619bddffc9546643a67df6f0",
+		"5ae089fb5acfc408fb13989b",
+		"5b3b713c5acfc4330140bd8d",
+		"63626d904aa74b8fe30ab426",
+		"636270263f2495c26f00b007"
+	],
+	"blacklistedItems_Cache":[
+		"5c0e541586f7747fa54205c9",
+		"619bc61e86e01e16f839a999",
+		"5b3f3af486f774679e752c1f",
+		"5b3f3b0186f774021a2afef7",
+		"5b3f3ade86f7746b6b790d8e",
+		"5b3f16c486f7747c327f55f7",
+		"5b3f3b0e86f7746752107cda",
+		"58ac60eb86f77401897560ff",
+		"628e4dd1f477aa12234918aa",
+		"62a61bbf8ec41a51b34758d2",
+		"60a7acf20c5cb24b01346648",
+		"5df8a6a186f77412640e2e80",
+		"5df8a72c86f77412640e2e83",
+		"5df8a77486f77412672a1e3f",
+		"609e860ebd219504d8507525",
+		"628b9c7d45122232a872358f",
+		"5798a2832459774b53341029",
+		"619bddc6c9546643a67df6ee",
+		"5a43943586f77416ad2f06e2",
+		"62963c18dbc8ab5f0d382d0b",
+		"62e910aaf957f2915e0a5e36",
+		"59f32bb586f774757e1e8442",
+		"59f32c3b86f77472a31742f0",
+		"5c1a1e3f2e221602b66cc4c2",
+		"5e2af55f86f7746d4159f07c",
+		"5be4038986f774527d3fae60",
+		"59fb042886f7746c5005a7b2",
+		"59ef13ca86f77445fd0e2483",
+		"619bde3dc9546643a67df6f2",
+		"628baf0b967de16aab5a4f36",
+		"5b7c710788a4506dec015957",
+		"5c127c4486f7745625356c13",
+		"5c0e874186f7745dc7616606",
+		"5aafbcd986f7745e590fff23",
+		"59fb016586f7746d0d4b423a",
+		"5af04c0b86f774138708f78e",
+		"5c093db286f7740a1b2617e3",
+		"567143bf4bdc2d1a0f8b4567",
+		"634959225289190e5e773b3b",
+		"628b9784bcf6e2659e09b8a2",
+		"5a43957686f7742a2c2f11b0",
+		"5a80a29286f7742b25692012",
+		"5a8036fb86f77407252ddc02",
+		"5af04e0a86f7743a532b79e2",
+		"60a7ad3a0c5cb24b0134664a",
+		"60a7ad2a2198820d95707a2e",
+		"5b6d9ce188a4501afc1b2b25",
+		"5c0a840b86f7742ffa4f2482",
+		"619bddffc9546643a67df6f0",
+		"59fb023c86f7746d0d4b423c",
+		"5900b89686f7744e704a8747",
+		"63626d904aa74b8fe30ab426",
+		"636270263f2495c26f00b007"
+	],
+	"blacklistedItems_DuffleBag":[
+		"6389c85357baa773a825b356",
+		"5df8a6a186f77412640e2e80",
+		"5df8a72c86f77412640e2e83",
+		"5df8a77486f77412672a1e3f",
+		"5798a2832459774b53341029",
+		"62e910aaf957f2915e0a5e36",
+		"59f32bb586f774757e1e8442",
+		"59f32c3b86f77472a31742f0",
+		"6389c7f115805221fb410466",
+		"5be4038986f774527d3fae60",
+		"6389c7750ef44505c87f5996",
+		"5c052f6886f7746b1e3db148",
+		"5af04c0b86f774138708f78e",
+		"5d03775b86f774203e7e0c4b",
+		"63a0b2eabea67a6d93009e52",
+		"5a80a29286f7742b25692012",
+		"5a8036fb86f77407252ddc02",
+		"5af04e0a86f7743a532b79e2",
+		"5900b89686f7744e704a8747"
+	],
+	"blacklistedItems_Medical":[
+		""
+	],
+	"blacklistedItems_Technical":[
+		"5bc9be8fd4351e00334cae6e",
+		"6389c85357baa773a825b356",
+		"62a08f4c4f842e1bd12d9d62",
+		"5c1265fc86f7743f896a21c2",
+		"5e54f6af86f7742199090bf3",
+		"5af0484c86f7740f02001f7f",
+		"5734779624597737e04bf329",
+		"590a386e86f77429692b27ab",
+		"62e910aaf957f2915e0a5e36",
+		"59f32bb586f774757e1e8442",
+		"59f32c3b86f77472a31742f0",
+		"5734781f24597737e04bf32a",
+		"6389c70ca33d8c4cdf4932c6",
+		"6389c7f115805221fb410466",
+		"5bc9b720d4351e450201234b",
+		"57347ca924597744596b4e71",
+		"5d0377ce86f774186372f689",
+		"6389c7750ef44505c87f5996",
+		"5c052f6886f7746b1e3db148",
+		"5d0376a486f7747d8050965c",
+		"5d03784a86f774203e7e0c4d",
+		"5af04c0b86f774138708f78e",
+		"5d0379a886f77420407aa271",
+		"5d4041f086f7743cac3f22a7",
+		"6389c6463485cf0eeb260715",
+		"573477e124597737dd42e191",
+		"5d03775b86f774203e7e0c4b",
+		"590a3b0486f7743954552bdb",
+		"577e1c9d2459773cd707c525",
+		"634959225289190e5e773b3b",
+		"63a0b2eabea67a6d93009e52",
+		"57347baf24597738002c6178",
+		"5af04e0a86f7743a532b79e2",
+		"5c13cd2486f774072c757944",
+		"5c12620d86f7743f8b198b72",
+		"5c13cef886f774072e618e82",
+		"57347c93245977448d35f6e3",
+		"5c052fb986f7746b2101e909",
+		"5e2af51086f7746d3f3c3402",
+		"5c05300686f7746dce784e5d",
+        "5c05308086f7746b2101e90b"
+	],
+	"blacklistedItems_Rations":[
+		"5d1b33a686f7742523398398",
+		"5d1b376e86f774252519444e"
+	],
+	"blacklistedItems_PCBlock":[
+        "6389c85357baa773a825b356",
+		"5c1265fc86f7743f896a21c2",
+		"56742c324bdc2d150f8b456d",
+		"5d1b309586f77425227d1676",
+		"59e35de086f7741778269d84",
+		"5d1b2fa286f77425227d1674",
+		"590a3cd386f77436f20848cb",
+		"6389c7f115805221fb410466",
+		"590a3efd86f77437d351a25b",
+		"5672cb724bdc2dc2088b456b",
+		"5bc9b720d4351e450201234b",
+		"5d0377ce86f774186372f689",
+		"5d1b392c86f77425243e98fe",
+		"590a391c86f774385a33c404",
+		"6389c7750ef44505c87f5996",
+		"5c052f6886f7746b1e3db148",
+		"5d0375ff86f774186372f685",
+		"5d0376a486f7747d8050965c",
+		"5d03784a86f774203e7e0c4d",
+		"5d0378d486f77420421a5ff4",
+		"5af04c0b86f774138708f78e",
+		"5d1b2ffd86f77425243e8d17",
+		"5d1b313086f77425227d1678",
+		"5d03775b86f774203e7e0c4b",
+		"5d1c774f86f7746d6620f8db",
+		"5af04e0a86f7743a532b79e2",
+		"590a3c0a86f774385a33c450",
+		"57347cd0245977445a2d6ff1",
+		"5c12620d86f7743f8b198b72",
+		"5c052fb986f7746b2101e909",
+		"5909e99886f7740c983b9984",
+		"590a3d9c86f774385926e510",
+		"5c05300686f7746dce784e5d",
+		"5c05308086f7746b2101e90b",
+        "5d1b304286f774253763a528"
+    ],
+	"blacklistedItems_Safe":[
+        "5df8a6a186f77412640e2e80",
+        "5df8a72c86f77412640e2e83",
+		"5df8a77486f77412672a1e3f"
+    ],
+	"blacklistedItems_Ammo":[
+		"5cde8864d7f00c0010373be1",
+		"5d2f2ab648f03550091993ca",
+		"5996f6fc86f7745e585b4de3",
+		"5996f6d686f77467977ba6cc",
+		"5996f6cb86f774678763a6ca",
+		"5943d9c186f7745a13413ac9"
+	],
+	"blacklistedItems_Money_RoublesOnly":[
+		"5696686a4bdc2da3298b456a",
+		"569668774bdc2da2298b4568"
+	],
+	"blacklistedItems_ShturmansStash":[
+		"619bc61e86e01e16f839a999",
+		"619bddc6c9546643a67df6ee",
+		"5648b62b4bdc2d9d488b4585",
+		"55d617094bdc2d89028b4568",
+		"64637076203536ad5600c990",
+		"64ca3d3954fc657e230529cc",
+		"619bde3dc9546643a67df6f2",
+		"5c0e874186f7745dc7616606",
+		"619bdeb986e01e16f839a99e",
+		"54490a4d4bdc2dbc018b4573",
+		"619bdef8c9546643a67df6f6",
+		"619bddffc9546643a67df6f0",
+		"619bdf9cc9546643a67df6f8"
+	],
+	"blacklistedItems_WeaponBox5x5":[
+		"619bc61e86e01e16f839a999",
+		"619bddc6c9546643a67df6ee",
+		"5648b62b4bdc2d9d488b4585",
+		"55d617094bdc2d89028b4568",
+		"64637076203536ad5600c990",
+		"64ca3d3954fc657e230529cc",
+		"619bde3dc9546643a67df6f2",
+		"5c0e874186f7745dc7616606",
+		"619bdeb986e01e16f839a99e",
+		"54490a4d4bdc2dbc018b4573",
+		"619bdef8c9546643a67df6f6",
+		"619bddffc9546643a67df6f0",
+		"619bdf9cc9546643a67df6f8"
+	],
+	"blacklistedItems_WeaponBox6x3":[
+		"619bc61e86e01e16f839a999",
+		"619bddc6c9546643a67df6ee",
+		"5648b62b4bdc2d9d488b4585",
+		"55d617094bdc2d89028b4568",
+		"64637076203536ad5600c990",
+		"64ca3d3954fc657e230529cc",
+		"619bde3dc9546643a67df6f2",
+		"5c0e874186f7745dc7616606",
+		"619bdeb986e01e16f839a99e",
+		"54490a4d4bdc2dbc018b4573",
+		"619bdef8c9546643a67df6f6",
+		"619bddffc9546643a67df6f0",
+		"619bdf9cc9546643a67df6f8"
+	],
+	"container_ShturmansStash_MinValuePerItem": 30000,
+	"container_ShturmansStash_MaxValuePerItem": 1660000,
+	"container_WeaponBox5x5_MinValuePerItem": 20000,
+	"container_WeaponBox5x5_MaxValuePerItem": 1660000,
+	"container_WeaponBox6x3_MinValuePerItem": 6000,
+	"container_WeaponBox6x3_MaxValuePerItem": 400000,
+	"container_Drawer_ItemsDistribution":[
+		"0","1"
+	],
+	"container_Drawer_ItemsDistributionProbabilities":[
+		"0","100"
+	],
+	"container_CashRegister_ItemsDistribution":[
+		"0","1","2"
+	],
+	"container_CashRegister_ItemsDistributionProbabilities":[
+		"0","100","80"
+	],
+	"container_PCBlock_ItemsDistribution":[
+		"0","1","2"
+	],
+	"container_PCBlock_ItemsDistributionProbabilities":[
+		"0","100","80"
+	],
+	"container_Jacket_ItemsDistribution":[
+		"0","1"
+	],
+	"container_Jacket_ItemsDistributionProbabilities":[
+		"0","100"
+	],
+	"container_Toolbox_ItemsDistribution":[
+		"0","1","2","3"
+	],
+	"container_Toolbox_ItemsDistributionProbabilities":[
+		"0","100","100","80"
+	],
+	"container_Medcase_ItemsDistribution":[
+		"0","1","2","3"
+	],
+	"container_Medcase_ItemsDistributionProbabilities":[
+		"0","80","100","80"
+	],
+	"container_Safe_ItemsDistribution":[
+		"0","1","2","3","4","5"
+	],
+	"container_Safe_ItemsDistributionProbabilities":[
+		"0","0","80","100","80","30"
+	],
+	"container_WeaponBox5x5_ItemsDistribution":[
+		"0","1","2","3","4","5","6"
+	],
+	"container_WeaponBox5x5_ItemsDistributionProbabilities":[
+		"0","0","0","80","100","100","100"
+	],
+	"container_WeaponBox5x2_ItemsDistribution":[
+		"0","1","2","3","4","5"
+	],
+	"container_WeaponBox5x2_ItemsDistributionProbabilities":[
+		"0","60","60","100","80","80"
+	],
+	"container_DuffleBag01_ItemsDistribution":[
+		"0","1","2","3","4"
+	],
+	"container_DuffleBag01_ItemsDistributionProbabilities":[
+		"0","100","100","30","30"
+	],
+	"container_WeaponBox6x3_ItemsDistribution":[
+		"0","1","2","3","4","5","6"
+	],
+	"container_WeaponBox6x3_ItemsDistributionProbabilities":[
+		"0","0","0","80","200","100","80"
+	],
+	"container_WeaponBox4x4_ItemsDistribution":[
+		"0","1","2","3","4","5","6","7","8","9"
+	],
+	"container_WeaponBox4x4_ItemsDistributionProbabilities":[
+		"0","0","80","80","80","80","80","30","20","20"
+	],
+	"container_GrenadeBox_ItemsDistribution":[
+		"0","1","2","3"
+	],
+	"container_GrenadeBox_ItemsDistributionProbabilities":[
+		"0","80","80","80"
+	],
+	"container_PlasticSuitcase_ItemsDistribution":[
+		"0","1","2","3","4"
+	],
+	"container_PlasticSuitcase_ItemsDistributionProbabilities":[
+		"0","80","100","80","60"
+	],
+	"container_MedbagSmu0601_ItemsDistribution":[
+		"0","1","2","3"
+	],
+	"container_MedbagSmu0601_ItemsDistributionProbabilities":[
+		"0","80","200","80"
+	],
+	"container_WoodenCrate_ItemsDistribution":[
+		"0","1","2","3","4","5"
+	],
+	"container_WoodenCrate_ItemsDistributionProbabilities":[
+		"0","60","100","80","80","80"
+	],
+	"container_MedicalSupplyCrate_ItemsDistribution":[
+		"0","1","2","3","4","5","6"
+	],
+	"container_MedicalSupplyCrate_ItemsDistributionProbabilities":[
+		"0","20","20","100","100","200","50"
+	],
+	"container_TechnicalSupplyCrate_ItemsDistribution":[
+		"0","1","2","3","4","5","6"
+	],
+	"container_TechnicalSupplyCrate_ItemsDistributionProbabilities":[
+		"0","20","20","100","100","200","50"
+	],
+	"container_DeadScav_ItemsDistribution":[
+		"0","1","2","3","4","5","6"
+	],
+	"container_DeadScav_ItemsDistributionProbabilities":[
+		"0","80","80","80","80","80","40"
+	],
+	"container_GroundCache_ItemsDistribution":[
+		"0","1","2","3","4","5","6"
+	],
+	"container_GroundCache_ItemsDistributionProbabilities":[
+		"0","80","80","80","80","80","40"
+	],
+	"container_BurriedBarrelCache_ItemsDistribution":[
+		"0","1","2","3","4","5"
+	],
+	"container_BurriedBarrelCache_ItemsDistributionProbabilities":[
+		"0","80","80","80","60","40"
+	],
+	"container_WoodenAmmoBox_ItemsDistribution":[
+		"0","1","2","3","4"
+	],
+	"container_WoodenAmmoBox_ItemsDistributionProbabilities":[
+		"0","80","80","80","40"
+	],
+	"container_JacketDorms114_ItemsDistribution":[
+		"0","1"
+	],
+	"container_JacketDorms114_ItemsDistributionProbabilities":[
+		"5","100"
+	],
+	"container_JacketMachineryKey_ItemsDistribution":[
+		"0","1"
+	],
+	"container_JacketMachineryKey_ItemsDistributionProbabilities":[
+		"0","100"
+	],
+	"container_RationSupplyCrate_ItemsDistribution":[
+		"0","1","2","3","4","5","6","7","8"
+	],
+	"container_RationSupplyCrate_ItemsDistributionProbabilities":[
+		"0","20","20","100","200","200","100","80","60"
+	],
+	"container_JacketDorms204_ItemsDistribution":[
+		"0","1"
+	],
+	"container_JacketDorms204_ItemsDistributionProbabilities":[
+		"0","100"
+	],
+	"container_ShturmansStash_ItemsDistribution":[
+		"5","6","7","8","9","10"
+	],
+	"container_ShturmansStash_ItemsDistributionProbabilities":[
+		"100","100","80","80","80","10"
+	],
+	"container_DuffleBag02_ItemsDistribution":[
+		"0","1","2","3","4"
+	],
+	"container_DuffleBag02_ItemsDistributionProbabilities":[
+		"0","100","100","80","30"
+	],
+	"container_MedbagSmu0602_ItemsDistribution":[
+		"0","1","2","3"
+	],
+	"container_MedbagSmu0602_ItemsDistributionProbabilities":[
+		"0","80","200","80"
+	],
+	"container_CashRegisterTAR_ItemsDistribution":[
+		"0","1","2","3","4"
+	],
+	"container_CashRegisterTAR_ItemsDistributionProbabilities":[
+		"0","80","80","80","30"
+	],
+	"container_BankCashRegister_ItemsDistribution":[
+		"0","1","2","3","4","5","6","7","8","9"
+	],
+	"container_BankCashRegister_ItemsDistributionProbabilities":[
+		"0","0","0","0","80","80","80","30","20","20"
+	],
+	"container_BankSafe_ItemsDistribution":[
+		"0","1","2","3","4","5","6","7","8","9",
+		"10","11","12","13","14","15","16"
+	],
+	"container_BankSafe_ItemsDistributionProbabilities":[
+		"0","0","0","0","0","0","0","80","80","80",
+		"80","80","80","80","80","80","80"
+	],
+	"rate_SELECTED_ITEMS": 1.0,
+	"rate_BARTER_OTHERS": 1.0,
+	"rate_BARTER_BUILDINGMATERIALS": 1.0,
+	"rate_BARTER_ELECTRONICS": 1.0,
+	"rate_BARTER_ENERGYELEMENTS": 1.0,
+	"rate_BARTER_FLAMMABLEMATERIALS": 1.0,
+	"rate_BARTER_HOUSEHOLDMATERIALS": 1.0,
+	"rate_BARTER_MEDICALSUPPLIES": 1.0,
+	"rate_BARTER_TOOLS": 1.0,
+	"rate_BARTER_VALUABLES": 0.5,
+	"rate_GEAR_BACKPACKS": 1.0,
+	"rate_GEAR_BODYARMOR": 1.5,
+	"rate_GEAR_EYEWEAR": 1.0,
+	"rate_GEAR_FACECOVERS": 1.0,
+	"rate_GEAR_GEARCOMPONENTS": 1.0,
+	"rate_GEAR_HEADGEAR": 1.2,
+	"rate_GEAR_HEADSETS": 1.2,
+	"rate_GEAR_SECURECONTAINERS": 0.0,
+	"rate_GEAR_STORAGECONTAINERS": 0.1,
+	"rate_GEAR_TACTICALRIGS": 1.2,
+	"rate_WPM_FM_AUXILIARYPARTS": 1.0,
+	"rate_WPM_FM_BIPODS": 1.0,
+	"rate_WPM_FM_FOREGRIPS": 1.0,
+	"rate_WPM_FM_LLD_FLASHLIGHTS": 1.0,
+	"rate_WPM_FM_LLD_LASERTARGETPOINTERS": 1.0,
+	"rate_WPM_FM_LLD_TACTICALCOMBODEVICES": 1.0,
+	"rate_WPM_FM_MD_FLASHHIDERSBRAKES": 1.0,
+	"rate_WPM_FM_MD_MUZZLEADAPTERS": 1.0,
+	"rate_WPM_FM_MD_SUPPRESSORS": 1.0,
+	"rate_WPM_FM_S_ASSAULTSCOPES": 1.0,
+	"rate_WPM_FM_S_COLLIMATORS": 1.0,
+	"rate_WPM_FM_S_COMPACTCOLLIMATORS": 1.0,
+	"rate_WPM_FM_S_IRONSIGHTS": 1.0,
+	"rate_WPM_FM_S_OPTICS": 1.0,
+	"rate_WPM_FM_S_SPECIALPURPOSESIGHTS": 1.0,
+	"rate_WPM_GM_CHARGINGHANDLES": 1.0,
+	"rate_WPM_GM_LAUNCHERS": 1.0,
+	"rate_WPM_GM_MAGAZINES": 1.0,
+	"rate_WPM_GM_MOUNTS": 1.0,
+	"rate_WPM_GM_STOCKSCHASSIS": 1.0,
+	"rate_WPM_VP_BARRELS": 1.0,
+	"rate_WPM_VP_GASBLOCKS": 1.0,
+	"rate_WPM_VP_HANDGUARDS": 1.0,
+	"rate_WPM_VP_PISTOLGRIPS": 1.0,
+	"rate_WPM_VP_RECEIVERSSLIDES": 1.0,
+	"rate_WEAPONS_ASSAULTCARBINES": 1.5,
+	"rate_WEAPONS_ASSAULTRIFLES": 1.5,
+	"rate_WEAPONS_BOLTACTIONRIFLES": 1.5,
+	"rate_WEAPONS_GRENADELAUNCHERS": 1.0,
+	"rate_WEAPONS_MACHINEGUNS": 1.2,
+	"rate_WEAPONS_MARKSMANRIFLES": 1.5,
+	"rate_WEAPONS_MELEEWEAPONS": 1.0,
+	"rate_WEAPONS_PISTOLS": 1.0,
+	"rate_WEAPONS_SMGS": 1.0,
+	"rate_WEAPONS_SHOTGUNS": 1.0,
+	"rate_WEAPONS_SPECIALWEAPONS": 1.0,
+	"rate_WEAPONS_THROWABLES": 1.0,
+	"rate_AMMO_AMMOPACKS": 1.0,
+	"rate_AMMO_ROUNDS": 1.0,
+	"rate_PROVISIONS_DRINKS": 1.0,
+	"rate_PROVISIONS_FOOD": 1.0,
+	"rate_MEDICATION_INJECTORS": 0.2,
+	"rate_MEDICATION_INJURYTREATMENT": 1.0,
+	"rate_MEDICATION_MEDKITS": 1.0,
+	"rate_MEDICATION_PILLS": 1.0,
+	"rate_KEYS_ELECTRONICKEYS": 0.02,
+	"rate_KEYS_MECHANICALKEYS": 0.03,
+	"rate_INFOITEMS": 0.5,
+	"rate_SPECIALEQUIPMENT": 1.0,
+	"rate_MAPS": 0.3,
+	"rate_MONEY": 5.0,
+	"removeBackpackRestrictions": true,
+	"showItemListing": true,
+	"debugMode": true,
+	"selectedItems_IncreaseSpawnChance":[
+		"5c0126f40db834002a125382",
+		"5b057b4f5acfc4771e1bd3e9",
+		"5c0a840b86f7742ffa4f2482"
+	],
+	"selectedItems_spawnChance":[
+		"1.0",
+		"1.0",
+		"1.0"
+	]
+}

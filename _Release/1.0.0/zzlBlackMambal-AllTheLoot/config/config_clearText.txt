@@ -1,0 +1,659 @@
+==================================================
+-- Drawer --		|| Others, Building, Electronics, Energy, Keycards, Keys, Info, Special Equipment, Maps
+6-STEN-140-M military battery
+Advanced current converter
+Analog thermometer
+BEAR Buddy plush toy
+Car battery
+Corrugated hose
+Customs plan map
+Cyclon rechargeable battery
+Digital secure DSP radio transmitter
+Dogtag BEAR
+Dogtag USEC
+Electric drill
+Electric motor
+Far-forward GPS Signal Amplifier Unit
+Golden 1GPhone smartphone
+Graphics card
+Interchange plan map
+Iridium military thermal vision module
+Machinery Key
+Microcontroller board
+Military cable	
+Military circuit board
+Military COFDM Wireless Signal Transmitter
+Military corrugated tube
+Military gyrotachometer
+Military power filter
+Motor Controller #1
+OFZ 30x160mm shell
+Pack of Arseniy buckwheat
+Phased array element
+Power supply unit
+Pressure gauge
+Radio repeater
+Shoreline Health Resort plan map
+Shoreline plan map	
+Shturman's stash key
+Shustrilo sealing foam
+Single-axis Fiber Optic Gyroscope #1
+UHF RFID Reader
+Virtex programmable processor
+VPX Flash Storage Module
+Water filter
+Woods plan map
+Xenomorph sealing foam
+==================================================
+-- Jacket --		|| Others, Building, Electronics, Energy, Flammable, Tools, Keys, Special Equipment
+42 Signature Blend English
+6-STEN-140-M military battery
+Advanced current converter
+Analog thermometer
+Aramid fiber fabric
+BEAR Buddy plush toy
+Car battery
+Cordura polyamide fabric
+Corrugated hose
+Customs plan map
+Cyclon rechargeable battery
+Damaged hard drive
+Digital secure DSP radio transmitter
+Dogtag BEAR
+Dogtag USEC
+DVD drive
+Electric drill
+Electric motor
+Expeditionary fuel tank	
+Far-forward GPS Signal Amplifier Unit
+Fierce Blow sledgehammer
+Fleece fabric
+FP-100 filter absorber
+Fuel conditioner
+Golden 1GPhone smartphone
+Graphics card
+Interchange plan map
+Iridium military thermal vision module
+Metal fuel tank
+Microcontroller board
+Military cable	
+Military circuit board
+Military COFDM Wireless Signal Transmitter
+Military corrugated tube
+Military power filter
+Motor Controller #1
+OFZ 30x160mm shell
+Pack of Arseniy buckwheat
+Phased array element
+Power supply unit
+Pressure gauge
+Propane tank (5L)
+Radio repeater
+Ripstop fabric
+Set of files "Master"
+Shoreline Health Resort plan map
+Shoreline plan map	
+Shturman's stash key
+Shustrilo sealing foam
+Single-axis Fiber Optic Gyroscope #1
+UHF RFID Reader
+Virtex programmable processor
+VPX Flash Storage Module
+Water filter
+Weapon parts
+Woods plan map
+Xenomorph sealing foam
+==================================================
+-- Weapon case --	|| Gear, Weapon parts, Weapons, Ammo
+6B13 M modified assault armor (Tan)
+12.7x108mm B-32
+12.7x108mm BZT-44M
+Alpha Armband
+Armband (Blue)
+Armband (Green)
+Armband (Red)
+Armband (White)
+Armband (Yellow)
+Ars Arma CPC MOD.1 plate carrier
+Balaclava_dev
+Bars A-2607 Damascus knife
+Bars A-2607 95Kh18 knife
+Big Pipe's bandana
+Big Pipe's smoking pipe
+BOSS cap
+Crye Precision AVS plate carrier (Tagilla Edition)
+Crye Precision CPC plate carrier (Goons Edition)
+Cultist knife
+DEADSKUL armband
+Ded Moroz hat
+Death Knight mask
+Fake white beard
+GP-34 40mm underbarrel grenade launcher
+Jack-o'-lantern tactical pumpkin helmet
+KAC QDC 6.5x35 sound suppressor
+Kalashnikov PKM 7.62x54R machine gun
+Kalashnikov PKP 7.62x54R infantry machine gun
+Kiba Arms armband
+LBT-1961A Load Bearing Chest Rig (Goons Edition)
+M67 Shrapnel
+Maska-1SCh bulletproof helmet (Killa)
+Master hand
+MON-50 Shrapnel
+PAG-17 scope
+Red Rebel ice pick
+RGD-5 Shrapnel
+S&S Precision PlateFrame plate carrier (Goons Edition)
+Santa hat
+Shrapnel
+SilencerCo Sparrow 22 sound suppressor
+Tagilla's welding mask "Gorilla"
+Tagilla's welding mask "UBEY"
+Train Hard armband
+Trophy
+TT-33 7.62x25 TT pistol (Golden)
+Zryachiy's balaclava
+Zryachiy's balaclava (folded)
+==================================================
+-- Cache --			|| Others, Building, Electronics, Energy, Flammable, Household, Medical supplies, Tools, Valuables, Gear, Provisions, Medication, Info, Maps
+6B13 M modified assault armor (Tan)
+Alpha Armband
+Armband (Blue)
+Armband (Green)
+Armband (Red)
+Armband (White)
+Armband (Yellow)
+Balaclava_dev
+Big Pipe's bandana
+Big Pipe's smoking pipe
+BOSS cap
+Christmas tree ornament (Red)
+Christmas tree ornament (Silver)
+Christmas tree ornament (Violet)
+Crye Precision AVS plate carrier (Tagilla Edition)
+Crye Precision CPC plate carrier (Goons Edition)
+Customs plan map
+DEADSKUL armband
+Ded Moroz hat
+Death Knight mask
+Digital secure DSP radio transmitter
+Dogtag BEAR
+Dogtag USEC
+Fake white beard
+Grenade case
+Interchange plan map
+Item case
+Jack-o'-lantern tactical pumpkin helmet
+Kiba Arms armband
+LBT-1961A Load Bearing Chest Rig (Goons Edition)
+Lucky Scav Junk box
+Magazine case
+Maska-1SCh bulletproof helmet (Killa)
+Medicine case
+Money case
+Motor Controller #1
+Mr. Holodilnick thermal bag
+Pistol case
+Pumpkin with sweets
+S&S Precision PlateFrame plate carrier (Goons Edition)
+Santa hat
+Shoreline Health Resort plan map
+Shoreline plan map
+Single-axis Fiber Optic Gyroscope #1
+Tagilla's welding mask "Gorilla"
+Tagilla's welding mask "UBEY"	
+T H I C C Weapon case
+T H I C C item case
+Train Hard armband
+Weapon case
+Woods plan map
+Zryachiy's balaclava
+Zryachiy's balaclava (folded)
+==================================================
+-- Duffle bag --	|| Others, Building, Electronics, Energy, Flammable, Household, Medical supplies, Tools, Valuables, Provisions, Medication, Info, Special Equipment, Maps
+Advanced current converter
+Christmas tree ornament (Red)
+Christmas tree ornament (Silver)
+Christmas tree ornament (Violet)
+Customs plan map
+Digital secure DSP radio transmitter
+Dogtag BEAR
+Dogtag USEC
+Far-forward GPS Signal Amplifier Unit
+Interchange plan map
+Microcontroller board
+Military COFDM Wireless Signal Transmitter
+Motor Controller #1
+Phased array element
+Radio repeater
+Shoreline Health Resort plan map
+Shoreline plan map
+Single-axis Fiber Optic Gyroscope #1
+Woods plan map
+==================================================
+-- Medical --		|| Medical supplies, Injectors, Injury, Medkits, Pills
+
+==================================================
+-- Technical --		|| Others, Building, Electronics, Energy, Flammable, Tools, Special Equipment
+42 Signature Blend English
+Advanced current converter
+BEAR Buddy plush toy
+Broken GPhone X smartphone
+Can of Dr. Lupo's coffee beans
+Can of Majaica coffee beans
+CPU fan
+Damaged hard drive
+Digital secure DSP radio transmitter
+Dogtag BEAR
+Dogtag USEC
+DVD drive
+Electronic components
+Far-forward GPS Signal Amplifier Unit
+Golden 1GPhone smartphone
+Graphics card
+Iridium military thermal vision module
+Microcontroller board
+Military COFDM Wireless Signal Transmitter
+Military circuit board
+Military gyrotachometer
+Motor Controller #1
+OFZ 30x160mm shell
+Ortodontox toothpaste
+Pack of Arseniy buckwheat
+PC CPU
+Phased array element
+Printed circuit board
+Printer paper
+Pumpkin with sweets
+Radio repeater
+RAM
+Single-axis Fiber Optic Gyroscope #1
+Soap
+Tetriz portable game console
+Toilet paper
+Toothpaste
+UHF RFID Reader
+UZRGM grenade fuze
+VPX Flash Storage Module
+Virtex programmable processor
+==================================================
+-- Rations --
+Canister with purified water
+Bottle of Fierce Hatchling moonshine
+==================================================
+-- PC Block --		|| Electronics
+Advanced current converter
+Broken GPhone X smartphone
+Broken GPhone smartphone
+Broken LCD
+Electric drill
+Electric motor
+Energy-saving lamp
+Far-forward GPS Signal Amplifier Unit
+Gas analyzer
+Geiger-Muller counter
+Golden 1GPhone smartphone
+Iridium military thermal vision module
+Light bulb
+Magnet
+Microcontroller board
+Military COFDM Wireless Signal Transmitter
+Military cable
+Military circuit board
+Military gyrotachometer
+Military power filter
+Motor Controller #1
+NIXXOR lens
+Phase control relay
+Phased array element
+Radiator helix
+Single-axis Fiber Optic Gyroscope #1
+Spark plug
+T-shaped plug
+Tetriz portable game console
+UHF RFID Reader
+USB Adapter
+Ultraviolet lamp
+VPX Flash Storage Module
+Virtex programmable processor
+Working LCD
+==================================================
+-- Safe --			|| Valuables, Info, Money
+Christmas tree ornament (Red)
+Christmas tree ornament (Silver)
+Christmas tree ornament (Violet)
+==================================================
+-- Ammo --
+12.7x108mm B-32
+12.7x108mm BZT-44M
+M67 Shrapnel
+MON-50 Shrapnel
+RGD-5 Shrapnel
+Shrapnel
+==================================================
+-- Money Roubles only --
+Dollars
+Euros
+==================================================
+-- Shturman's Stash Content (add stuff here) --
+Alpha Armband
+DEADSKUL armband
+GP-34 40mm underbarrel grenade launcher
+KAC QDC 6.5x35 sound suppressor
+Kalashnikov PKM 7.62x54R machine gun
+Kalashnikov PKP 7.62x54R infantry machine gun
+Kiba Arms armband
+Maska-1SCh bulletproof helmet (Killa)
+RFARMY armband
+SilencerCo Sparrow 22 sound suppressor
+Terragroup Armband
+Train Hard armband
+UNTAR Armband
+==================================================
+-- Weapon Box 5x5 --
+Alpha Armband
+DEADSKUL armband
+GP-34 40mm underbarrel grenade launcher
+KAC QDC 6.5x35 sound suppressor
+Kalashnikov PKM 7.62x54R machine gun
+Kalashnikov PKP 7.62x54R infantry machine gun
+Kiba Arms armband
+Maska-1SCh bulletproof helmet (Killa)
+RFARMY armband
+SilencerCo Sparrow 22 sound suppressor
+Terragroup Armband
+Train Hard armband
+UNTAR Armband
+==================================================
+-- Weapon Box 6x3 --
+Alpha Armband
+DEADSKUL armband
+GP-34 40mm underbarrel grenade launcher
+KAC QDC 6.5x35 sound suppressor
+Kalashnikov PKM 7.62x54R machine gun
+Kalashnikov PKP 7.62x54R infantry machine gun
+Kiba Arms armband
+Maska-1SCh bulletproof helmet (Killa)
+RFARMY armband
+SilencerCo Sparrow 22 sound suppressor
+Terragroup Armband
+Train Hard armband
+UNTAR Armband
+==================================================
+==================================================
+==================================================
+==================================================
+==================================================
+==================================================
+==================================================
+Drawer
+Drawer
+Drawer
+Drawer
+Drawer
+==================================================
+Cash register
+Cash register
+Cash register
+Cash register
+Cash register
+==================================================
+PC block
+PC block
+PC block
+PC block
+PC block
+==================================================
+Jacket
+Jacket
+Jacket
+Jacket
+Jacket
+==================================================
+Toolbox
+Toolbox
+Toolbox
+Toolbox
+Toolbox
+==================================================
+Medcase
+Medcase
+Medcase
+Medcase
+Medcase
+==================================================
+Safe
+Safe
+Safe
+Safe
+Safe
+==================================================
+Weapon box (5x5)
+Weapon box (5x5)
+Weapon box (5x5)
+Weapon box (5x5)
+Weapon box (5x5)
+==================================================
+Weapon box (5x2)
+Weapon box (5x2)
+Weapon box (5x2)
+Weapon box (5x2)
+Weapon box (5x2)
+==================================================
+Duffle bag 01
+Duffle bag 01
+Duffle bag 01
+Duffle bag 01
+Duffle bag 01
+==================================================
+Weapon box (6x3)
+Weapon box (6x3)
+Weapon box (6x3)
+Weapon box (6x3)
+Weapon box (6x3)
+==================================================
+Weapon box (4x4)
+Weapon box (4x4)
+Weapon box (4x4)
+Weapon box (4x4)
+Weapon box (4x4)
+==================================================
+Grenade box
+Grenade box
+Grenade box
+Grenade box
+Grenade box
+==================================================
+Plastic suitcase
+Plastic suitcase
+Plastic suitcase
+Plastic suitcase
+Plastic suitcase
+==================================================
+Medbag SMU06 01
+Medbag SMU06 01
+Medbag SMU06 01
+Medbag SMU06 01
+Medbag SMU06 01
+==================================================
+Wooden crate
+Wooden crate
+Wooden crate
+Wooden crate
+Wooden crate
+==================================================
+Medical supply crate
+Medical supply crate
+Medical supply crate
+Medical supply crate
+Medical supply crate
+==================================================
+Technical supply crate
+Technical supply crate
+Technical supply crate
+Technical supply crate
+Technical supply crate
+==================================================
+Dead Scav
+Dead Scav
+Dead Scav
+Dead Scav
+Dead Scav
+==================================================
+Ground cache
+Ground cache
+Ground cache
+Ground cache
+Ground cache
+==================================================
+Burried barrel cache
+Burried barrel cache
+Burried barrel cache
+Burried barrel cache
+Burried barrel cache
+==================================================
+Wooden ammo box
+Wooden ammo box
+Wooden ammo box
+Wooden ammo box
+Wooden ammo box
+==================================================
+Jacket (Dorms 114)
+Jacket (Dorms 114)
+Jacket (Dorms 114)
+Jacket (Dorms 114)
+Jacket (Dorms 114)
+==================================================
+Jacket (Machinery Key)
+Jacket (Machinery Key)
+Jacket (Machinery Key)
+Jacket (Machinery Key)
+Jacket (Machinery Key)
+==================================================
+Ration supply crate
+Ration supply crate
+Ration supply crate
+Ration supply crate
+Ration supply crate
+==================================================
+Jacket (Dorms 204)
+Jacket (Dorms 204)
+Jacket (Dorms 204)
+Jacket (Dorms 204)
+Jacket (Dorms 204)
+==================================================
+Shturman's Stash
+Shturman's Stash
+Shturman's Stash
+Shturman's Stash
+Shturman's Stash
+==================================================
+Duffle bag 02
+Duffle bag 02
+Duffle bag 02
+Duffle bag 02
+Duffle bag 02
+==================================================
+Medbag SMU06 02
+Medbag SMU06 02
+Medbag SMU06 02
+Medbag SMU06 02
+Medbag SMU06 02
+==================================================
+Cash register TAR2-2
+Cash register TAR2-2
+Cash register TAR2-2
+Cash register TAR2-2
+Cash register TAR2-2
+==================================================
+Bank cash register
+Bank cash register
+Bank cash register
+Bank cash register
+Bank cash register
+==================================================
+Bank safe
+Bank safe
+Bank safe
+Bank safe
+Bank safe
+Bank safe
+Bank safe
+==================================================
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+==================================================
+Selected items
+Selected items
+Selected items
