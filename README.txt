@@ -25,7 +25,7 @@ Based on its value, it will get a spawn rate assigned.
 Since I was struggling hard to implement a "per-item-price-spawn-logic" (e.g. inverse of the price for each item)
 I used a value range condition.
 The conditions are currently as following:
-0 - 2000        -> 25000	// specifically to avoid super low value items (but mainly ammo rounds) spawning all over
+0 - 2000        -> 25000	// to avoid super low value items (but mainly ammo rounds) spawning all over
 2000 - 20000    -> 50000
 20000 - 30000   -> 40000
 30000 - 50000   -> 30000
