@@ -15,7 +15,7 @@ Somehow a quite tedious process.
 ===== AllTheLoot =====
 
 The intention behind AllTheLoot was:
-- being able to loot anything from containers
+- being able to loot the complete Tarkov loot pool from containers
 - being able to easily boost specific items or item categories
 - being able to easily adjust the item distribution of each container type (i.e. how many items can spawn per type)
 - being able to easily adjust the spawn rate of those distributions (i.e. how likely it is that e.g. 2 or 3 items spawn)
@@ -34,6 +34,7 @@ The conditions (item value above/below) and the resulting spawn rate are current
 300000 - 600000 -> 7500
 600000 -        -> 3750
 
+
 Each item category, e.g. Barters/Electronics can be tuned via the config file (see below).
 If you want to tweak on an item basis, that's also possible via the config file.
 
@@ -43,7 +44,7 @@ https://escapefromtarkov.fandom.com/wiki/Looting#Searchable_Containers
 
 When I created the mod my intention was not to define certain loot tables for each and every container type.
 Instead I reduced them to defined categories of items that (in my eyes) make sense.
-Those categories are as following:
+Those categories are as following and managed within the mod implementation:
 -- Drawer --
 -- Jacket --
 -- Weapon Box Global --
@@ -97,9 +98,36 @@ Within the file config.json you have different options:
 - selectedItems_IncreaseSpawnChance allows to increase the spawn rate of defined items
 
 
+(everything below refers to adjustments in the config.json)
+Example 1 - Adjusting spawn rates for an item category
+Assuming you want to increase/decrease the spawn probability of all Barter-Electronics items, then simply increase/decrease the parameter rate_BARTER_ELECTRONICS
+If you want to deactivate the spawn chance of an item category completely, use the value 0.0 (e.g. default value for rate_GEAR_SECURECONTAINERS)
+
+
+Example 2 - Adjusting the spawn rates for specific items
+First find out the corresponding ID by either go to db.sptarkov or - much easier - via getting the ID from the server console (if config option "showItemListing" is true).
+Add another line at "selectedItems_IncreaseSpawnChance" and put the ID between double quotes ("), if it's the last line of that section, remove any comma
+Add another line at "selectedItems_spawnChance", at the same position as you added the ID (selectedItems_IncreaseSpawnChance) before. Put the spawn rate again in double quotes.
+Make sure that the very last line of that section again doesn't have a comma.
+The rate you define here will be multiplied with the item category spawn rate, i.e. if Barter-Eletronics = 2.0 and you define e.g. Eletric Motor (ID: 5d1b2fa286f77425227d1674) with a rate of 1.5, the final calculation input will be 3.0
+To find out the category in which the item is stored, in SPT either directly open up the handbook and check for the item of interest or use flea and inspect it there. At the top of the small window you will see the category path.
+
+
+Example 3 - Adjusting the spawn behavior of containers
+Each of the 32 containers has 2 parameters:
+#1 defines how many items can spawn in a container of this type (container_xx_ItemsDistribution)
+#2 defines the possibilities (container_xx_ItemsDistributionProbabilities) of #1
+Assuming you have
+"0","1","2","3" (container_xx_ItemsDistribution) and
+"0","80","200","80" (container_xx_ItemsDistributionProbabilities)
+
+This means that either 0, 1, 2 or 3 items can spawn with a chance of 0 (for 0 items), 80 (for 1 item), 200 (for 2 items) and 80 (for 3 items). Most likely you will get 2 items but there's a chance to get 1 or 3 items. Somehow (SPT related?) - even if the probability value is set to 0 - very very rarely you get no item spawned.
+
+
+
 Additional info:
 Shturman's Stash, Weapon Box 5x5 and Weapon Box 6x3 have items assigned based on a specified value range. Like such chances are much higher that less "garbage" and more "big guns" spawn in those.
-In addition to value ranges for those 3 container types I globally removed some of the weapon mods categories (e.g. Iron sights, Charging Handles, etc.).
+In addition to value ranges for those 3 container types I globally removed some of the weapon mods categories (e.g. Iron sights, Charging Handles, etc.) to make the non-garbage stuff even more likely.
 
 The items are currently assigned so it's not really "breaking" some of the game principles, i.e most of the items specific to bosses (e.g. Tagilla, Killa, Kaban, etc.) are blacklisted.
 Feel free to remove them from the config to make them spawn again.
