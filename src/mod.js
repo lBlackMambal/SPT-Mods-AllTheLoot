@@ -353,8 +353,10 @@ class AllTheLoot {
             data.Price = Math.floor(15000 * spawnTweaker);
         else if (data_ref.Price >= 300000 && data_ref.Price < 600000 && data.Price === data_ref.Price)
             data.Price = Math.floor(7500 * spawnTweaker);
-        else if (data_ref.Price >= 600000 && data.Price === data_ref.Price)
+        else if (data_ref.Price >= 600000 && data_ref.Price < 2000000 && data.Price === data_ref.Price)
             data.Price = Math.floor(3750 * spawnTweaker);
+        else if (data_ref.Price >= 2000000 && data.Price === data_ref.Price)
+            data.Price = Math.floor(2000 * spawnTweaker);
         else
             data.Price = data_ref.Price;
         // Increase spawn rate for selected items
@@ -362,6 +364,10 @@ class AllTheLoot {
             const index = this.config.selectedItems_IncreaseSpawnChance.indexOf(data.Id);
             data.Price *= this.config.selectedItems_spawnChance[index];
         }
+        const randomValue = Math.floor(Math.random() * (this.config.randomizerRange + 1)) - this.config.randomizerRange / 2;
+        const scaleFactor = 1 / (1 + (data_ref.Price / 100000));
+        if (!(data.Price + randomValue < 0))
+            data.Price += Math.floor(randomValue * scaleFactor);
     }
     removeBlacklistedItems(data, lootType) {
         const cleanedLoot = [];
@@ -499,6 +505,7 @@ class AllTheLoot {
         const category_Ammo_Grenades = [];
         const category_MedicalAddOn = [];
         const category_RationsAddOn = [];
+        const category_WeaponBox5x5AddOn = [];
         const category_DEBUG = [];
         // ===== REF ARRAY (used to keep original data) =====
         // ===== BARTER ITEMS =====
@@ -588,6 +595,7 @@ class AllTheLoot {
         const category_Ammo_Grenades_ref = [];
         const category_MedicalAddOn_ref = [];
         const category_RationsAddOn_ref = [];
+        const category_WeaponBox5x5AddOn_ref = [];
         const category_DEBUG_ref = [];
         for (let i = 0; i < data.length; i++) {
             // ===== BARTER ITEMS =====
@@ -901,9 +909,18 @@ class AllTheLoot {
                 category_MedicalAddOn_ref.push(data_ref[i]);
             }
             // ===== RATIONS ADDON =====                                                // used instead of blacklisting category from type barter
-            if (data[i].Id === "62a09ee4cf4a99369e262453") {
+            if (data[i].Id === "62a09ee4cf4a99369e262453" || data[i].Id === "5bc9be8fd4351e00334cae6e" || data[i].Id === "573475fb24597737fb1379e1" ||
+                data[i].Id === "5e54f6af86f7742199090bf3" || data[i].Id === "5af0484c86f7740f02001f7f" || data[i].Id === "573476d324597737da2adc13" ||
+                data[i].Id === "6389c6463485cf0eeb260715" || data[i].Id === "5734770f24597738025ee254" || data[i].Id === "573476f124597737e04bf328") {
                 category_RationsAddOn.push(data[i]);
                 category_RationsAddOn_ref.push(data_ref[i]);
+            }
+            // ===== WEAPONBOX5x5 ADDON =====
+            if (data[i].Id === "6389c85357baa773a825b356" || data[i].Id === "6389c7f115805221fb410466" || data[i].Id === "6389c7750ef44505c87f5996" ||
+                data[i].Id === "5c052f6886f7746b1e3db148" || data[i].Id === "5c052fb986f7746b2101e909" || data[i].Id === "5c05308086f7746b2101e90b" ||
+                data[i].Id === "5c05300686f7746dce784e5d") {
+                category_WeaponBox5x5AddOn.push(data[i]);
+                category_WeaponBox5x5AddOn_ref.push(data_ref[i]);
             }
             // DEBUG
             /* if(data[i].Id === "5c0a840b86f7742ffa4f2482") {
@@ -919,7 +936,7 @@ class AllTheLoot {
         // items for Shturman's Stash (that normally should contain high tier items)
         // create another array that only contains items above a certain value
         let allHandbookItemsForShturmansStash = [];
-        allHandbookItemsForShturmansStash = allHandbookItemsForShturmansStash.concat(category_Barter_Valuables, category_Gear_GearComponents, category_Gear_Headgear, category_Gear_Headsets, category_WeaponPartsMods_FM_Bipods, category_WeaponPartsMods_FM_Foregrips, category_WeaponPartsMods_FM_LLD_Flashlights, category_WeaponPartsMods_FM_LLD_LaserTargetPointers, category_WeaponPartsMods_FM_LLD_TacticalComboDevices, category_WeaponPartsMods_FM_MD_FlashhidersBrakes, category_WeaponPartsMods_FM_MD_Suppressors, category_WeaponPartsMods_FM_S_AssaultScopes, category_WeaponPartsMods_FM_S_Collimators, category_WeaponPartsMods_FM_S_CompactCollimators, category_WeaponPartsMods_FM_S_Optics, category_WeaponPartsMods_FM_S_SpecialPurposeSights, category_WeaponPartsMods_GM_Launchers, category_WeaponPartsMods_GM_Magazines, category_WeaponPartsMods_GM_Mounts, category_WeaponPartsMods_GM_StocksChassis, category_WeaponPartsMods_VP_Barrels, category_WeaponPartsMods_VP_GasBlocks, category_WeaponPartsMods_VP_Handguards, category_WeaponPartsMods_VP_PistolGrips, category_WeaponPartsMods_VP_ReceiversSlides, category_Weapons_AssaultCarbines, category_Weapons_AssaultRifles, category_Weapons_BoltActionRifles, category_Weapons_GrenadeLaunchers, category_Weapons_MachineGuns, category_Weapons_MarksmanRifles, category_Weapons_MeleeWeapons, category_Weapons_Pistols, category_Weapons_SMGs, category_Weapons_Shotguns, category_Weapons_SpecialWeapons, category_Weapons_Throwables, category_Ammo_AmmoPacks, category_Ammo_Rounds, category_InfoItems);
+        allHandbookItemsForShturmansStash = allHandbookItemsForShturmansStash.concat(category_Barter_Valuables, category_Gear_BodyArmor, category_Gear_GearComponents, category_Gear_Headgear, category_Gear_Headsets, category_WeaponPartsMods_FM_Bipods, category_WeaponPartsMods_FM_Foregrips, category_WeaponPartsMods_FM_LLD_Flashlights, category_WeaponPartsMods_FM_LLD_LaserTargetPointers, category_WeaponPartsMods_FM_LLD_TacticalComboDevices, category_WeaponPartsMods_FM_MD_FlashhidersBrakes, category_WeaponPartsMods_FM_MD_Suppressors, category_WeaponPartsMods_FM_S_AssaultScopes, category_WeaponPartsMods_FM_S_Collimators, category_WeaponPartsMods_FM_S_CompactCollimators, category_WeaponPartsMods_FM_S_Optics, category_WeaponPartsMods_FM_S_SpecialPurposeSights, category_WeaponPartsMods_GM_Launchers, category_WeaponPartsMods_GM_Magazines, category_WeaponPartsMods_GM_StocksChassis, category_WeaponPartsMods_VP_Barrels, category_WeaponPartsMods_VP_Handguards, category_WeaponPartsMods_VP_PistolGrips, category_WeaponPartsMods_VP_ReceiversSlides, category_Weapons_AssaultCarbines, category_Weapons_AssaultRifles, category_Weapons_BoltActionRifles, category_Weapons_GrenadeLaunchers, category_Weapons_MachineGuns, category_Weapons_MarksmanRifles, category_Weapons_MeleeWeapons, category_Weapons_Pistols, category_Weapons_SMGs, category_Weapons_Shotguns, category_Weapons_SpecialWeapons, category_Weapons_Throwables, category_InfoItems);
         const category_ShturmansStash = [];
         const minValueShturman = this.config.container_ShturmansStash_MinValuePerItem;
         const maxValueShturman = this.config.container_ShturmansStash_MaxValuePerItem;
@@ -930,7 +947,7 @@ class AllTheLoot {
         // items for Weapon Box 5x5 (less categories allow more weapon/gear spawns)
         // create another array that only contains items above a certain value -> allows spawn of Red Rebel
         let allHandbookItemsForWeaponBox5x5 = [];
-        allHandbookItemsForWeaponBox5x5 = allHandbookItemsForWeaponBox5x5.concat(category_Gear_BodyArmor, category_Gear_Headgear, category_Gear_Headsets, category_Gear_TacticalRigs, category_WeaponPartsMods_FM_Bipods, category_WeaponPartsMods_FM_Foregrips, category_WeaponPartsMods_FM_LLD_Flashlights, category_WeaponPartsMods_FM_LLD_LaserTargetPointers, category_WeaponPartsMods_FM_LLD_TacticalComboDevices, category_WeaponPartsMods_FM_MD_FlashhidersBrakes, category_WeaponPartsMods_FM_MD_Suppressors, category_WeaponPartsMods_FM_S_AssaultScopes, category_WeaponPartsMods_FM_S_Collimators, category_WeaponPartsMods_FM_S_CompactCollimators, category_WeaponPartsMods_FM_S_Optics, category_WeaponPartsMods_FM_S_SpecialPurposeSights, category_WeaponPartsMods_GM_Launchers, category_WeaponPartsMods_GM_Magazines, category_WeaponPartsMods_VP_Barrels, category_WeaponPartsMods_VP_Handguards, category_WeaponPartsMods_VP_PistolGrips, category_WeaponPartsMods_VP_ReceiversSlides, category_Weapons_AssaultCarbines, category_Weapons_AssaultRifles, category_Weapons_BoltActionRifles, category_Weapons_GrenadeLaunchers, category_Weapons_MachineGuns, category_Weapons_MarksmanRifles, category_Weapons_MeleeWeapons, category_Weapons_Pistols, category_Weapons_SMGs, category_Weapons_Shotguns, category_Weapons_SpecialWeapons);
+        allHandbookItemsForWeaponBox5x5 = allHandbookItemsForWeaponBox5x5.concat(category_Gear_Backpacks, category_Gear_BodyArmor, category_Gear_Headgear, category_Gear_Headsets, category_Gear_TacticalRigs, category_Gear_Headsets, category_WeaponPartsMods_FM_Bipods, category_WeaponPartsMods_FM_Foregrips, category_WeaponPartsMods_FM_LLD_Flashlights, category_WeaponPartsMods_FM_LLD_LaserTargetPointers, category_WeaponPartsMods_FM_LLD_TacticalComboDevices, category_WeaponPartsMods_FM_MD_FlashhidersBrakes, category_WeaponPartsMods_FM_MD_Suppressors, category_WeaponPartsMods_FM_S_AssaultScopes, category_WeaponPartsMods_FM_S_Collimators, category_WeaponPartsMods_FM_S_CompactCollimators, category_WeaponPartsMods_FM_S_Optics, category_WeaponPartsMods_FM_S_SpecialPurposeSights, category_WeaponPartsMods_GM_Launchers, category_WeaponPartsMods_GM_Magazines, category_WeaponPartsMods_VP_Barrels, category_WeaponPartsMods_VP_Handguards, category_WeaponPartsMods_VP_PistolGrips, category_WeaponPartsMods_VP_ReceiversSlides, category_Weapons_AssaultCarbines, category_Weapons_AssaultRifles, category_Weapons_BoltActionRifles, category_Weapons_GrenadeLaunchers, category_Weapons_MachineGuns, category_Weapons_MarksmanRifles, category_Weapons_MeleeWeapons, category_Weapons_Pistols, category_Weapons_SMGs, category_Weapons_Shotguns, category_Weapons_SpecialWeapons, category_WeaponBox5x5AddOn);
         const category_WeaponBox5x5 = [];
         const minValueWeaponBox5x5 = this.config.container_WeaponBox5x5_MinValuePerItem;
         const maxValueWeaponBox5x5 = this.config.container_WeaponBox5x5_MaxValuePerItem;
@@ -941,7 +958,7 @@ class AllTheLoot {
         // items for Weapon Box 6x3 (less categories allow more weapon/gear spawns)
         // create another array that only contains items above a certain value
         let allHandbookItemsForWeaponBox6x3 = [];
-        allHandbookItemsForWeaponBox6x3 = allHandbookItemsForWeaponBox6x3.concat(category_Gear_BodyArmor, category_Gear_Headgear, category_Gear_Headsets, category_Gear_TacticalRigs, category_WeaponPartsMods_FM_Bipods, category_WeaponPartsMods_FM_Foregrips, category_WeaponPartsMods_FM_LLD_Flashlights, category_WeaponPartsMods_FM_LLD_LaserTargetPointers, category_WeaponPartsMods_FM_LLD_TacticalComboDevices, category_WeaponPartsMods_FM_MD_FlashhidersBrakes, category_WeaponPartsMods_FM_MD_Suppressors, category_WeaponPartsMods_FM_S_AssaultScopes, category_WeaponPartsMods_FM_S_Collimators, category_WeaponPartsMods_FM_S_CompactCollimators, category_WeaponPartsMods_FM_S_Optics, category_WeaponPartsMods_FM_S_SpecialPurposeSights, category_WeaponPartsMods_GM_Launchers, category_WeaponPartsMods_GM_Magazines, category_WeaponPartsMods_VP_Barrels, category_WeaponPartsMods_VP_Handguards, category_WeaponPartsMods_VP_PistolGrips, category_WeaponPartsMods_VP_ReceiversSlides, category_Weapons_AssaultCarbines, category_Weapons_AssaultRifles, category_Weapons_BoltActionRifles, category_Weapons_GrenadeLaunchers, category_Weapons_MachineGuns, category_Weapons_MarksmanRifles, category_Weapons_MeleeWeapons, category_Weapons_Pistols, category_Weapons_SMGs, category_Weapons_Shotguns, category_Weapons_SpecialWeapons);
+        allHandbookItemsForWeaponBox6x3 = allHandbookItemsForWeaponBox6x3.concat(category_Gear_Backpacks, category_Gear_BodyArmor, category_Gear_Headgear, category_Gear_Headsets, category_Gear_TacticalRigs, category_WeaponPartsMods_FM_Bipods, category_WeaponPartsMods_FM_Foregrips, category_WeaponPartsMods_FM_LLD_Flashlights, category_WeaponPartsMods_FM_LLD_LaserTargetPointers, category_WeaponPartsMods_FM_LLD_TacticalComboDevices, category_WeaponPartsMods_FM_MD_FlashhidersBrakes, category_WeaponPartsMods_FM_MD_Suppressors, category_WeaponPartsMods_FM_S_AssaultScopes, category_WeaponPartsMods_FM_S_Collimators, category_WeaponPartsMods_FM_S_CompactCollimators, category_WeaponPartsMods_FM_S_Optics, category_WeaponPartsMods_FM_S_SpecialPurposeSights, category_WeaponPartsMods_GM_Launchers, category_WeaponPartsMods_GM_Magazines, category_WeaponPartsMods_VP_Barrels, category_WeaponPartsMods_VP_Handguards, category_WeaponPartsMods_VP_PistolGrips, category_WeaponPartsMods_VP_ReceiversSlides, category_Weapons_AssaultCarbines, category_Weapons_AssaultRifles, category_Weapons_BoltActionRifles, category_Weapons_GrenadeLaunchers, category_Weapons_MachineGuns, category_Weapons_MarksmanRifles, category_Weapons_MeleeWeapons, category_Weapons_Pistols, category_Weapons_SMGs, category_Weapons_Shotguns, category_Weapons_SpecialWeapons);
         const category_WeaponBox6x3 = [];
         const minValueWeaponBox6x3 = this.config.container_WeaponBox6x3_MinValuePerItem;
         const maxValueWeaponBox6x3 = this.config.container_WeaponBox6x3_MaxValuePerItem;
@@ -1147,7 +1164,7 @@ class AllTheLoot {
         loot_WeaponBoxGlobal = this.removeBlacklistedItems(loot_WeaponBoxGlobal, LootGlobalType.WEAPONBOXGLOBAL);
         // ===== Loot - Cashes =====
         let loot_Caches = [];
-        loot_Caches = loot_Caches.concat(category_Barter_Others, category_Barter_BuildingMaterials, category_Barter_Electronics, category_Barter_EnergyElements, category_Barter_FlammableMaterials, category_Barter_HouseholdMaterials, category_Barter_MedicalSupplies, category_Barter_Tools, category_Barter_Valuables, category_Gear_BodyArmor, category_Gear_Eyewear, category_Gear_Facecovers, category_Gear_GearComponents, category_Gear_Headgear, category_Gear_Headsets, category_Gear_StorageContainers, category_Gear_TacticalRigs, category_Provisions_Drinks, category_Provisions_Food, category_Medication_Injectors, category_Medication_InjuryTreatment, category_Medication_Medkits, category_Medication_Pills, category_InfoItems, category_SpecialEquipment, category_Maps);
+        loot_Caches = loot_Caches.concat(category_Barter_Others, category_Barter_BuildingMaterials, category_Barter_Electronics, category_Barter_EnergyElements, category_Barter_FlammableMaterials, category_Barter_HouseholdMaterials, category_Barter_MedicalSupplies, category_Barter_Tools, category_Barter_Valuables, category_Gear_BodyArmor, category_Gear_Eyewear, category_Gear_Facecovers, category_Gear_GearComponents, category_Gear_Headgear, category_Gear_Headsets, category_Gear_StorageContainers, category_Gear_TacticalRigs, category_Provisions_Drinks, category_Provisions_Food, category_Medication_Injectors, category_Medication_InjuryTreatment, category_Medication_Medkits, category_Medication_Pills, category_Keys_ElectronicKeys, category_InfoItems, category_SpecialEquipment, category_Maps);
         loot_Caches = this.removeBlacklistedItems(loot_Caches, LootGlobalType.CACHE);
         // ===== Loot - Duffle bag =====
         let loot_DuffleBag = [];
@@ -1158,7 +1175,7 @@ class AllTheLoot {
         loot_Medical = loot_Medical.concat(category_Barter_MedicalSupplies, category_Medication_Injectors, category_Medication_InjuryTreatment, category_Medication_Medkits, category_Medication_Pills, category_MedicalAddOn);
         // ===== Loot - Technical =====
         let loot_Technical = [];
-        loot_Technical = loot_Technical.concat(category_Barter_Others, category_Barter_BuildingMaterials, category_Barter_Electronics, category_Barter_EnergyElements, category_Barter_FlammableMaterials, category_Barter_Tools, category_Gear_StorageContainers, category_SpecialEquipment);
+        loot_Technical = loot_Technical.concat(category_Barter_Others, category_Barter_BuildingMaterials, category_Barter_Electronics, category_Barter_EnergyElements, category_Barter_FlammableMaterials, category_Barter_Tools, category_Gear_SecureContainers, category_Gear_StorageContainers, category_SpecialEquipment);
         loot_Technical = this.removeBlacklistedItems(loot_Technical, LootGlobalType.TECHNICAL);
         // ===== Loot - Rations =====
         let loot_Rations = [];
@@ -1682,327 +1699,584 @@ class AllTheLoot {
         this.config.container_BankSafe_ItemsDistributionProbabilities.forEach(item => {
             container_BankSafe_ItemsDistributionProbabilities.push(parseInt(item));
         });
+        const overwriteContainer_Drawer = this.config.overwriteContainer_Drawer;
+        const overwriteContainer_CashRegister = this.config.overwriteContainer_CashRegister;
+        const overwriteContainer_PCBlock = this.config.overwriteContainer_PCBlock;
+        const overwriteContainer_Jacket = this.config.overwriteContainer_Jacket;
+        const overwriteContainer_Toolbox = this.config.overwriteContainer_Toolbox;
+        const overwriteContainer_Medcase = this.config.overwriteContainer_Medcase;
+        const overwriteContainer_Safe = this.config.overwriteContainer_Safe;
+        const overwriteContainer_WeaponBox5x5 = this.config.overwriteContainer_WeaponBox5x5;
+        const overwriteContainer_WeaponBox5x2 = this.config.overwriteContainer_WeaponBox5x2;
+        const overwriteContainer_DuffleBag01 = this.config.overwriteContainer_DuffleBag01;
+        const overwriteContainer_WeaponBox6x3 = this.config.overwriteContainer_WeaponBox6x3;
+        const overwriteContainer_WeaponBox4x4 = this.config.overwriteContainer_WeaponBox4x4;
+        const overwriteContainer_GrenadeBox = this.config.overwriteContainer_GrenadeBox;
+        const overwriteContainer_PlasticSuitcase = this.config.overwriteContainer_PlasticSuitcase;
+        const overwriteContainer_MedbagSmu0601 = this.config.overwriteContainer_MedbagSmu0601;
+        const overwriteContainer_WoodenCrate = this.config.overwriteContainer_WoodenCrate;
+        const overwriteContainer_MedicalSupplyCrate = this.config.overwriteContainer_MedicalSupplyCrate;
+        const overwriteContainer_TechnicalSupplyCrate = this.config.overwriteContainer_TechnicalSupplyCrate;
+        const overwriteContainer_DeadScav = this.config.overwriteContainer_DeadScav;
+        const overwriteContainer_GroundCache = this.config.overwriteContainer_GroundCache;
+        const overwriteContainer_BurriedBarrelCache = this.config.overwriteContainer_BurriedBarrelCache;
+        const overwriteContainer_WoodenAmmoBox = this.config.overwriteContainer_WoodenAmmoBox;
+        const overwriteContainer_JacketDorms114 = this.config.overwriteContainer_JacketDorms114;
+        const overwriteContainer_JacketMachineryKey = this.config.overwriteContainer_JacketMachineryKey;
+        const overwriteContainer_RationSupplyCrate = this.config.overwriteContainer_RationSupplyCrate;
+        const overwriteContainer_JacketDorms204 = this.config.overwriteContainer_JacketDorms204;
+        const overwriteContainer_ShturmansStash = this.config.overwriteContainer_ShturmansStash;
+        const overwriteContainer_DuffleBag02 = this.config.overwriteContainer_DuffleBag02;
+        const overwriteContainer_MedbagSmu0602 = this.config.overwriteContainer_MedbagSmu0602;
+        const overwriteContainer_CashRegisterTAR = this.config.overwriteContainer_CashRegisterTAR;
+        const overwriteContainer_BankCashRegister = this.config.overwriteContainer_BankCashRegister;
+        const overwriteContainer_BankSafe = this.config.overwriteContainer_BankSafe;
+        const tmpVar = this.database.getTables().loot.staticLoot[0];
         const lootRecordsAll = {
-            [SPTLootContainer.DRAWER]: {
-                itemcountDistribution: container_Drawer_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_Drawer_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: drawerItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: drawerItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.CASHREGISTER]: {
-                itemcountDistribution: container_CashRegister_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_CashRegister_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: cashRegisterItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: cashRegisterItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.PCBLOCK]: {
-                itemcountDistribution: container_PCBlock_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_PCBlock_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: pcBlockItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: pcBlockItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.JACKET]: {
-                itemcountDistribution: container_Jacket_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_Jacket_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: jacketItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: jacketItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.TOOLBOX]: {
-                itemcountDistribution: container_Toolbox_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_Toolbox_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: toolboxItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: toolboxItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.MEDCASE]: {
-                itemcountDistribution: container_Medcase_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_Medcase_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: medcaseItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: medcaseItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.SAFE]: {
-                itemcountDistribution: container_Safe_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_Safe_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: safeItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: safeItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.WEAPONBOX5X5]: {
-                itemcountDistribution: container_WeaponBox5x5_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_WeaponBox5x5_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: weaponBox5x5Items.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: weaponBox5x5ItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.WEAPONBOX5X2]: {
-                itemcountDistribution: container_WeaponBox5x2_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_WeaponBox5x2_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: weaponBox5x2Items.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: weaponBox5x2ItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.DUFFLEBAG01]: {
-                itemcountDistribution: container_DuffleBag01_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_DuffleBag01_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: duffleBag01Items.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: duffleBag01ItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.WEAPONBOX6X3]: {
-                itemcountDistribution: container_WeaponBox6x3_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_WeaponBox6x3_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: weaponBox6x3Items.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: weaponBox6x3ItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.WEAPONBOX4X4]: {
-                itemcountDistribution: container_WeaponBox4x4_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_WeaponBox4x4_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: weaponBox4x4Items.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: weaponBox4x4ItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.GRENADEBOX]: {
-                itemcountDistribution: container_GrenadeBox_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_GrenadeBox_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: grenadeBoxItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: grenadeBoxItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.PLASTICSUITCASE]: {
-                itemcountDistribution: container_PlasticSuitcase_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_PlasticSuitcase_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: plasticSuitcaseItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: plasticSuitcaseItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.MEDBAGSMU0601]: {
-                itemcountDistribution: container_MedbagSmu0601_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_MedbagSmu0601_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: medbagSmu0601Items.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: medbagSmu0601ItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.WOODENCRATE]: {
-                itemcountDistribution: container_WoodenCrate_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_WoodenCrate_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: woodenCrateItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: woodenCrateItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.MEDICALSUPPLYCRATE]: {
-                itemcountDistribution: container_MedicalSupplyCrate_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_MedicalSupplyCrate_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: medicalSupplyCrateItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: medicalSupplyCrateItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.TECHNICALSUPPLYCRATE]: {
-                itemcountDistribution: container_TechnicalSupplyCrate_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_TechnicalSupplyCrate_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: technicalSupplyCrateItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: technicalSupplyCrateItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.DEADSCAV]: {
-                itemcountDistribution: container_DeadScav_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_DeadScav_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: deadScavItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: deadScavItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.GROUNDCACHE]: {
-                itemcountDistribution: container_GroundCache_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_GroundCache_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: groundCacheItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: groundCacheItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.BURRIEDBARRELCACHE]: {
-                itemcountDistribution: container_BurriedBarrelCache_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_BurriedBarrelCache_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: burriedBarrelCacheItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: burriedBarrelCacheItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.WOODENAMMOBOX]: {
-                itemcountDistribution: container_WoodenAmmoBox_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_WoodenAmmoBox_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: woodenAmmoBoxItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: woodenAmmoBoxItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.JACKETDORMS114]: {
-                itemcountDistribution: container_JacketDorms114_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_JacketDorms114_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: jacketDorms114Items.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: jacketDorms114ItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.JACKETMACHINERYKEY]: {
-                itemcountDistribution: container_JacketMachineryKey_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_JacketMachineryKey_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: jacketMachineryKeyItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: jacketMachineryKeyItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.RATIONSUPPLYCRATE]: {
-                itemcountDistribution: container_RationSupplyCrate_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_RationSupplyCrate_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: rationSupplyCrateItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: rationSupplyCrateItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.JACKETDORMS204]: {
-                itemcountDistribution: container_JacketDorms204_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_JacketDorms204_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: jacketDorms204Items.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: jacketDorms204ItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.COMMONFUNDSTASH]: {
-                itemcountDistribution: container_ShturmansStash_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_ShturmansStash_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: commonFundStashItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: commonFundStashItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.DUFFLEBAG02]: {
-                itemcountDistribution: container_DuffleBag02_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_DuffleBag02_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: duffleBag02Items.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: duffleBag02ItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.MEDBAGSMU0602]: {
-                itemcountDistribution: container_MedbagSmu0602_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_MedbagSmu0602_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: medbagSmu0602Items.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: medbagSmu0602ItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.CASHREGISTERTAR]: {
-                itemcountDistribution: container_CashRegisterTAR_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_CashRegisterTAR_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: cashRegisterTARItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: cashRegisterTARItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.BANKCASHREGISTER]: {
-                itemcountDistribution: container_BankCashRegister_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_BankCashRegister_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: bankCashRegisterItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: bankCashRegisterItemsProbabilities[index] || 1,
-                })),
-            },
-            [SPTLootContainer.BANKSAFE]: {
-                itemcountDistribution: container_BankSafe_ItemsDistribution.map((count, index) => ({
-                    count,
-                    relativeProbability: container_BankSafe_ItemsDistributionProbabilities[index] || 1,
-                })),
-                itemDistribution: bankSafeItems.map((tpl, index) => ({
-                    tpl,
-                    relativeProbability: bankSafeItemsProbabilities[index] || 1,
-                })),
-            },
+            ...(overwriteContainer_Drawer ? {
+                [SPTLootContainer.DRAWER]: {
+                    itemcountDistribution: container_Drawer_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_Drawer_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: drawerItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: drawerItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.DRAWER]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.DRAWER].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.DRAWER].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_CashRegister ? {
+                [SPTLootContainer.CASHREGISTER]: {
+                    itemcountDistribution: container_CashRegister_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_CashRegister_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: cashRegisterItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: cashRegisterItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.CASHREGISTER]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.CASHREGISTER].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.CASHREGISTER].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_PCBlock ? {
+                [SPTLootContainer.PCBLOCK]: {
+                    itemcountDistribution: container_PCBlock_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_PCBlock_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: pcBlockItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: pcBlockItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.PCBLOCK]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.PCBLOCK].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.PCBLOCK].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_Jacket ? {
+                [SPTLootContainer.JACKET]: {
+                    itemcountDistribution: container_Jacket_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_Jacket_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: jacketItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: jacketItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.JACKET]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.JACKET].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.JACKET].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_Toolbox ? {
+                [SPTLootContainer.TOOLBOX]: {
+                    itemcountDistribution: container_Toolbox_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_Toolbox_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: toolboxItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: toolboxItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.TOOLBOX]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.TOOLBOX].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.TOOLBOX].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_Medcase ? {
+                [SPTLootContainer.MEDCASE]: {
+                    itemcountDistribution: container_Medcase_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_Medcase_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: medcaseItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: medcaseItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.MEDCASE]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.MEDCASE].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.MEDCASE].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_Safe ? {
+                [SPTLootContainer.SAFE]: {
+                    itemcountDistribution: container_Safe_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_Safe_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: safeItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: safeItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.SAFE]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.SAFE].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.SAFE].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_WeaponBox5x5 ? {
+                [SPTLootContainer.WEAPONBOX5X5]: {
+                    itemcountDistribution: container_WeaponBox5x5_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_WeaponBox5x5_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: weaponBox5x5Items.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: weaponBox5x5ItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.WEAPONBOX5X5]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.WEAPONBOX5X5].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.WEAPONBOX5X5].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_WeaponBox5x2 ? {
+                [SPTLootContainer.WEAPONBOX5X2]: {
+                    itemcountDistribution: container_WeaponBox5x2_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_WeaponBox5x2_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: weaponBox5x2Items.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: weaponBox5x2ItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.WEAPONBOX5X2]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.WEAPONBOX5X2].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.WEAPONBOX5X2].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_DuffleBag01 ? {
+                [SPTLootContainer.DUFFLEBAG01]: {
+                    itemcountDistribution: container_DuffleBag01_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_DuffleBag01_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: duffleBag01Items.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: duffleBag01ItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.DUFFLEBAG01]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.DUFFLEBAG01].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.DUFFLEBAG01].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_WeaponBox6x3 ? {
+                [SPTLootContainer.WEAPONBOX6X3]: {
+                    itemcountDistribution: container_WeaponBox6x3_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_WeaponBox6x3_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: weaponBox6x3Items.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: weaponBox6x3ItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.WEAPONBOX6X3]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.WEAPONBOX6X3].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.WEAPONBOX6X3].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_WeaponBox4x4 ? {
+                [SPTLootContainer.WEAPONBOX4X4]: {
+                    itemcountDistribution: container_WeaponBox4x4_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_WeaponBox4x4_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: weaponBox4x4Items.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: weaponBox4x4ItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.WEAPONBOX4X4]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.WEAPONBOX4X4].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.WEAPONBOX4X4].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_GrenadeBox ? {
+                [SPTLootContainer.GRENADEBOX]: {
+                    itemcountDistribution: container_GrenadeBox_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_GrenadeBox_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: grenadeBoxItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: grenadeBoxItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.GRENADEBOX]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.GRENADEBOX].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.GRENADEBOX].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_PlasticSuitcase ? {
+                [SPTLootContainer.PLASTICSUITCASE]: {
+                    itemcountDistribution: container_PlasticSuitcase_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_PlasticSuitcase_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: plasticSuitcaseItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: plasticSuitcaseItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.PLASTICSUITCASE]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.PLASTICSUITCASE].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.PLASTICSUITCASE].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_MedbagSmu0601 ? {
+                [SPTLootContainer.MEDBAGSMU0601]: {
+                    itemcountDistribution: container_MedbagSmu0601_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_MedbagSmu0601_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: medbagSmu0601Items.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: medbagSmu0601ItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.MEDBAGSMU0601]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.MEDBAGSMU0601].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.MEDBAGSMU0601].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_WoodenCrate ? {
+                [SPTLootContainer.WOODENCRATE]: {
+                    itemcountDistribution: container_WoodenCrate_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_WoodenCrate_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: woodenCrateItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: woodenCrateItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.WOODENCRATE]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.WOODENCRATE].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.WOODENCRATE].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_MedicalSupplyCrate ? {
+                [SPTLootContainer.MEDICALSUPPLYCRATE]: {
+                    itemcountDistribution: container_MedicalSupplyCrate_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_MedicalSupplyCrate_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: medicalSupplyCrateItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: medicalSupplyCrateItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.MEDICALSUPPLYCRATE]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.MEDICALSUPPLYCRATE].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.MEDICALSUPPLYCRATE].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_TechnicalSupplyCrate ? {
+                [SPTLootContainer.TECHNICALSUPPLYCRATE]: {
+                    itemcountDistribution: container_TechnicalSupplyCrate_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_TechnicalSupplyCrate_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: technicalSupplyCrateItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: technicalSupplyCrateItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.TECHNICALSUPPLYCRATE]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.TECHNICALSUPPLYCRATE].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.TECHNICALSUPPLYCRATE].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_DeadScav ? {
+                [SPTLootContainer.DEADSCAV]: {
+                    itemcountDistribution: container_DeadScav_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_DeadScav_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: deadScavItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: deadScavItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.DEADSCAV]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.DEADSCAV].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.DEADSCAV].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_GroundCache ? {
+                [SPTLootContainer.GROUNDCACHE]: {
+                    itemcountDistribution: container_GroundCache_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_GroundCache_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: groundCacheItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: groundCacheItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.GROUNDCACHE]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.GROUNDCACHE].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.GROUNDCACHE].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_BurriedBarrelCache ? {
+                [SPTLootContainer.BURRIEDBARRELCACHE]: {
+                    itemcountDistribution: container_BurriedBarrelCache_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_BurriedBarrelCache_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: burriedBarrelCacheItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: burriedBarrelCacheItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.BURRIEDBARRELCACHE]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.BURRIEDBARRELCACHE].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.BURRIEDBARRELCACHE].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_WoodenAmmoBox ? {
+                [SPTLootContainer.WOODENAMMOBOX]: {
+                    itemcountDistribution: container_WoodenAmmoBox_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_WoodenAmmoBox_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: woodenAmmoBoxItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: woodenAmmoBoxItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.WOODENAMMOBOX]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.WOODENAMMOBOX].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.WOODENAMMOBOX].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_JacketDorms114 ? {
+                [SPTLootContainer.JACKETDORMS114]: {
+                    itemcountDistribution: container_JacketDorms114_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_JacketDorms114_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: jacketDorms114Items.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: jacketDorms114ItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.JACKETDORMS114]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.JACKETDORMS114].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.JACKETDORMS114].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_JacketMachineryKey ? {
+                [SPTLootContainer.JACKETMACHINERYKEY]: {
+                    itemcountDistribution: container_JacketMachineryKey_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_JacketMachineryKey_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: jacketMachineryKeyItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: jacketMachineryKeyItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.JACKETMACHINERYKEY]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.JACKETMACHINERYKEY].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.JACKETMACHINERYKEY].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_RationSupplyCrate ? {
+                [SPTLootContainer.RATIONSUPPLYCRATE]: {
+                    itemcountDistribution: container_RationSupplyCrate_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_RationSupplyCrate_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: rationSupplyCrateItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: rationSupplyCrateItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.RATIONSUPPLYCRATE]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.RATIONSUPPLYCRATE].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.RATIONSUPPLYCRATE].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_JacketDorms204 ? {
+                [SPTLootContainer.JACKETDORMS204]: {
+                    itemcountDistribution: container_JacketDorms204_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_JacketDorms204_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: jacketDorms204Items.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: jacketDorms204ItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.JACKETDORMS204]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.JACKETDORMS204].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.JACKETDORMS204].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_ShturmansStash ? {
+                [SPTLootContainer.COMMONFUNDSTASH]: {
+                    itemcountDistribution: container_ShturmansStash_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_ShturmansStash_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: commonFundStashItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: commonFundStashItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.COMMONFUNDSTASH]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.COMMONFUNDSTASH].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.COMMONFUNDSTASH].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_DuffleBag02 ? {
+                [SPTLootContainer.DUFFLEBAG02]: {
+                    itemcountDistribution: container_DuffleBag02_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_DuffleBag02_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: duffleBag02Items.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: duffleBag02ItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.DUFFLEBAG02]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.DUFFLEBAG02].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.DUFFLEBAG02].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_MedbagSmu0602 ? {
+                [SPTLootContainer.MEDBAGSMU0602]: {
+                    itemcountDistribution: container_MedbagSmu0602_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_MedbagSmu0602_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: medbagSmu0602Items.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: medbagSmu0602ItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.MEDBAGSMU0602]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.MEDBAGSMU0602].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.MEDBAGSMU0602].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_CashRegisterTAR ? {
+                [SPTLootContainer.CASHREGISTERTAR]: {
+                    itemcountDistribution: container_CashRegisterTAR_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_CashRegisterTAR_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: cashRegisterTARItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: cashRegisterTARItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.CASHREGISTERTAR]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.CASHREGISTERTAR].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.CASHREGISTERTAR].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_BankCashRegister ? {
+                [SPTLootContainer.BANKCASHREGISTER]: {
+                    itemcountDistribution: container_BankCashRegister_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_BankCashRegister_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: bankCashRegisterItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: bankCashRegisterItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.BANKCASHREGISTER]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.BANKCASHREGISTER].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.BANKCASHREGISTER].itemDistribution,
+                }
+            }),
+            ...(overwriteContainer_BankSafe ? {
+                [SPTLootContainer.BANKSAFE]: {
+                    itemcountDistribution: container_BankSafe_ItemsDistribution.map((count, index) => ({
+                        count,
+                        relativeProbability: container_BankSafe_ItemsDistributionProbabilities[index] || 1,
+                    })),
+                    itemDistribution: bankSafeItems.map((tpl, index) => ({
+                        tpl,
+                        relativeProbability: bankSafeItemsProbabilities[index] || 1,
+                    })),
+                }
+            } : {
+                [SPTLootContainer.BANKSAFE]: {
+                    itemcountDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.BANKSAFE].itemcountDistribution,
+                    itemDistribution: this.database.getTables().loot.staticLoot[SPTLootContainer.BANKSAFE].itemDistribution,
+                }
+            }),
         };
         if (this.config.debugMode) {
             let allHandbookItemsSpawnAdjusted = [];

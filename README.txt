@@ -32,7 +32,8 @@ The conditions (item value above/below) and the resulting spawn rate are current
 50000 - 100000  -> 20000
 100000 - 300000 -> 15000
 300000 - 600000 -> 7500
-600000 -        -> 3750
+600000 - 2000000-> 3750
+2000000 -       -> 2000
 
 
 Each item category, e.g. Barters/Electronics can be tuned via the config file (see below).
@@ -136,3 +137,17 @@ Feel free to remove them from the config to make them spawn again.
 I hope with that mod you will have even more fun within this awesome project SPT.
 
 Any feedback highly appreciated.
+
+
+
+
+Changelog v1.0.1:
+- added the functionality to overwrite only certain container types (via config.json)
+- added backpacks to lootpool (since most of the good backpacks won't fit in containers anyways, items haven't been considered in 1.0.0
+- added very high value electronics items to Weapon Box 5x5
+- removed some blacklisted items from certain loot categories
+- updated details on used item categories for Shturman's stash, Weapon Box 5x5 and Weapon Box 6x3 (config_clearText.txt)
+- added another condition for extremely high value items (2000000+ -> initial spawn rate: 2000)
+- final spawn rate is now slightly randomized to decrease chance of multiple items of same type in one container
+- explicit spawn rate adjustment of certain special equipment items (MS2000 Marker, Signal Jammer, Vortex Ranger 1500 rangefinder, WI-FI Camera)
+- further tweaking of category and container spawn rates
