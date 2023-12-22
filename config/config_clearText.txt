@@ -86,6 +86,7 @@ Military cable
 Military circuit board
 Military COFDM Wireless Signal Transmitter
 Military corrugated tube
+Military gyrotachometer
 Military power filter
 Motor Controller #1
 OFZ 30x160mm shell
