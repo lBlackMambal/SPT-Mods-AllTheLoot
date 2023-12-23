@@ -32,6 +32,7 @@ Pack of Arseniy buckwheat
 PC CPU
 Phased array element
 Power supply unit
+Press pass (issued for NoiceGuy)
 Pressure gauge
 Printed circuit board
 Radiator helix
@@ -95,6 +96,7 @@ PC CPU
 Phased array element
 Power cord
 Power supply unit
+Press pass (issued for NoiceGuy)
 Pressure gauge
 Printed circuit board
 Propane tank (5L)
@@ -140,6 +142,7 @@ DEADSKUL armband
 Ded Moroz hat
 Death Knight mask
 Fake white beard
+GK-01 12ga compensator
 GP-34 40mm underbarrel grenade launcher
 Jack-o'-lantern tactical pumpkin helmet
 KAC QDC 6.5x35 sound suppressor
@@ -151,10 +154,12 @@ M67 Shrapnel
 Maska-1SCh bulletproof helmet (Killa)
 Master hand
 MON-50 Shrapnel
+Mystery Ranch NICE COMM 3 BVS frame system
 PAG-17 scope
 Red Rebel ice pick
 RGD-5 Shrapnel
 S&S Precision PlateFrame plate carrier (Goons Edition)
+Sanitar's bag
 Santa hat
 Shrapnel
 SilencerCo Sparrow 22 sound suppressor
@@ -190,6 +195,7 @@ Death Knight mask
 Digital secure DSP radio transmitter
 Dogtag BEAR
 Dogtag USEC
+EYE MK.2 professional hand-held compass
 Fake white beard
 Grenade case
 Interchange plan map
@@ -275,6 +281,7 @@ Ortodontox toothpaste
 Pack of Arseniy buckwheat
 PC CPU
 Power supply unit
+Press pass (issued for NoiceGuy)
 Printed circuit board
 Printer paper
 Pumpkin with sweets
@@ -352,6 +359,9 @@ Euros
 -- Shturman's Stash Content -- || Valuables, Body Armor, Gear Components, Headgear, all Weapon Categories except: Auxiliary parts, Compact collimators, Muzzle adapters, Iron sights, Charging handles, Mounts, Gas blocks, All weapons except: Throwables
 6B13 M modified assault armor (Tan)
 Alpha Armband
+Balaclava_dev
+Bars A-2607 Damascus knife
+Bars A-2607 95Kh18 knife
 Big Pipe's bandana
 Big Pipe's smoking pipe
 BOSS cap
@@ -360,6 +370,7 @@ Crye Precision CPC plate carrier (Goons Edition)
 Cultist knife
 DEADSKUL armband
 Death Knight mask
+GK-01 12ga compensator
 GP-34 40mm underbarrel grenade launcher
 Jack-o'-lantern tactical pumpkin helmet
 KAC QDC 6.5x35 sound suppressor
@@ -368,9 +379,12 @@ Kalashnikov PKP 7.62x54R infantry machine gun
 Kiba Arms armband
 LBT-1961A Load Bearing Chest Rig (Goons Edition)
 Maska-1SCh bulletproof helmet (Killa)
+Master hand
+Mystery Ranch NICE COMM 3 BVS frame system
 Pumpkin with sweets
 RFARMY armband
 S&S Precision PlateFrame plate carrier (Goons Edition)
+Sanitar's bag
 SilencerCo Sparrow 22 sound suppressor
 Tagilla's welding mask "Gorilla"
 Tagilla's welding mask "UBEY"
@@ -384,6 +398,9 @@ Zryachiy's balaclava (folded)
 -- Weapon Box 5x5 -- || Valuables, Body Armor, Gear Components, Headgear, all Weapon Categories except: Auxiliary parts, Compact collimators, Muzzle adapters, Iron sights, Charging handles, Mounts, Stocks Chassis, Gas blocks, All weapons except: Throwables
 6B13 M modified assault armor (Tan)
 Alpha Armband
+Balaclava_dev
+Bars A-2607 Damascus knife
+Bars A-2607 95Kh18 knife
 Big Pipe's bandana
 Big Pipe's smoking pipe
 BOSS cap
@@ -392,6 +409,7 @@ Crye Precision CPC plate carrier (Goons Edition)
 Cultist knife
 DEADSKUL armband
 Death Knight mask
+GK-01 12ga compensator
 GP-34 40mm underbarrel grenade launcher
 Jack-o'-lantern tactical pumpkin helmet
 KAC QDC 6.5x35 sound suppressor
@@ -400,9 +418,12 @@ Kalashnikov PKP 7.62x54R infantry machine gun
 Kiba Arms armband
 LBT-1961A Load Bearing Chest Rig (Goons Edition)
 Maska-1SCh bulletproof helmet (Killa)
+Master hand
+Mystery Ranch NICE COMM 3 BVS frame system
 Pumpkin with sweets
 RFARMY armband
 S&S Precision PlateFrame plate carrier (Goons Edition)
+Sanitar's bag
 SilencerCo Sparrow 22 sound suppressor
 Tagilla's welding mask "Gorilla"
 Tagilla's welding mask "UBEY"
@@ -416,6 +437,9 @@ Zryachiy's balaclava (folded)
 -- Weapon Box 6x3 -- || Valuables, Body Armor, Gear Components, Headgear, all Weapon Categories except: Auxiliary parts, Compact collimators, Muzzle adapters, Iron sights, Charging handles, Mounts, Stocks Chassis, Gas blocks, All weapons except: Throwables
 6B13 M modified assault armor (Tan)
 Alpha Armband
+Balaclava_dev
+Bars A-2607 Damascus knife
+Bars A-2607 95Kh18 knife
 Big Pipe's bandana
 Big Pipe's smoking pipe
 BOSS cap
@@ -424,6 +448,7 @@ Crye Precision CPC plate carrier (Goons Edition)
 Cultist knife
 DEADSKUL armband
 Death Knight mask
+GK-01 12ga compensator
 GP-34 40mm underbarrel grenade launcher
 Jack-o'-lantern tactical pumpkin helmet
 KAC QDC 6.5x35 sound suppressor
@@ -432,9 +457,12 @@ Kalashnikov PKP 7.62x54R infantry machine gun
 Kiba Arms armband
 LBT-1961A Load Bearing Chest Rig (Goons Edition)
 Maska-1SCh bulletproof helmet (Killa)
+Master hand
+Mystery Ranch NICE COMM 3 BVS frame system
 Pumpkin with sweets
 RFARMY armband
 S&S Precision PlateFrame plate carrier (Goons Edition)
+Sanitar's bag
 SilencerCo Sparrow 22 sound suppressor
 Tagilla's welding mask "Gorilla"
 Tagilla's welding mask "UBEY"
@@ -751,6 +779,24 @@ Bank safe
 =====
 =====
 =====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
+=====
 ==================================================
 Red Rebel ice pick
 Stark SE-5 Express Forward foregrip
@@ -759,6 +805,19 @@ MS2000 Marker
 Signal Jammer
 Vortex Ranger 1500 rangefinder
 WI-FI Camera
+Can of white salt
+40mm VOG-25 grenade
+40x46mm M381 (HE) grenade
+40x46mm M386 (HE) grenade
+40x46mm M406 (HE) grenade
+40x46mm M433 (HEDP) grenade
+40x46mm M441 (HE) grenade
+40x46mm M576 (MP-APERS) grenade
+UZRGM grenade fuze
+GreenBat lithium battery
+Rechargeable battery
+Portable Powerbank
+D Size battery
 ==================================================
 ==================================================
 Red Rebel ice pick
@@ -768,5 +827,18 @@ MS2000 Marker
 Signal Jammer
 Vortex Ranger 1500 rangefinder
 WI-FI Camera
+Can of white salt
+40mm VOG-25 grenade
+40x46mm M381 (HE) grenade
+40x46mm M386 (HE) grenade
+40x46mm M406 (HE) grenade
+40x46mm M433 (HEDP) grenade
+40x46mm M441 (HE) grenade
+40x46mm M576 (MP-APERS) grenade
+UZRGM grenade fuze
+GreenBat lithium battery
+Rechargeable battery
+Portable Powerbank
+D Size battery
 ==================================================
 ==================================================

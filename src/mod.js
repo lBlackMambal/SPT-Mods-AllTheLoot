@@ -114,6 +114,8 @@ var LootGlobalType;
     LootGlobalType["SAFE"] = "SAFE";
     LootGlobalType["AMMO"] = "AMMO";
     LootGlobalType["GRENADES"] = "GRENADES";
+    LootGlobalType["MONEY"] = "MONEY";
+    LootGlobalType["MACHINERYKEY"] = "MACHINERYKEY";
     LootGlobalType["REGISTERROUBLES"] = "REGISTERROUBLES";
     LootGlobalType["SHTURMANSSTASH"] = "SHTURMANSSTASH";
 })(LootGlobalType || (LootGlobalType = {}));
@@ -193,8 +195,9 @@ class AllTheLoot {
         const handbook_Items_ref = deepCopy(handbook_Items);
         const lootRecordsCalculated = this.createLootRecords(handbook_Items_toModify, handbook_Items_ref, tables);
         this.database.getTables().loot.staticLoot = lootRecordsCalculated;
+        const itemsAmount = handbook_Items.length;
         this.logger.warning("AllTheLoot successfully applied");
-        this.logger.warning("Now you are able to loot most of the 2893 items from containers");
+        this.logger.warning("Now you are able to loot most of the " + itemsAmount + " handbook items from containers");
     }
     adjustSpawnRate(data, data_ref, lootType) {
         let spawnTweaker = 1.0;
@@ -369,13 +372,44 @@ class AllTheLoot {
         if (!(data.Price + randomValue < 0))
             data.Price += Math.floor(randomValue * scaleFactor);
     }
+    adjustItemSpawnRateForEachContainerType(lootData) {
+        const allCategoriesInContainer = [];
+        for (let i = 0; i < lootData.length; i++) {
+            allCategoriesInContainer.push(lootData[i]);
+        }
+        let totalItemAmountInContainer = 0;
+        for (let i = 0; i < lootData.length; i++) {
+            totalItemAmountInContainer += allCategoriesInContainer[i].length;
+        }
+        const allRatiosPerCategory = [];
+        let sumAllSingleDistributions = 0;
+        for (let i = 0; i < lootData.length; i++) {
+            const ratioPerCategory = totalItemAmountInContainer / allCategoriesInContainer[i].length;
+            allRatiosPerCategory.push(ratioPerCategory);
+            sumAllSingleDistributions += ratioPerCategory;
+        }
+        // normalized scale factors
+        const finalScaleFactorsPerCategory = [];
+        for (let i = 0; i < allCategoriesInContainer.length; i++) {
+            const normalizedScaleFactorPerCategory = allRatiosPerCategory[i] / sumAllSingleDistributions;
+            finalScaleFactorsPerCategory.push(normalizedScaleFactorPerCategory);
+        }
+        for (let i = 0; i < lootData.length; i++) {
+            for (let j = 0; j < lootData[i].length; j++) {
+                lootData[i][j].Price *= finalScaleFactorsPerCategory[i];
+                lootData[i][j].Price = Math.floor(lootData[i][j].Price);
+            }
+        }
+    }
     removeBlacklistedItems(data, lootType) {
         const cleanedLoot = [];
-        data.forEach(item => {
-            if (!this.isBlacklistedItem(item.Id, lootType)) {
-                cleanedLoot.push(item);
+        for (let i = 0; i < data.length; i++) {
+            for (let j = 0; j < data[i].length; j++) {
+                if (!this.isBlacklistedItem(data[i][j].Id, lootType)) {
+                    cleanedLoot.push(data[i][j]);
+                }
             }
-        });
+        }
         return cleanedLoot;
     }
     isBlacklistedItem(data, LootGlobalType) {
@@ -935,37 +969,144 @@ class AllTheLoot {
         }
         // items for Shturman's Stash (that normally should contain high tier items)
         // create another array that only contains items above a certain value
-        let allHandbookItemsForShturmansStash = [];
-        allHandbookItemsForShturmansStash = allHandbookItemsForShturmansStash.concat(category_Barter_Valuables, category_Gear_BodyArmor, category_Gear_GearComponents, category_Gear_Headgear, category_Gear_Headsets, category_WeaponPartsMods_FM_Bipods, category_WeaponPartsMods_FM_Foregrips, category_WeaponPartsMods_FM_LLD_Flashlights, category_WeaponPartsMods_FM_LLD_LaserTargetPointers, category_WeaponPartsMods_FM_LLD_TacticalComboDevices, category_WeaponPartsMods_FM_MD_FlashhidersBrakes, category_WeaponPartsMods_FM_MD_Suppressors, category_WeaponPartsMods_FM_S_AssaultScopes, category_WeaponPartsMods_FM_S_Collimators, category_WeaponPartsMods_FM_S_CompactCollimators, category_WeaponPartsMods_FM_S_Optics, category_WeaponPartsMods_FM_S_SpecialPurposeSights, category_WeaponPartsMods_GM_Launchers, category_WeaponPartsMods_GM_Magazines, category_WeaponPartsMods_GM_StocksChassis, category_WeaponPartsMods_VP_Barrels, category_WeaponPartsMods_VP_Handguards, category_WeaponPartsMods_VP_PistolGrips, category_WeaponPartsMods_VP_ReceiversSlides, category_Weapons_AssaultCarbines, category_Weapons_AssaultRifles, category_Weapons_BoltActionRifles, category_Weapons_GrenadeLaunchers, category_Weapons_MachineGuns, category_Weapons_MarksmanRifles, category_Weapons_MeleeWeapons, category_Weapons_Pistols, category_Weapons_SMGs, category_Weapons_Shotguns, category_Weapons_SpecialWeapons, category_Weapons_Throwables, category_InfoItems);
-        const category_ShturmansStash = [];
-        const minValueShturman = this.config.container_ShturmansStash_MinValuePerItem;
-        const maxValueShturman = this.config.container_ShturmansStash_MaxValuePerItem;
-        allHandbookItemsForShturmansStash.forEach(item => {
-            if (item.Price > minValueShturman && item.Price < maxValueShturman)
-                category_ShturmansStash.push(item);
-        });
+        const category_ShturmansStash_Final = [];
+        const minValueWeaponShturmansStash = this.config.container_ShturmansStash_MinValuePerItem;
+        const maxValueWeaponShturmansStash = this.config.container_ShturmansStash_MaxValuePerItem;
+        const preSelectionForShturmansStash = [];
+        preSelectionForShturmansStash.push(category_Barter_Valuables);
+        preSelectionForShturmansStash.push(category_Gear_Backpacks);
+        preSelectionForShturmansStash.push(category_Gear_BodyArmor);
+        preSelectionForShturmansStash.push(category_Gear_Headgear);
+        preSelectionForShturmansStash.push(category_Gear_Headsets);
+        preSelectionForShturmansStash.push(category_Gear_TacticalRigs);
+        preSelectionForShturmansStash.push(category_WeaponPartsMods_FM_Bipods);
+        preSelectionForShturmansStash.push(category_WeaponPartsMods_FM_Foregrips);
+        preSelectionForShturmansStash.push(category_WeaponPartsMods_FM_LLD_Flashlights);
+        preSelectionForShturmansStash.push(category_WeaponPartsMods_FM_LLD_LaserTargetPointers);
+        preSelectionForShturmansStash.push(category_WeaponPartsMods_FM_LLD_TacticalComboDevices);
+        preSelectionForShturmansStash.push(category_WeaponPartsMods_FM_MD_FlashhidersBrakes);
+        preSelectionForShturmansStash.push(category_WeaponPartsMods_FM_MD_Suppressors);
+        preSelectionForShturmansStash.push(category_WeaponPartsMods_FM_S_AssaultScopes);
+        preSelectionForShturmansStash.push(category_WeaponPartsMods_FM_S_Collimators);
+        preSelectionForShturmansStash.push(category_WeaponPartsMods_FM_S_CompactCollimators);
+        preSelectionForShturmansStash.push(category_WeaponPartsMods_FM_S_Optics);
+        preSelectionForShturmansStash.push(category_WeaponPartsMods_FM_S_SpecialPurposeSights);
+        preSelectionForShturmansStash.push(category_WeaponPartsMods_GM_Launchers);
+        preSelectionForShturmansStash.push(category_WeaponPartsMods_GM_Magazines);
+        preSelectionForShturmansStash.push(category_WeaponPartsMods_VP_Barrels);
+        preSelectionForShturmansStash.push(category_WeaponPartsMods_VP_Handguards);
+        preSelectionForShturmansStash.push(category_WeaponPartsMods_VP_PistolGrips);
+        preSelectionForShturmansStash.push(category_WeaponPartsMods_VP_ReceiversSlides);
+        preSelectionForShturmansStash.push(category_Weapons_AssaultCarbines);
+        preSelectionForShturmansStash.push(category_Weapons_AssaultRifles);
+        preSelectionForShturmansStash.push(category_Weapons_BoltActionRifles);
+        preSelectionForShturmansStash.push(category_Weapons_GrenadeLaunchers);
+        preSelectionForShturmansStash.push(category_Weapons_MachineGuns);
+        preSelectionForShturmansStash.push(category_Weapons_MarksmanRifles);
+        preSelectionForShturmansStash.push(category_Weapons_MeleeWeapons);
+        preSelectionForShturmansStash.push(category_Weapons_Pistols);
+        preSelectionForShturmansStash.push(category_Weapons_SMGs);
+        preSelectionForShturmansStash.push(category_Weapons_Shotguns);
+        preSelectionForShturmansStash.push(category_Weapons_SpecialWeapons);
+        preSelectionForShturmansStash.push(category_InfoItems);
+        for (let i = 0; i < preSelectionForShturmansStash.length; i++) {
+            for (let j = 0; j < preSelectionForShturmansStash[i].length; j++) {
+                if (preSelectionForShturmansStash[i][j].Price > minValueWeaponShturmansStash && preSelectionForShturmansStash[i][j].Price < maxValueWeaponShturmansStash)
+                    category_ShturmansStash_Final.push(preSelectionForShturmansStash[i][j]);
+            }
+        }
         // items for Weapon Box 5x5 (less categories allow more weapon/gear spawns)
         // create another array that only contains items above a certain value -> allows spawn of Red Rebel
-        let allHandbookItemsForWeaponBox5x5 = [];
-        allHandbookItemsForWeaponBox5x5 = allHandbookItemsForWeaponBox5x5.concat(category_Gear_Backpacks, category_Gear_BodyArmor, category_Gear_Headgear, category_Gear_Headsets, category_Gear_TacticalRigs, category_Gear_Headsets, category_WeaponPartsMods_FM_Bipods, category_WeaponPartsMods_FM_Foregrips, category_WeaponPartsMods_FM_LLD_Flashlights, category_WeaponPartsMods_FM_LLD_LaserTargetPointers, category_WeaponPartsMods_FM_LLD_TacticalComboDevices, category_WeaponPartsMods_FM_MD_FlashhidersBrakes, category_WeaponPartsMods_FM_MD_Suppressors, category_WeaponPartsMods_FM_S_AssaultScopes, category_WeaponPartsMods_FM_S_Collimators, category_WeaponPartsMods_FM_S_CompactCollimators, category_WeaponPartsMods_FM_S_Optics, category_WeaponPartsMods_FM_S_SpecialPurposeSights, category_WeaponPartsMods_GM_Launchers, category_WeaponPartsMods_GM_Magazines, category_WeaponPartsMods_VP_Barrels, category_WeaponPartsMods_VP_Handguards, category_WeaponPartsMods_VP_PistolGrips, category_WeaponPartsMods_VP_ReceiversSlides, category_Weapons_AssaultCarbines, category_Weapons_AssaultRifles, category_Weapons_BoltActionRifles, category_Weapons_GrenadeLaunchers, category_Weapons_MachineGuns, category_Weapons_MarksmanRifles, category_Weapons_MeleeWeapons, category_Weapons_Pistols, category_Weapons_SMGs, category_Weapons_Shotguns, category_Weapons_SpecialWeapons, category_WeaponBox5x5AddOn);
-        const category_WeaponBox5x5 = [];
+        const category_WeaponBox5x5_Final = [];
         const minValueWeaponBox5x5 = this.config.container_WeaponBox5x5_MinValuePerItem;
         const maxValueWeaponBox5x5 = this.config.container_WeaponBox5x5_MaxValuePerItem;
-        allHandbookItemsForWeaponBox5x5.forEach(item => {
-            if (item.Price > minValueWeaponBox5x5 && item.Price < maxValueWeaponBox5x5)
-                category_WeaponBox5x5.push(item);
-        });
+        const preSelectionForWeaponBox5x5 = [];
+        preSelectionForWeaponBox5x5.push(category_Gear_Backpacks);
+        preSelectionForWeaponBox5x5.push(category_Gear_BodyArmor);
+        preSelectionForWeaponBox5x5.push(category_Gear_Headgear);
+        preSelectionForWeaponBox5x5.push(category_Gear_Headsets);
+        preSelectionForWeaponBox5x5.push(category_Gear_TacticalRigs);
+        preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_FM_Bipods);
+        preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_FM_Foregrips);
+        preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_FM_LLD_Flashlights);
+        preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_FM_LLD_LaserTargetPointers);
+        preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_FM_LLD_TacticalComboDevices);
+        preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_FM_MD_FlashhidersBrakes);
+        preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_FM_MD_Suppressors);
+        preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_FM_S_AssaultScopes);
+        preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_FM_S_Collimators);
+        preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_FM_S_CompactCollimators);
+        preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_FM_S_Optics);
+        preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_FM_S_SpecialPurposeSights);
+        preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_GM_Launchers);
+        preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_GM_Magazines);
+        preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_VP_Barrels);
+        preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_VP_Handguards);
+        preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_VP_PistolGrips);
+        preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_VP_ReceiversSlides);
+        preSelectionForWeaponBox5x5.push(category_Weapons_AssaultCarbines);
+        preSelectionForWeaponBox5x5.push(category_Weapons_AssaultRifles);
+        preSelectionForWeaponBox5x5.push(category_Weapons_BoltActionRifles);
+        preSelectionForWeaponBox5x5.push(category_Weapons_GrenadeLaunchers);
+        preSelectionForWeaponBox5x5.push(category_Weapons_MachineGuns);
+        preSelectionForWeaponBox5x5.push(category_Weapons_MarksmanRifles);
+        preSelectionForWeaponBox5x5.push(category_Weapons_MeleeWeapons);
+        preSelectionForWeaponBox5x5.push(category_Weapons_Pistols);
+        preSelectionForWeaponBox5x5.push(category_Weapons_SMGs);
+        preSelectionForWeaponBox5x5.push(category_Weapons_Shotguns);
+        preSelectionForWeaponBox5x5.push(category_Weapons_SpecialWeapons);
+        for (let i = 0; i < preSelectionForWeaponBox5x5.length; i++) {
+            for (let j = 0; j < preSelectionForWeaponBox5x5[i].length; j++) {
+                if (preSelectionForWeaponBox5x5[i][j].Price > minValueWeaponBox5x5 && preSelectionForWeaponBox5x5[i][j].Price < maxValueWeaponBox5x5)
+                    category_WeaponBox5x5_Final.push(preSelectionForWeaponBox5x5[i][j]);
+            }
+        }
         // items for Weapon Box 6x3 (less categories allow more weapon/gear spawns)
         // create another array that only contains items above a certain value
-        let allHandbookItemsForWeaponBox6x3 = [];
-        allHandbookItemsForWeaponBox6x3 = allHandbookItemsForWeaponBox6x3.concat(category_Gear_Backpacks, category_Gear_BodyArmor, category_Gear_Headgear, category_Gear_Headsets, category_Gear_TacticalRigs, category_WeaponPartsMods_FM_Bipods, category_WeaponPartsMods_FM_Foregrips, category_WeaponPartsMods_FM_LLD_Flashlights, category_WeaponPartsMods_FM_LLD_LaserTargetPointers, category_WeaponPartsMods_FM_LLD_TacticalComboDevices, category_WeaponPartsMods_FM_MD_FlashhidersBrakes, category_WeaponPartsMods_FM_MD_Suppressors, category_WeaponPartsMods_FM_S_AssaultScopes, category_WeaponPartsMods_FM_S_Collimators, category_WeaponPartsMods_FM_S_CompactCollimators, category_WeaponPartsMods_FM_S_Optics, category_WeaponPartsMods_FM_S_SpecialPurposeSights, category_WeaponPartsMods_GM_Launchers, category_WeaponPartsMods_GM_Magazines, category_WeaponPartsMods_VP_Barrels, category_WeaponPartsMods_VP_Handguards, category_WeaponPartsMods_VP_PistolGrips, category_WeaponPartsMods_VP_ReceiversSlides, category_Weapons_AssaultCarbines, category_Weapons_AssaultRifles, category_Weapons_BoltActionRifles, category_Weapons_GrenadeLaunchers, category_Weapons_MachineGuns, category_Weapons_MarksmanRifles, category_Weapons_MeleeWeapons, category_Weapons_Pistols, category_Weapons_SMGs, category_Weapons_Shotguns, category_Weapons_SpecialWeapons);
-        const category_WeaponBox6x3 = [];
+        const category_WeaponBox6x3_Final = [];
         const minValueWeaponBox6x3 = this.config.container_WeaponBox6x3_MinValuePerItem;
         const maxValueWeaponBox6x3 = this.config.container_WeaponBox6x3_MaxValuePerItem;
-        allHandbookItemsForWeaponBox6x3.forEach(item => {
-            if (item.Price > minValueWeaponBox6x3 && item.Price < maxValueWeaponBox6x3)
-                category_WeaponBox6x3.push(item);
-        });
+        const preSelectionForWeaponBox6x3 = [];
+        preSelectionForWeaponBox6x3.push(category_Gear_Backpacks);
+        preSelectionForWeaponBox6x3.push(category_Gear_BodyArmor);
+        preSelectionForWeaponBox6x3.push(category_Gear_Headgear);
+        preSelectionForWeaponBox6x3.push(category_Gear_Headsets);
+        preSelectionForWeaponBox6x3.push(category_Gear_TacticalRigs);
+        preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_FM_Bipods);
+        preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_FM_Foregrips);
+        preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_FM_LLD_Flashlights);
+        preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_FM_LLD_LaserTargetPointers);
+        preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_FM_LLD_TacticalComboDevices);
+        preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_FM_MD_FlashhidersBrakes);
+        preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_FM_MD_Suppressors);
+        preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_FM_S_AssaultScopes);
+        preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_FM_S_Collimators);
+        preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_FM_S_CompactCollimators);
+        preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_FM_S_Optics);
+        preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_FM_S_SpecialPurposeSights);
+        preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_GM_Launchers);
+        preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_GM_Magazines);
+        preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_VP_Barrels);
+        preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_VP_Handguards);
+        preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_VP_PistolGrips);
+        preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_VP_ReceiversSlides);
+        preSelectionForWeaponBox6x3.push(category_Weapons_AssaultCarbines);
+        preSelectionForWeaponBox6x3.push(category_Weapons_AssaultRifles);
+        preSelectionForWeaponBox6x3.push(category_Weapons_BoltActionRifles);
+        preSelectionForWeaponBox6x3.push(category_Weapons_GrenadeLaunchers);
+        preSelectionForWeaponBox6x3.push(category_Weapons_MachineGuns);
+        preSelectionForWeaponBox6x3.push(category_Weapons_MarksmanRifles);
+        preSelectionForWeaponBox6x3.push(category_Weapons_MeleeWeapons);
+        preSelectionForWeaponBox6x3.push(category_Weapons_Pistols);
+        preSelectionForWeaponBox6x3.push(category_Weapons_SMGs);
+        preSelectionForWeaponBox6x3.push(category_Weapons_Shotguns);
+        preSelectionForWeaponBox6x3.push(category_Weapons_SpecialWeapons);
+        for (let i = 0; i < preSelectionForWeaponBox6x3.length; i++) {
+            for (let j = 0; j < preSelectionForWeaponBox6x3[i].length; j++) {
+                if (preSelectionForWeaponBox6x3[i][j].Price > minValueWeaponBox6x3 && preSelectionForWeaponBox6x3[i][j].Price < maxValueWeaponBox6x3)
+                    category_WeaponBox6x3_Final.push(preSelectionForWeaponBox6x3[i][j]);
+            }
+        }
         // DEBUG
         // Put all handbook items in one array for DEBUG purposes
         if (this.config.showItemListing) {
@@ -989,12 +1130,11 @@ class AllTheLoot {
                 const propertyName = `${item.Id} Name`;
                 const value = jsonData[propertyName];
                 this.logger.warning(value);
-            });
-
-            // Item prices only
-            allHandbookItems.forEach(item => {
-                this.logger.warning(item.Price);
             }); */
+            // Item prices only
+            // allHandbookItems.forEach(item => {
+            //     this.logger.warning(item.Price);
+            // }); 
         }
         // adjust the spawn rate here (so it's easier to assign rates to certain categories)
         // ===== BARTER ITEMS =====
@@ -1151,78 +1291,233 @@ class AllTheLoot {
             this.adjustSpawnRate(category_Money[i], category_Money_ref[i], LootType.MONEY);
         // Create container type pre-assignment
         // ===== Loot - Drawers =====
-        let loot_Drawers = [];
-        loot_Drawers = loot_Drawers.concat(category_Barter_Others, category_Barter_BuildingMaterials, category_Barter_Electronics, category_Barter_EnergyElements, category_Keys_ElectronicKeys, category_Keys_MechanicalKeys, category_InfoItems, category_SpecialEquipment, category_Maps);
-        loot_Drawers = this.removeBlacklistedItems(loot_Drawers, LootGlobalType.DRAWER);
+        const loot_DrawersArray = [];
+        loot_DrawersArray.push(category_Barter_Others);
+        loot_DrawersArray.push(category_Barter_BuildingMaterials);
+        loot_DrawersArray.push(category_Barter_Electronics);
+        loot_DrawersArray.push(category_Barter_EnergyElements);
+        loot_DrawersArray.push(category_Keys_ElectronicKeys);
+        loot_DrawersArray.push(category_Keys_MechanicalKeys);
+        loot_DrawersArray.push(category_InfoItems);
+        loot_DrawersArray.push(category_SpecialEquipment);
+        loot_DrawersArray.push(category_Maps);
+        let loot_Drawers_Final = deepCopy(loot_DrawersArray);
+        this.adjustItemSpawnRateForEachContainerType(loot_Drawers_Final);
+        loot_Drawers_Final = this.removeBlacklistedItems(loot_Drawers_Final, LootGlobalType.DRAWER);
         // ===== Loot - Jackets =====
-        let loot_Jackets = [];
-        loot_Jackets = loot_Jackets.concat(category_Barter_Others, category_Barter_BuildingMaterials, category_Barter_Electronics, category_Barter_EnergyElements, category_Barter_FlammableMaterials, category_Barter_Tools, category_Keys_MechanicalKeys, category_SpecialEquipment);
-        loot_Jackets = this.removeBlacklistedItems(loot_Jackets, LootGlobalType.JACKET);
+        const loot_JacketsArray = [];
+        loot_JacketsArray.push(category_Barter_Others);
+        loot_JacketsArray.push(category_Barter_BuildingMaterials);
+        loot_JacketsArray.push(category_Barter_Electronics);
+        loot_JacketsArray.push(category_Barter_EnergyElements);
+        loot_JacketsArray.push(category_Barter_FlammableMaterials);
+        loot_JacketsArray.push(category_Barter_Tools);
+        loot_JacketsArray.push(category_Keys_MechanicalKeys);
+        loot_JacketsArray.push(category_SpecialEquipment);
+        let loot_Jackets_Final = deepCopy(loot_JacketsArray);
+        this.adjustItemSpawnRateForEachContainerType(loot_Jackets_Final);
+        loot_Jackets_Final = this.removeBlacklistedItems(loot_Jackets_Final, LootGlobalType.JACKET);
         // ===== Loot - Weapon cases =====
-        let loot_WeaponBoxGlobal = [];
-        loot_WeaponBoxGlobal = loot_WeaponBoxGlobal.concat(category_Gear_BodyArmor, category_Gear_Eyewear, category_Gear_Facecovers, category_Gear_GearComponents, category_Gear_Headgear, category_Gear_Headsets, category_Gear_TacticalRigs, category_WeaponPartsMods_FM_AuxiliaryParts, category_WeaponPartsMods_FM_Bipods, category_WeaponPartsMods_FM_Foregrips, category_WeaponPartsMods_FM_LLD_Flashlights, category_WeaponPartsMods_FM_LLD_LaserTargetPointers, category_WeaponPartsMods_FM_LLD_TacticalComboDevices, category_WeaponPartsMods_FM_MD_FlashhidersBrakes, category_WeaponPartsMods_FM_MD_MuzzleAdapters, category_WeaponPartsMods_FM_MD_Suppressors, category_WeaponPartsMods_FM_S_AssaultScopes, category_WeaponPartsMods_FM_S_Collimators, category_WeaponPartsMods_FM_S_CompactCollimators, category_WeaponPartsMods_FM_S_IronSights, category_WeaponPartsMods_FM_S_Optics, category_WeaponPartsMods_FM_S_SpecialPurposeSights, category_WeaponPartsMods_GM_ChargingHandles, category_WeaponPartsMods_GM_Launchers, category_WeaponPartsMods_GM_Magazines, category_WeaponPartsMods_GM_Mounts, category_WeaponPartsMods_GM_StocksChassis, category_WeaponPartsMods_VP_Barrels, category_WeaponPartsMods_VP_GasBlocks, category_WeaponPartsMods_VP_Handguards, category_WeaponPartsMods_VP_PistolGrips, category_WeaponPartsMods_VP_ReceiversSlides, category_Weapons_AssaultCarbines, category_Weapons_AssaultRifles, category_Weapons_BoltActionRifles, category_Weapons_GrenadeLaunchers, category_Weapons_MachineGuns, category_Weapons_MarksmanRifles, category_Weapons_MeleeWeapons, category_Weapons_Pistols, category_Weapons_SMGs, category_Weapons_Shotguns, category_Weapons_SpecialWeapons, category_Ammo_AmmoPacks, category_Ammo_Rounds, category_Ammo_Grenades);
-        loot_WeaponBoxGlobal = this.removeBlacklistedItems(loot_WeaponBoxGlobal, LootGlobalType.WEAPONBOXGLOBAL);
+        const loot_WeaponBoxGlobalArray = [];
+        loot_WeaponBoxGlobalArray.push(category_Gear_BodyArmor);
+        loot_WeaponBoxGlobalArray.push(category_Gear_Eyewear);
+        loot_WeaponBoxGlobalArray.push(category_Gear_Facecovers);
+        loot_WeaponBoxGlobalArray.push(category_Gear_GearComponents);
+        loot_WeaponBoxGlobalArray.push(category_Gear_Headgear);
+        loot_WeaponBoxGlobalArray.push(category_Gear_Headsets);
+        loot_WeaponBoxGlobalArray.push(category_Gear_TacticalRigs);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_AuxiliaryParts);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_Bipods);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_Foregrips);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_LLD_Flashlights);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_LLD_LaserTargetPointers);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_LLD_TacticalComboDevices);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_MD_FlashhidersBrakes);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_MD_MuzzleAdapters);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_MD_Suppressors);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_S_AssaultScopes);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_S_Collimators);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_S_CompactCollimators);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_S_IronSights);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_S_Optics);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_S_SpecialPurposeSights);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_GM_ChargingHandles);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_GM_Launchers);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_GM_Magazines);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_GM_Mounts);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_GM_StocksChassis);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_VP_Barrels);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_VP_GasBlocks);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_VP_Handguards);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_VP_PistolGrips);
+        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_VP_ReceiversSlides);
+        loot_WeaponBoxGlobalArray.push(category_Weapons_AssaultCarbines);
+        loot_WeaponBoxGlobalArray.push(category_Weapons_AssaultRifles);
+        loot_WeaponBoxGlobalArray.push(category_Weapons_BoltActionRifles);
+        loot_WeaponBoxGlobalArray.push(category_Weapons_GrenadeLaunchers);
+        loot_WeaponBoxGlobalArray.push(category_Weapons_MachineGuns);
+        loot_WeaponBoxGlobalArray.push(category_Weapons_MarksmanRifles);
+        loot_WeaponBoxGlobalArray.push(category_Weapons_MeleeWeapons);
+        loot_WeaponBoxGlobalArray.push(category_Weapons_Pistols);
+        loot_WeaponBoxGlobalArray.push(category_Weapons_SMGs);
+        loot_WeaponBoxGlobalArray.push(category_Weapons_Shotguns);
+        loot_WeaponBoxGlobalArray.push(category_Weapons_SpecialWeapons);
+        loot_WeaponBoxGlobalArray.push(category_Ammo_AmmoPacks);
+        loot_WeaponBoxGlobalArray.push(category_Ammo_Rounds);
+        let loot_WeaponBoxGlobal_Final = deepCopy(loot_WeaponBoxGlobalArray);
+        this.adjustItemSpawnRateForEachContainerType(loot_WeaponBoxGlobal_Final);
+        loot_WeaponBoxGlobal_Final = this.removeBlacklistedItems(loot_WeaponBoxGlobal_Final, LootGlobalType.WEAPONBOXGLOBAL);
         // ===== Loot - Cashes =====
-        let loot_Caches = [];
-        loot_Caches = loot_Caches.concat(category_Barter_Others, category_Barter_BuildingMaterials, category_Barter_Electronics, category_Barter_EnergyElements, category_Barter_FlammableMaterials, category_Barter_HouseholdMaterials, category_Barter_MedicalSupplies, category_Barter_Tools, category_Barter_Valuables, category_Gear_BodyArmor, category_Gear_Eyewear, category_Gear_Facecovers, category_Gear_GearComponents, category_Gear_Headgear, category_Gear_Headsets, category_Gear_StorageContainers, category_Gear_TacticalRigs, category_Provisions_Drinks, category_Provisions_Food, category_Medication_Injectors, category_Medication_InjuryTreatment, category_Medication_Medkits, category_Medication_Pills, category_Keys_ElectronicKeys, category_InfoItems, category_SpecialEquipment, category_Maps);
-        loot_Caches = this.removeBlacklistedItems(loot_Caches, LootGlobalType.CACHE);
+        const loot_CachesArray = [];
+        loot_CachesArray.push(category_Barter_Others);
+        loot_CachesArray.push(category_Barter_BuildingMaterials);
+        loot_CachesArray.push(category_Barter_Electronics);
+        loot_CachesArray.push(category_Barter_EnergyElements);
+        loot_CachesArray.push(category_Barter_FlammableMaterials);
+        loot_CachesArray.push(category_Barter_HouseholdMaterials);
+        loot_CachesArray.push(category_Barter_MedicalSupplies);
+        loot_CachesArray.push(category_Barter_Tools);
+        loot_CachesArray.push(category_Barter_Valuables);
+        loot_CachesArray.push(category_Gear_BodyArmor);
+        loot_CachesArray.push(category_Gear_Eyewear);
+        loot_CachesArray.push(category_Gear_Facecovers);
+        loot_CachesArray.push(category_Gear_GearComponents);
+        loot_CachesArray.push(category_Gear_Headgear);
+        loot_CachesArray.push(category_Gear_Headsets);
+        loot_CachesArray.push(category_Gear_StorageContainers);
+        loot_CachesArray.push(category_Gear_TacticalRigs);
+        loot_CachesArray.push(category_Provisions_Drinks);
+        loot_CachesArray.push(category_Provisions_Food);
+        loot_CachesArray.push(category_Medication_Injectors);
+        loot_CachesArray.push(category_Medication_InjuryTreatment);
+        loot_CachesArray.push(category_Medication_Medkits);
+        loot_CachesArray.push(category_Medication_Pills);
+        loot_CachesArray.push(category_Keys_ElectronicKeys);
+        loot_CachesArray.push(category_InfoItems);
+        loot_CachesArray.push(category_SpecialEquipment);
+        loot_CachesArray.push(category_Maps);
+        let loot_Caches_Final = deepCopy(loot_CachesArray);
+        this.adjustItemSpawnRateForEachContainerType(loot_Caches_Final);
+        loot_Caches_Final = this.removeBlacklistedItems(loot_Caches_Final, LootGlobalType.CACHE);
         // ===== Loot - Duffle bag =====
-        let loot_DuffleBag = [];
-        loot_DuffleBag = loot_DuffleBag.concat(category_Barter_Others, category_Barter_BuildingMaterials, category_Barter_Electronics, category_Barter_EnergyElements, category_Barter_FlammableMaterials, category_Barter_HouseholdMaterials, category_Barter_MedicalSupplies, category_Barter_Tools, category_Barter_Valuables, category_Provisions_Drinks, category_Provisions_Food, category_Medication_Injectors, category_Medication_InjuryTreatment, category_Medication_Medkits, category_Medication_Pills, category_InfoItems, category_SpecialEquipment, category_Maps);
-        loot_DuffleBag = this.removeBlacklistedItems(loot_DuffleBag, LootGlobalType.DUFFLEBAG);
+        const loot_DuffleBagArray = [];
+        loot_DuffleBagArray.push(category_Barter_Others);
+        loot_DuffleBagArray.push(category_Barter_BuildingMaterials);
+        loot_DuffleBagArray.push(category_Barter_Electronics);
+        loot_DuffleBagArray.push(category_Barter_EnergyElements);
+        loot_DuffleBagArray.push(category_Barter_FlammableMaterials);
+        loot_DuffleBagArray.push(category_Barter_HouseholdMaterials);
+        loot_DuffleBagArray.push(category_Barter_MedicalSupplies);
+        loot_DuffleBagArray.push(category_Barter_Tools);
+        loot_DuffleBagArray.push(category_Barter_Valuables);
+        loot_DuffleBagArray.push(category_Provisions_Drinks);
+        loot_DuffleBagArray.push(category_Provisions_Food);
+        loot_DuffleBagArray.push(category_Medication_Injectors);
+        loot_DuffleBagArray.push(category_Medication_InjuryTreatment);
+        loot_DuffleBagArray.push(category_Medication_Medkits);
+        loot_DuffleBagArray.push(category_Medication_Pills);
+        loot_DuffleBagArray.push(category_InfoItems);
+        loot_DuffleBagArray.push(category_SpecialEquipment);
+        loot_DuffleBagArray.push(category_Maps);
+        let loot_DuffleBag_Final = deepCopy(loot_DuffleBagArray);
+        this.adjustItemSpawnRateForEachContainerType(loot_DuffleBag_Final);
+        loot_DuffleBag_Final = this.removeBlacklistedItems(loot_DuffleBag_Final, LootGlobalType.DUFFLEBAG);
         // ===== Loot - Medical =====
-        let loot_Medical = [];
-        loot_Medical = loot_Medical.concat(category_Barter_MedicalSupplies, category_Medication_Injectors, category_Medication_InjuryTreatment, category_Medication_Medkits, category_Medication_Pills, category_MedicalAddOn);
+        const loot_MedicalArray = [];
+        loot_MedicalArray.push(category_Barter_MedicalSupplies);
+        loot_MedicalArray.push(category_Medication_Injectors);
+        loot_MedicalArray.push(category_Medication_InjuryTreatment);
+        loot_MedicalArray.push(category_Medication_Medkits);
+        loot_MedicalArray.push(category_Medication_Pills);
+        loot_MedicalArray.push(category_MedicalAddOn);
+        let loot_Medical_Final = deepCopy(loot_MedicalArray);
+        this.adjustItemSpawnRateForEachContainerType(loot_Medical_Final);
+        loot_Medical_Final = this.removeBlacklistedItems(loot_Medical_Final, LootGlobalType.MEDICAL);
         // ===== Loot - Technical =====
-        let loot_Technical = [];
-        loot_Technical = loot_Technical.concat(category_Barter_Others, category_Barter_BuildingMaterials, category_Barter_Electronics, category_Barter_EnergyElements, category_Barter_FlammableMaterials, category_Barter_Tools, category_Gear_SecureContainers, category_Gear_StorageContainers, category_SpecialEquipment);
-        loot_Technical = this.removeBlacklistedItems(loot_Technical, LootGlobalType.TECHNICAL);
+        const loot_TechnicalArray = [];
+        loot_TechnicalArray.push(category_Barter_Others);
+        loot_TechnicalArray.push(category_Barter_BuildingMaterials);
+        loot_TechnicalArray.push(category_Barter_Electronics);
+        loot_TechnicalArray.push(category_Barter_EnergyElements);
+        loot_TechnicalArray.push(category_Barter_FlammableMaterials);
+        loot_TechnicalArray.push(category_Barter_Tools);
+        loot_TechnicalArray.push(category_Gear_SecureContainers);
+        loot_TechnicalArray.push(category_Gear_StorageContainers);
+        loot_TechnicalArray.push(category_SpecialEquipment);
+        let loot_Technical_Final = deepCopy(loot_TechnicalArray);
+        this.adjustItemSpawnRateForEachContainerType(loot_Technical_Final);
+        loot_Technical_Final = this.removeBlacklistedItems(loot_Technical_Final, LootGlobalType.TECHNICAL);
         // ===== Loot - Rations =====
-        let loot_Rations = [];
-        loot_Rations = loot_Rations.concat(category_Provisions_Drinks, category_Provisions_Food, category_RationsAddOn);
-        loot_Rations = this.removeBlacklistedItems(loot_Rations, LootGlobalType.RATIONS);
+        const loot_RationsArray = [];
+        loot_RationsArray.push(category_Provisions_Drinks);
+        loot_RationsArray.push(category_Provisions_Food);
+        loot_RationsArray.push(category_RationsAddOn);
+        let loot_Rations_Final = deepCopy(loot_RationsArray);
+        this.adjustItemSpawnRateForEachContainerType(loot_Rations_Final);
+        loot_Rations_Final = this.removeBlacklistedItems(loot_Rations_Final, LootGlobalType.RATIONS);
         // ===== Loot - PC Block =====
-        let loot_PCBlock = [];
-        loot_PCBlock = category_Barter_Electronics;
-        loot_PCBlock = this.removeBlacklistedItems(loot_PCBlock, LootGlobalType.PCBLOCK);
+        const loot_PCBlockArray = [];
+        loot_PCBlockArray.push(category_Barter_Electronics);
+        let loot_PCBlock_Final = deepCopy(loot_PCBlockArray);
+        this.adjustItemSpawnRateForEachContainerType(loot_PCBlock_Final);
+        loot_PCBlock_Final = this.removeBlacklistedItems(loot_PCBlock_Final, LootGlobalType.PCBLOCK);
         // ===== Loot - Safes =====
-        let loot_Safes = [];
-        loot_Safes = loot_Safes.concat(category_Barter_Valuables, category_InfoItems, category_Money);
-        loot_Safes = this.removeBlacklistedItems(loot_Safes, LootGlobalType.SAFE);
+        const loot_SafesArray = [];
+        loot_SafesArray.push(category_Barter_Valuables);
+        loot_SafesArray.push(category_InfoItems);
+        loot_SafesArray.push(category_Money);
+        let loot_Safes_Final = deepCopy(loot_SafesArray);
+        this.adjustItemSpawnRateForEachContainerType(loot_Safes_Final);
+        loot_Safes_Final = this.removeBlacklistedItems(loot_Safes_Final, LootGlobalType.SAFE);
         // ===== Loot - Ammo =====
-        let loot_Ammo = [];
-        loot_Ammo = loot_Ammo.concat(category_Ammo_AmmoPacks, category_Ammo_Rounds);
-        loot_Ammo = this.removeBlacklistedItems(loot_Ammo, LootGlobalType.AMMO);
+        const loot_AmmoArray = [];
+        loot_AmmoArray.push(category_Ammo_AmmoPacks);
+        loot_AmmoArray.push(category_Ammo_Rounds);
+        let loot_Ammo_Final = deepCopy(loot_AmmoArray);
+        this.adjustItemSpawnRateForEachContainerType(loot_Ammo_Final);
+        loot_Ammo_Final = this.removeBlacklistedItems(loot_Ammo_Final, LootGlobalType.AMMO);
         // ===== Loot - Grenades =====
-        let loot_Grenades = [];
-        loot_Grenades = loot_Grenades.concat(category_Weapons_Throwables, category_Ammo_Grenades);
+        const loot_GrenadesArray = [];
+        loot_GrenadesArray.push(category_Weapons_Throwables);
+        loot_GrenadesArray.push(category_Ammo_Grenades);
+        let loot_Grenades_Final = deepCopy(loot_GrenadesArray);
+        this.adjustItemSpawnRateForEachContainerType(loot_Grenades_Final);
+        loot_Grenades_Final = this.removeBlacklistedItems(loot_Grenades_Final, LootGlobalType.GRENADES);
         // ===== Loot - Money =====
-        let loot_Money = [];
-        loot_Money = loot_Money.concat(category_Money);
+        const loot_MoneyArray = [];
+        loot_MoneyArray.push(category_Money);
+        let loot_Money_Final = deepCopy(loot_MoneyArray);
+        this.adjustItemSpawnRateForEachContainerType(loot_Money_Final);
+        loot_Money_Final = this.removeBlacklistedItems(loot_Money_Final, LootGlobalType.MONEY);
         // ===== Loot - Money Roubles only =====
-        let loot_Money_RoublesOnly = [];
-        loot_Money_RoublesOnly = loot_Money_RoublesOnly.concat(category_Money);
-        loot_Money_RoublesOnly = this.removeBlacklistedItems(loot_Money_RoublesOnly, LootGlobalType.REGISTERROUBLES);
+        const loot_Money_RoublesOnlyArray = [];
+        loot_Money_RoublesOnlyArray.push(category_Money);
+        let loot_Money_RoublesOnly_Final = deepCopy(loot_Money_RoublesOnlyArray);
+        this.adjustItemSpawnRateForEachContainerType(loot_Money_RoublesOnly_Final);
+        loot_Money_RoublesOnly_Final = this.removeBlacklistedItems(loot_Money_RoublesOnly_Final, LootGlobalType.REGISTERROUBLES);
         // ===== Loot - Machinery Key Jacket =====
-        let loot_JacketMachineryKey = [];
-        loot_JacketMachineryKey = loot_JacketMachineryKey.concat(category_MachineryKey);
+        const loot_JacketMachineryKeyArray = [];
+        loot_JacketMachineryKeyArray.push(category_MachineryKey);
+        let loot_JacketMachineryKey_Final = deepCopy(loot_JacketMachineryKeyArray);
+        this.adjustItemSpawnRateForEachContainerType(loot_JacketMachineryKey_Final);
+        loot_JacketMachineryKey_Final = this.removeBlacklistedItems(loot_JacketMachineryKey_Final, LootGlobalType.MACHINERYKEY);
         // ===== Loot - Shturman's Stash =====
-        let loot_ShturmansStash = [];
-        loot_ShturmansStash = loot_ShturmansStash.concat(category_ShturmansStash);
-        loot_ShturmansStash = this.removeBlacklistedItems(loot_ShturmansStash, LootGlobalType.SHTURMANSSTASH);
+        let loot_ShturmansStash_Final = deepCopy(preSelectionForShturmansStash);
+        this.adjustItemSpawnRateForEachContainerType(loot_ShturmansStash_Final);
+        loot_ShturmansStash_Final = this.removeBlacklistedItems(loot_ShturmansStash_Final, LootGlobalType.SHTURMANSSTASH);
         // ===== Loot - Weapon Box 6x3 =====
-        let loot_WeaponBox5x5 = [];
-        loot_WeaponBox5x5 = loot_WeaponBox5x5.concat(category_WeaponBox5x5);
-        loot_WeaponBox5x5 = this.removeBlacklistedItems(loot_WeaponBox5x5, LootGlobalType.WEAPONBOX5X5);
+        let loot_WeaponBox5x5_Final = deepCopy(preSelectionForWeaponBox5x5);
+        this.adjustItemSpawnRateForEachContainerType(loot_WeaponBox5x5_Final);
+        loot_WeaponBox5x5_Final = this.removeBlacklistedItems(loot_WeaponBox5x5_Final, LootGlobalType.WEAPONBOX5X5);
         // ===== Loot - Weapon Box 6x3 =====
-        let loot_WeaponBox6x3 = [];
-        loot_WeaponBox6x3 = loot_WeaponBox6x3.concat(category_WeaponBox6x3);
-        loot_WeaponBox6x3 = this.removeBlacklistedItems(loot_WeaponBox6x3, LootGlobalType.WEAPONBOX6X3);
+        let loot_WeaponBox6x3_Final = deepCopy(preSelectionForWeaponBox6x3);
+        this.adjustItemSpawnRateForEachContainerType(loot_WeaponBox6x3_Final);
+        loot_WeaponBox6x3_Final = this.removeBlacklistedItems(loot_WeaponBox6x3_Final, LootGlobalType.WEAPONBOX6X3);
         // Preparation to finally create the Record file
         // ===== Drawer =====
         const drawerItems = [];
         const drawerItemsProbabilities = [];
-        loot_Drawers.forEach(item => {
+        loot_Drawers_Final.forEach(item => {
             drawerItems.push(item.Id);
             drawerItemsProbabilities.push(item.Price);
         });
@@ -1237,7 +1532,7 @@ class AllTheLoot {
         // ===== Cash Register =====    
         const cashRegisterItems = [];
         const cashRegisterItemsProbabilities = [];
-        loot_Money_RoublesOnly.forEach(item => {
+        loot_Money_RoublesOnly_Final.forEach(item => {
             cashRegisterItems.push(item.Id);
             cashRegisterItemsProbabilities.push(item.Price);
         });
@@ -1252,7 +1547,7 @@ class AllTheLoot {
         // ===== PC Block =====
         const pcBlockItems = [];
         const pcBlockItemsProbabilities = [];
-        loot_PCBlock.forEach(item => {
+        loot_PCBlock_Final.forEach(item => {
             pcBlockItems.push(item.Id);
             pcBlockItemsProbabilities.push(item.Price);
         });
@@ -1267,7 +1562,7 @@ class AllTheLoot {
         // ===== Jacket =====
         const jacketItems = [];
         const jacketItemsProbabilities = [];
-        loot_Jackets.forEach(item => {
+        loot_Jackets_Final.forEach(item => {
             jacketItems.push(item.Id);
             jacketItemsProbabilities.push(item.Price);
         });
@@ -1282,7 +1577,7 @@ class AllTheLoot {
         // ===== Toolbox =====
         const toolboxItems = [];
         const toolboxItemsProbabilities = [];
-        loot_Technical.forEach(item => {
+        loot_Technical_Final.forEach(item => {
             toolboxItems.push(item.Id);
             toolboxItemsProbabilities.push(item.Price);
         });
@@ -1297,7 +1592,7 @@ class AllTheLoot {
         // ===== Medcase =====
         const medcaseItems = [];
         const medcaseItemsProbabilities = [];
-        loot_Medical.forEach(item => {
+        loot_Medical_Final.forEach(item => {
             medcaseItems.push(item.Id);
             medcaseItemsProbabilities.push(item.Price);
         });
@@ -1312,7 +1607,7 @@ class AllTheLoot {
         // ===== Safe =====
         const safeItems = [];
         const safeItemsProbabilities = [];
-        loot_Safes.forEach(item => {
+        loot_Safes_Final.forEach(item => {
             safeItems.push(item.Id);
             safeItemsProbabilities.push(item.Price);
         });
@@ -1327,7 +1622,7 @@ class AllTheLoot {
         // ===== Weapon box (Green) =====
         const weaponBox5x5Items = [];
         const weaponBox5x5ItemsProbabilities = [];
-        loot_WeaponBox5x5.forEach(item => {
+        loot_WeaponBox5x5_Final.forEach(item => {
             weaponBox5x5Items.push(item.Id);
             weaponBox5x5ItemsProbabilities.push(item.Price);
         });
@@ -1342,7 +1637,7 @@ class AllTheLoot {
         // ===== Weapon box (5x2) =====
         const weaponBox5x2Items = [];
         const weaponBox5x2ItemsProbabilities = [];
-        loot_WeaponBoxGlobal.forEach(item => {
+        loot_WeaponBoxGlobal_Final.forEach(item => {
             weaponBox5x2Items.push(item.Id);
             weaponBox5x2ItemsProbabilities.push(item.Price);
         });
@@ -1357,7 +1652,7 @@ class AllTheLoot {
         // ===== Duffle bag 01 =====
         const duffleBag01Items = [];
         const duffleBag01ItemsProbabilities = [];
-        loot_DuffleBag.forEach(item => {
+        loot_DuffleBag_Final.forEach(item => {
             duffleBag01Items.push(item.Id);
             duffleBag01ItemsProbabilities.push(item.Price);
         });
@@ -1372,7 +1667,7 @@ class AllTheLoot {
         // ===== Weapon box (6x3) =====
         const weaponBox6x3Items = [];
         const weaponBox6x3ItemsProbabilities = [];
-        loot_WeaponBox6x3.forEach(item => {
+        loot_WeaponBox6x3_Final.forEach(item => {
             weaponBox6x3Items.push(item.Id);
             weaponBox6x3ItemsProbabilities.push(item.Price);
         });
@@ -1387,7 +1682,7 @@ class AllTheLoot {
         // ===== Weapon box (4x4) =====
         const weaponBox4x4Items = [];
         const weaponBox4x4ItemsProbabilities = [];
-        loot_WeaponBoxGlobal.forEach(item => {
+        loot_WeaponBoxGlobal_Final.forEach(item => {
             weaponBox4x4Items.push(item.Id);
             weaponBox4x4ItemsProbabilities.push(item.Price);
         });
@@ -1402,7 +1697,7 @@ class AllTheLoot {
         // ===== Grenade box =====
         const grenadeBoxItems = [];
         const grenadeBoxItemsProbabilities = [];
-        loot_Grenades.forEach(item => {
+        loot_Grenades_Final.forEach(item => {
             grenadeBoxItems.push(item.Id);
             grenadeBoxItemsProbabilities.push(item.Price);
         });
@@ -1417,7 +1712,7 @@ class AllTheLoot {
         // ===== Plastic suitcase =====
         const plasticSuitcaseItems = [];
         const plasticSuitcaseItemsProbabilities = [];
-        loot_DuffleBag.forEach(item => {
+        loot_DuffleBag_Final.forEach(item => {
             plasticSuitcaseItems.push(item.Id);
             plasticSuitcaseItemsProbabilities.push(item.Price);
         });
@@ -1432,7 +1727,7 @@ class AllTheLoot {
         // ===== Medbag SMU06 01 =====
         const medbagSmu0601Items = [];
         const medbagSmu0601ItemsProbabilities = [];
-        loot_Medical.forEach(item => {
+        loot_Medical_Final.forEach(item => {
             medbagSmu0601Items.push(item.Id);
             medbagSmu0601ItemsProbabilities.push(item.Price);
         });
@@ -1447,7 +1742,7 @@ class AllTheLoot {
         // ===== Wooden crate =====
         const woodenCrateItems = [];
         const woodenCrateItemsProbabilities = [];
-        loot_WeaponBoxGlobal.forEach(item => {
+        loot_WeaponBoxGlobal_Final.forEach(item => {
             woodenCrateItems.push(item.Id);
             woodenCrateItemsProbabilities.push(item.Price);
         });
@@ -1462,7 +1757,7 @@ class AllTheLoot {
         // ===== Medical supply crate =====
         const medicalSupplyCrateItems = [];
         const medicalSupplyCrateItemsProbabilities = [];
-        loot_Medical.forEach(item => {
+        loot_Medical_Final.forEach(item => {
             medicalSupplyCrateItems.push(item.Id);
             medicalSupplyCrateItemsProbabilities.push(item.Price);
         });
@@ -1477,7 +1772,7 @@ class AllTheLoot {
         // ===== Technical supply crate =====
         const technicalSupplyCrateItems = [];
         const technicalSupplyCrateItemsProbabilities = [];
-        loot_Technical.forEach(item => {
+        loot_Technical_Final.forEach(item => {
             technicalSupplyCrateItems.push(item.Id);
             technicalSupplyCrateItemsProbabilities.push(item.Price);
         });
@@ -1492,7 +1787,7 @@ class AllTheLoot {
         // ===== Dead Scav =====
         const deadScavItems = [];
         const deadScavItemsProbabilities = [];
-        loot_DuffleBag.forEach(item => {
+        loot_DuffleBag_Final.forEach(item => {
             deadScavItems.push(item.Id);
             deadScavItemsProbabilities.push(item.Price);
         });
@@ -1507,7 +1802,7 @@ class AllTheLoot {
         // ===== Ground cache =====
         const groundCacheItems = [];
         const groundCacheItemsProbabilities = [];
-        loot_Caches.forEach(item => {
+        loot_Caches_Final.forEach(item => {
             groundCacheItems.push(item.Id);
             groundCacheItemsProbabilities.push(item.Price);
         });
@@ -1522,7 +1817,7 @@ class AllTheLoot {
         // ===== Burried barrel cache =====
         const burriedBarrelCacheItems = [];
         const burriedBarrelCacheItemsProbabilities = [];
-        loot_Caches.forEach(item => {
+        loot_Caches_Final.forEach(item => {
             burriedBarrelCacheItems.push(item.Id);
             burriedBarrelCacheItemsProbabilities.push(item.Price);
         });
@@ -1537,7 +1832,7 @@ class AllTheLoot {
         // ===== Wooden ammo box =====
         const woodenAmmoBoxItems = [];
         const woodenAmmoBoxItemsProbabilities = [];
-        loot_Ammo.forEach(item => {
+        loot_Ammo_Final.forEach(item => {
             woodenAmmoBoxItems.push(item.Id);
             woodenAmmoBoxItemsProbabilities.push(item.Price);
         });
@@ -1552,7 +1847,7 @@ class AllTheLoot {
         // ===== Jacket (Dorms 114) =====
         const jacketDorms114Items = [];
         const jacketDorms114ItemsProbabilities = [];
-        loot_Jackets.forEach(item => {
+        loot_Jackets_Final.forEach(item => {
             jacketDorms114Items.push(item.Id);
             jacketDorms114ItemsProbabilities.push(item.Price);
         });
@@ -1567,7 +1862,7 @@ class AllTheLoot {
         // ===== Jacket (Machinery Key) =====
         const jacketMachineryKeyItems = [];
         const jacketMachineryKeyItemsProbabilities = [];
-        loot_JacketMachineryKey.forEach(item => {
+        loot_JacketMachineryKey_Final.forEach(item => {
             jacketMachineryKeyItems.push(item.Id);
             jacketMachineryKeyItemsProbabilities.push(item.Price);
         });
@@ -1582,7 +1877,7 @@ class AllTheLoot {
         // ===== Ration supply crate =====
         const rationSupplyCrateItems = [];
         const rationSupplyCrateItemsProbabilities = [];
-        loot_Rations.forEach(item => {
+        loot_Rations_Final.forEach(item => {
             rationSupplyCrateItems.push(item.Id);
             rationSupplyCrateItemsProbabilities.push(item.Price);
         });
@@ -1597,7 +1892,7 @@ class AllTheLoot {
         // ===== Jacket (Dorms 204) =====
         const jacketDorms204Items = [];
         const jacketDorms204ItemsProbabilities = [];
-        loot_Jackets.forEach(item => {
+        loot_Jackets_Final.forEach(item => {
             jacketDorms204Items.push(item.Id);
             jacketDorms204ItemsProbabilities.push(item.Price);
         });
@@ -1612,7 +1907,7 @@ class AllTheLoot {
         // ===== Common fund stash (Shturman's Stash) =====
         const commonFundStashItems = [];
         const commonFundStashItemsProbabilities = [];
-        loot_ShturmansStash.forEach(item => {
+        loot_ShturmansStash_Final.forEach(item => {
             commonFundStashItems.push(item.Id);
             commonFundStashItemsProbabilities.push(item.Price);
         });
@@ -1627,7 +1922,7 @@ class AllTheLoot {
         // ===== Duffle bag 02 =====
         const duffleBag02Items = [];
         const duffleBag02ItemsProbabilities = [];
-        loot_DuffleBag.forEach(item => {
+        loot_DuffleBag_Final.forEach(item => {
             duffleBag02Items.push(item.Id);
             duffleBag02ItemsProbabilities.push(item.Price);
         });
@@ -1642,7 +1937,7 @@ class AllTheLoot {
         // ===== Medbag SMU06 02 =====
         const medbagSmu0602Items = [];
         const medbagSmu0602ItemsProbabilities = [];
-        loot_Medical.forEach(item => {
+        loot_Medical_Final.forEach(item => {
             medbagSmu0602Items.push(item.Id);
             medbagSmu0602ItemsProbabilities.push(item.Price);
         });
@@ -1657,7 +1952,7 @@ class AllTheLoot {
         // ===== Cash register TAR2-2 =====
         const cashRegisterTARItems = [];
         const cashRegisterTARItemsProbabilities = [];
-        loot_Money_RoublesOnly.forEach(item => {
+        loot_Money_RoublesOnly_Final.forEach(item => {
             cashRegisterTARItems.push(item.Id);
             cashRegisterTARItemsProbabilities.push(item.Price);
         });
@@ -1672,7 +1967,7 @@ class AllTheLoot {
         // ===== Bank cash register =====
         const bankCashRegisterItems = [];
         const bankCashRegisterItemsProbabilities = [];
-        loot_Money.forEach(item => {
+        loot_Money_Final.forEach(item => {
             bankCashRegisterItems.push(item.Id);
             bankCashRegisterItemsProbabilities.push(item.Price);
         });
@@ -1687,7 +1982,7 @@ class AllTheLoot {
         // ===== Bank safe =====
         const bankSafeItems = [];
         const bankSafeItemsProbabilities = [];
-        loot_Money.forEach(item => {
+        loot_Money_Final.forEach(item => {
             bankSafeItems.push(item.Id);
             bankSafeItemsProbabilities.push(item.Price);
         });
@@ -2278,11 +2573,173 @@ class AllTheLoot {
                 }
             }),
         };
-        if (this.config.debugMode) {
-            let allHandbookItemsSpawnAdjusted = [];
-            allHandbookItemsSpawnAdjusted = allHandbookItemsSpawnAdjusted.concat(category_Barter_Others, category_Barter_BuildingMaterials, category_Barter_Electronics, category_Barter_EnergyElements, category_Barter_FlammableMaterials, category_Barter_HouseholdMaterials, category_Barter_MedicalSupplies, category_Barter_Tools, category_Barter_Valuables, category_Gear_Backpacks, category_Gear_BodyArmor, category_Gear_Eyewear, category_Gear_Facecovers, category_Gear_GearComponents, category_Gear_Headgear, category_Gear_Headsets, category_Gear_SecureContainers, category_Gear_StorageContainers, category_Gear_TacticalRigs, category_WeaponPartsMods_FM_AuxiliaryParts, category_WeaponPartsMods_FM_Bipods, category_WeaponPartsMods_FM_Foregrips, category_WeaponPartsMods_FM_LLD_Flashlights, category_WeaponPartsMods_FM_LLD_LaserTargetPointers, category_WeaponPartsMods_FM_LLD_TacticalComboDevices, category_WeaponPartsMods_FM_MD_FlashhidersBrakes, category_WeaponPartsMods_FM_MD_MuzzleAdapters, category_WeaponPartsMods_FM_MD_Suppressors, category_WeaponPartsMods_FM_S_AssaultScopes, category_WeaponPartsMods_FM_S_Collimators, category_WeaponPartsMods_FM_S_CompactCollimators, category_WeaponPartsMods_FM_S_IronSights, category_WeaponPartsMods_FM_S_Optics, category_WeaponPartsMods_FM_S_SpecialPurposeSights, category_WeaponPartsMods_GM_ChargingHandles, category_WeaponPartsMods_GM_Launchers, category_WeaponPartsMods_GM_Magazines, category_WeaponPartsMods_GM_Mounts, category_WeaponPartsMods_GM_StocksChassis, category_WeaponPartsMods_VP_Barrels, category_WeaponPartsMods_VP_GasBlocks, category_WeaponPartsMods_VP_Handguards, category_WeaponPartsMods_VP_PistolGrips, category_WeaponPartsMods_VP_ReceiversSlides, category_Weapons_AssaultCarbines, category_Weapons_AssaultRifles, category_Weapons_BoltActionRifles, category_Weapons_GrenadeLaunchers, category_Weapons_MachineGuns, category_Weapons_MarksmanRifles, category_Weapons_MeleeWeapons, category_Weapons_Pistols, category_Weapons_SMGs, category_Weapons_Shotguns, category_Weapons_SpecialWeapons, category_Weapons_Throwables, category_Ammo_AmmoPacks, category_Ammo_Rounds, category_Provisions_Drinks, category_Provisions_Food, category_Medication_Injectors, category_Medication_InjuryTreatment, category_Medication_Medkits, category_Medication_Pills, category_Keys_ElectronicKeys, category_Keys_MechanicalKeys, category_InfoItems, category_SpecialEquipment, category_Maps, category_Money);
-            this.logger.error("All Items with adjusted spawns");
-            allHandbookItemsSpawnAdjusted.forEach(item => {
+        // DEBUG output
+        if (this.config.debugMode_ShowSpawnRates_Drawer) {
+            this.logger.error("Amount of Drawer items: " + drawerItems.length.toString());
+            this.logger.error("All " + drawerItems.length.toString() + " drawer items with adjusted spawn rates");
+            loot_Drawers_Final.forEach(item => {
+                const propertyName = `${item.Id} Name`;
+                const value = this.jsonDataClearNames[propertyName];
+                this.logger.warning(value + " Spawn rate: " + item.Price);
+            });
+        }
+        if (this.config.debugMode_ShowSpawnRates_CashRegister) {
+            this.logger.error("Amount of Cash Register items: " + cashRegisterItems.length.toString());
+            this.logger.error("All " + cashRegisterItems.length.toString() + " cash register items with adjusted spawn rates");
+            loot_Money_RoublesOnly_Final.forEach(item => {
+                const propertyName = `${item.Id} Name`;
+                const value = this.jsonDataClearNames[propertyName];
+                this.logger.warning(value + " Spawn rate: " + item.Price);
+            });
+        }
+        if (this.config.debugMode_ShowSpawnRates_PCBlock) {
+            this.logger.error("Amount of PC Block items: " + pcBlockItems.length.toString());
+            this.logger.error("All " + pcBlockItems.length.toString() + " PC block items with adjusted spawn rates");
+            loot_PCBlock_Final.forEach(item => {
+                const propertyName = `${item.Id} Name`;
+                const value = this.jsonDataClearNames[propertyName];
+                this.logger.warning(value + " Spawn rate: " + item.Price);
+            });
+        }
+        if (this.config.debugMode_ShowSpawnRates_Jacket) {
+            this.logger.error("Amount of Jacket items: " + jacketItems.length.toString());
+            this.logger.error("All " + jacketItems.length.toString() + " jacket items with adjusted spawn rates");
+            loot_Jackets_Final.forEach(item => {
+                const propertyName = `${item.Id} Name`;
+                const value = this.jsonDataClearNames[propertyName];
+                this.logger.warning(value + " Spawn rate: " + item.Price);
+            });
+        }
+        if (this.config.debugMode_ShowSpawnRates_Technical) {
+            this.logger.error("Amount of Toolbox items: " + toolboxItems.length.toString());
+            this.logger.error("All " + toolboxItems.length.toString() + " toolbox items with adjusted spawn rates");
+            loot_Technical_Final.forEach(item => {
+                const propertyName = `${item.Id} Name`;
+                const value = this.jsonDataClearNames[propertyName];
+                this.logger.warning(value + " Spawn rate: " + item.Price);
+            });
+        }
+        if (this.config.debugMode_ShowSpawnRates_Medical) {
+            this.logger.error("Amount of Medcase items: " + medcaseItems.length.toString());
+            this.logger.error("All " + medcaseItems.length.toString() + " medcase items with adjusted spawn rates");
+            loot_Medical_Final.forEach(item => {
+                const propertyName = `${item.Id} Name`;
+                const value = this.jsonDataClearNames[propertyName];
+                this.logger.warning(value + " Spawn rate: " + item.Price);
+            });
+        }
+        if (this.config.debugMode_ShowSpawnRates_Safe) {
+            this.logger.error("Amount of Safe items: " + safeItems.length.toString());
+            this.logger.error("All " + safeItems.length.toString() + " safe items with adjusted spawn rates");
+            loot_Safes_Final.forEach(item => {
+                const propertyName = `${item.Id} Name`;
+                const value = this.jsonDataClearNames[propertyName];
+                this.logger.warning(value + " Spawn rate: " + item.Price);
+            });
+        }
+        if (this.config.debugMode_ShowSpawnRates_WeaponBox5x5) {
+            this.logger.error("Amount of Weapon box 5x5 items: " + category_WeaponBox5x5_Final.length.toString());
+            this.logger.error("All " + category_WeaponBox5x5_Final.length.toString() + " weapon box 5x5 items with adjusted spawn rates");
+            category_WeaponBox5x5_Final.forEach(item => {
+                const propertyName = `${item.Id} Name`;
+                const value = this.jsonDataClearNames[propertyName];
+                this.logger.warning(value + " Spawn rate: " + item.Price);
+            });
+        }
+        if (this.config.debugMode_ShowSpawnRates_WeaponBoxGlobal) {
+            this.logger.error("Amount of Weapon box 5x2 items: " + weaponBox5x2Items.length.toString());
+            this.logger.error("All " + weaponBox5x2Items.length.toString() + " weapon box 5x2 items with adjusted spawn rates");
+            loot_WeaponBoxGlobal_Final.forEach(item => {
+                const propertyName = `${item.Id} Name`;
+                const value = this.jsonDataClearNames[propertyName];
+                this.logger.warning(value + " Spawn rate: " + item.Price);
+            });
+        }
+        if (this.config.debugMode_ShowSpawnRates_DuffleBag) {
+            this.logger.error("Amount of Dufflebag items: " + duffleBag01Items.length.toString());
+            this.logger.error("All " + weaponBox5x2Items.length.toString() + " dufflebag items with adjusted spawn rates");
+            loot_DuffleBag_Final.forEach(item => {
+                const propertyName = `${item.Id} Name`;
+                const value = this.jsonDataClearNames[propertyName];
+                this.logger.warning(value + " Spawn rate: " + item.Price);
+            });
+        }
+        if (this.config.debugMode_ShowSpawnRates_WeaponBox6x3) {
+            this.logger.error("Amount of Weapon box 6x3 items: " + category_WeaponBox6x3_Final.length.toString());
+            this.logger.error("All " + category_WeaponBox6x3_Final.length.toString() + " weapon box 6x3 items with adjusted spawn rates");
+            category_WeaponBox6x3_Final.forEach(item => {
+                const propertyName = `${item.Id} Name`;
+                const value = this.jsonDataClearNames[propertyName];
+                this.logger.warning(value + " Spawn rate: " + item.Price);
+            });
+        }
+        if (this.config.debugMode_ShowSpawnRates_WeaponBox4x4) {
+            this.logger.error("Amount of Weapon box 4x4 items: " + weaponBox4x4Items.length.toString());
+            this.logger.error("All " + weaponBox4x4Items.length.toString() + " weapon box 4x4 items with adjusted spawn rates");
+            loot_WeaponBoxGlobal_Final.forEach(item => {
+                const propertyName = `${item.Id} Name`;
+                const value = this.jsonDataClearNames[propertyName];
+                this.logger.warning(value + " Spawn rate: " + item.Price);
+            });
+        }
+        if (this.config.debugMode_ShowSpawnRates_GrenadeBox) {
+            this.logger.error("Amount of Grenade Box items: " + grenadeBoxItems.length.toString());
+            this.logger.error("All " + grenadeBoxItems.length.toString() + " grenade box items with adjusted spawn rates");
+            loot_Grenades_Final.forEach(item => {
+                const propertyName = `${item.Id} Name`;
+                const value = this.jsonDataClearNames[propertyName];
+                this.logger.warning(value + " Spawn rate: " + item.Price);
+            });
+        }
+        if (this.config.debugMode_ShowSpawnRates_Caches) {
+            this.logger.error("Amount of Caches items: " + groundCacheItems.length.toString());
+            this.logger.error("All " + groundCacheItems.length.toString() + " caches items with adjusted spawn rates");
+            loot_Caches_Final.forEach(item => {
+                const propertyName = `${item.Id} Name`;
+                const value = this.jsonDataClearNames[propertyName];
+                this.logger.warning(value + " Spawn rate: " + item.Price);
+            });
+        }
+        if (this.config.debugMode_ShowSpawnRates_WoodenAmmoBox) {
+            this.logger.error("Amount of Wooden Ammo Box items: " + woodenAmmoBoxItems.length.toString());
+            this.logger.error("All " + woodenAmmoBoxItems.length.toString() + " wooden ammo box items with adjusted spawn rates");
+            loot_Ammo_Final.forEach(item => {
+                const propertyName = `${item.Id} Name`;
+                const value = this.jsonDataClearNames[propertyName];
+                this.logger.warning(value + " Spawn rate: " + item.Price);
+            });
+        }
+        if (this.config.debugMode_ShowSpawnRates_JacketMachineryKey) {
+            this.logger.error("Amount of JacketMachineryKey items: " + jacketMachineryKeyItems.length.toString());
+            this.logger.error("All " + jacketMachineryKeyItems.length.toString() + " jacket machinery key items with adjusted spawn rates");
+            loot_JacketMachineryKey_Final.forEach(item => {
+                const propertyName = `${item.Id} Name`;
+                const value = this.jsonDataClearNames[propertyName];
+                this.logger.warning(value + " Spawn rate: " + item.Price);
+            });
+        }
+        if (this.config.debugMode_ShowSpawnRates_RationsSupplyCrate) {
+            this.logger.error("Amount of Rations Supply Crate items: " + rationSupplyCrateItems.length.toString());
+            this.logger.error("All " + rationSupplyCrateItems.length.toString() + " rations supply crate items with adjusted spawn rates");
+            loot_Rations_Final.forEach(item => {
+                const propertyName = `${item.Id} Name`;
+                const value = this.jsonDataClearNames[propertyName];
+                this.logger.warning(value + " Spawn rate: " + item.Price);
+            });
+        }
+        if (this.config.debugMode_ShowSpawnRates_ShturmansStash) {
+            this.logger.error("Amount of Shturman's Stash items: " + commonFundStashItems.length.toString());
+            this.logger.error("All " + commonFundStashItems.length.toString() + " shturman's stash items with adjusted spawn rates");
+            loot_ShturmansStash_Final.forEach(item => {
+                const propertyName = `${item.Id} Name`;
+                const value = this.jsonDataClearNames[propertyName];
+                this.logger.warning(value + " Spawn rate: " + item.Price);
+            });
+        }
+        if (this.config.debugMode_ShowSpawnRates_BankCashRegister) {
+            this.logger.error("Amount of Bank Cash Register items: " + bankCashRegisterItems.length.toString());
+            this.logger.error("All " + cashRegisterTARItems.length.toString() + " bank cash register items with adjusted spawn rates");
+            loot_Money_Final.forEach(item => {
                 const propertyName = `${item.Id} Name`;
                 const value = this.jsonDataClearNames[propertyName];
                 this.logger.warning(value + " Spawn rate: " + item.Price);
