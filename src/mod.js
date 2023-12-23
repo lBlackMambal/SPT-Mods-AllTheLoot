@@ -1502,15 +1502,21 @@ class AllTheLoot {
         this.adjustItemSpawnRateForEachContainerType(loot_JacketMachineryKey_Final);
         loot_JacketMachineryKey_Final = this.removeBlacklistedItems(loot_JacketMachineryKey_Final, LootGlobalType.MACHINERYKEY);
         // ===== Loot - Shturman's Stash =====
-        let loot_ShturmansStash_Final = deepCopy(preSelectionForShturmansStash);
+        const loot_ShturmansStashArray = [];
+        loot_ShturmansStashArray.push(category_ShturmansStash_Final);
+        let loot_ShturmansStash_Final = deepCopy(loot_ShturmansStashArray);
         this.adjustItemSpawnRateForEachContainerType(loot_ShturmansStash_Final);
         loot_ShturmansStash_Final = this.removeBlacklistedItems(loot_ShturmansStash_Final, LootGlobalType.SHTURMANSSTASH);
         // ===== Loot - Weapon Box 6x3 =====
-        let loot_WeaponBox5x5_Final = deepCopy(preSelectionForWeaponBox5x5);
+        const loot_WeaponBox5x5Array = [];
+        loot_WeaponBox5x5Array.push(category_WeaponBox5x5_Final);
+        let loot_WeaponBox5x5_Final = deepCopy(loot_WeaponBox5x5Array);
         this.adjustItemSpawnRateForEachContainerType(loot_WeaponBox5x5_Final);
         loot_WeaponBox5x5_Final = this.removeBlacklistedItems(loot_WeaponBox5x5_Final, LootGlobalType.WEAPONBOX5X5);
         // ===== Loot - Weapon Box 6x3 =====
-        let loot_WeaponBox6x3_Final = deepCopy(preSelectionForWeaponBox6x3);
+        const loot_WeaponBox6x3Array = [];
+        loot_WeaponBox6x3Array.push(category_WeaponBox6x3_Final);
+        let loot_WeaponBox6x3_Final = deepCopy(loot_WeaponBox6x3Array);
         this.adjustItemSpawnRateForEachContainerType(loot_WeaponBox6x3_Final);
         loot_WeaponBox6x3_Final = this.removeBlacklistedItems(loot_WeaponBox6x3_Final, LootGlobalType.WEAPONBOX6X3);
         // Preparation to finally create the Record file
@@ -2638,9 +2644,9 @@ class AllTheLoot {
             });
         }
         if (this.config.debugMode_ShowSpawnRates_WeaponBox5x5) {
-            this.logger.error("Amount of Weapon box 5x5 items: " + category_WeaponBox5x5_Final.length.toString());
-            this.logger.error("All " + category_WeaponBox5x5_Final.length.toString() + " weapon box 5x5 items with adjusted spawn rates");
-            category_WeaponBox5x5_Final.forEach(item => {
+            this.logger.error("Amount of Weapon box 5x5 items: " + weaponBox5x5Items.length.toString());
+            this.logger.error("All " + weaponBox5x5Items.length.toString() + " weapon box 5x5 items with adjusted spawn rates");
+            loot_WeaponBox5x5_Final.forEach(item => {
                 const propertyName = `${item.Id} Name`;
                 const value = this.jsonDataClearNames[propertyName];
                 this.logger.warning(value + " Spawn rate: " + item.Price);
@@ -2665,9 +2671,9 @@ class AllTheLoot {
             });
         }
         if (this.config.debugMode_ShowSpawnRates_WeaponBox6x3) {
-            this.logger.error("Amount of Weapon box 6x3 items: " + category_WeaponBox6x3_Final.length.toString());
-            this.logger.error("All " + category_WeaponBox6x3_Final.length.toString() + " weapon box 6x3 items with adjusted spawn rates");
-            category_WeaponBox6x3_Final.forEach(item => {
+            this.logger.error("Amount of Weapon box 6x3 items: " + weaponBox6x3Items.length.toString());
+            this.logger.error("All " + weaponBox6x3Items.length.toString() + " weapon box 6x3 items with adjusted spawn rates");
+            loot_WeaponBox6x3_Final.forEach(item => {
                 const propertyName = `${item.Id} Name`;
                 const value = this.jsonDataClearNames[propertyName];
                 this.logger.warning(value + " Spawn rate: " + item.Price);

@@ -140,10 +140,15 @@ Any feedback highly appreciated.
 
 
 
+Changelog v1.0.3:
+- fixed broken value based item assignment for Shturman's Stash, Weapon Box 5x5 and Weapon Box 6x3
+
+
 Changelog v1.0.2:
 - modified the spawn system by taking into account the sum of all items assignable to a container type - makes items of categories with little content spawn more often
 - further tweaked spawn rates
 - added Debug option for specific container types (allows to see the spawn rates for each pre-selection)
+
 
 Changelog v1.0.1:
 - added the functionality to overwrite only certain container types (via config.json)

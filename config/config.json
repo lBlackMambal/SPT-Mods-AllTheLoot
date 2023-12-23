@@ -505,7 +505,7 @@
 	"overwriteContainer_CashRegisterTAR": true,
 	"overwriteContainer_BankCashRegister": true,
 	"overwriteContainer_BankSafe": true,
-	"container_ShturmansStash_MinValuePerItem": 30000,
+	"container_ShturmansStash_MinValuePerItem": 40000,
 	"container_ShturmansStash_MaxValuePerItem": 1660000,
 	"container_WeaponBox5x5_MinValuePerItem": 20000,
 	"container_WeaponBox5x5_MaxValuePerItem": 1660000,
