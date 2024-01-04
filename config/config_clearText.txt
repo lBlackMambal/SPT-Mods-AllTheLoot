@@ -50,6 +50,9 @@ VPX Flash Storage Module
 Water filter
 Woods plan map
 Xenomorph sealing foam
+Backup hideout key
+Machinery key
+Unknown key
 ==================================================
 -- Jacket --		|| Others, Building, Electronics, Energy, Flammable, Tools, Keys, Special Equipment
 42 Signature Blend English
@@ -118,11 +121,15 @@ Weapon parts
 Woods plan map
 Working LCD
 Xenomorph sealing foam
+Backup hideout key
+Machinery key
+Unknown key
 ==================================================
 -- Weapon case --	|| Gear, Weapon parts, Weapons, Ammo Packs, Ammo Rounds
 6B13 M modified assault armor (Tan)
 12.7x108mm B-32
 12.7x108mm BZT-44M
+Airsoft 6mm BB
 Alpha Armband
 Armband (Blue)
 Armband (Green)
@@ -170,6 +177,11 @@ Trophy
 TT-33 7.62x25 TT pistol (Golden)
 Zryachiy's balaclava
 Zryachiy's balaclava (folded)
+Armasight Zeus-Pro 640 2-8x50 30Hz thermal scope
+FLIR RS-32 2.25-9x 35mm 60Hz thermal riflescope
+GPNVG-18 Night Vision goggles
+T-7 Thermal Goggles with a Night Vision mount
+Trijicon REAP-IR thermal scope
 ==================================================
 -- Cache --			|| Others, Building, Electronics, Energy, Flammable, Household, Medical supplies, Tools, Valuables, Gear, Provisions, Medication, Keycards, Info, Maps
 6B13 M modified assault armor (Tan)
@@ -229,25 +241,32 @@ Zryachiy's balaclava (folded)
 ==================================================
 -- Duffle bag --	|| Others, Building, Electronics, Energy, Flammable, Household, Medical supplies, Tools, Valuables, Provisions, Medication, Info, Special Equipment, Maps
 Advanced current converter
+Balaclava_dev
+Big Pipe's smoking pipe
 Christmas tree ornament (Red)
 Christmas tree ornament (Silver)
 Christmas tree ornament (Violet)
 Customs plan map
+Death Knight mask
 Digital secure DSP radio transmitter
 Dogtag BEAR
 Dogtag USEC
 EYE MK.2 professional hand-held compass
+Fake white beard
 Far-forward GPS Signal Amplifier Unit
 Interchange plan map
 Microcontroller board
 Military COFDM Wireless Signal Transmitter
 Motor Controller #1
-Phased array element
 Radio repeater
 Shoreline Health Resort plan map
 Shoreline plan map
 Single-axis Fiber Optic Gyroscope #1
+Tagilla's welding mask "Gorilla"
+Tagilla's welding mask "UBEY"
 Woods plan map
+Zryachiy's balaclava
+Zryachiy's balaclava (folded)
 ==================================================
 -- Medical --		|| Medical supplies, Injectors, Injury, Medkits, Pills
 
@@ -267,10 +286,8 @@ Dogtag BEAR
 Dogtag USEC
 DVD drive
 EYE MK.2 professional hand-held compass
-Far-forward GPS Signal Amplifier Unit
 Golden 1GPhone smartphone
 Graphics card
-Iridium military thermal vision module
 Malboro Cigarettes
 Microcontroller board
 Military COFDM Wireless Signal Transmitter
@@ -347,6 +364,7 @@ Christmas tree ornament (Violet)
 -- Ammo --
 12.7x108mm B-32
 12.7x108mm BZT-44M
+Airsoft 6mm BB
 M67 Shrapnel
 MON-50 Shrapnel
 RGD-5 Shrapnel
@@ -433,6 +451,7 @@ TT-33 7.62x25 TT pistol (Golden)
 UNTAR Armband
 Zryachiy's balaclava
 Zryachiy's balaclava (folded)
+T-7 Thermal Goggles with a Night Vision mount
 ==================================================
 -- Weapon Box 6x3 -- || Valuables, Body Armor, Gear Components, Headgear, all Weapon Categories except: Auxiliary parts, Compact collimators, Muzzle adapters, Iron sights, Charging handles, Mounts, Stocks Chassis, Gas blocks, All weapons except: Throwables
 6B13 M modified assault armor (Tan)
@@ -472,6 +491,7 @@ TT-33 7.62x25 TT pistol (Golden)
 UNTAR Armband
 Zryachiy's balaclava
 Zryachiy's balaclava (folded)
+T-7 Thermal Goggles with a Night Vision mount
 ==================================================
 ==================================================
 ==================================================
@@ -702,8 +722,6 @@ Bank safe
 Bank safe
 Bank safe
 Bank safe
-Bank safe
-Bank safe
 ==================================================
 =====
 =====
@@ -798,14 +816,12 @@ Bank safe
 =====
 =====
 ==================================================
-Red Rebel ice pick
-Stark SE-5 Express Forward foregrip
-Leatherman Multitool
-MS2000 Marker
-Signal Jammer
-Vortex Ranger 1500 rangefinder
-WI-FI Camera
-Can of white salt
+Ophthalmoscope
+LEDX Skin Transilluminator
+Portable defibrillator
+Graphics card
+S I C C organizational pouch
+T H I C C item case
 40mm VOG-25 grenade
 40x46mm M381 (HE) grenade
 40x46mm M386 (HE) grenade
@@ -813,21 +829,55 @@ Can of white salt
 40x46mm M433 (HEDP) grenade
 40x46mm M441 (HE) grenade
 40x46mm M576 (MP-APERS) grenade
+RGN hand grenade
+RGO hand grenade
 UZRGM grenade fuze
-GreenBat lithium battery
-Rechargeable battery
-Portable Powerbank
-D Size battery
-==================================================
-==================================================
+Zibbo lighter
+Classic matches
+Crickent lighter
+Ortodontox toothpaste
+Toilet paper
+Toothpaste
+Soap
+Can of white salt
+42 Signature Blend English Tea
+Apollo Soyuz cigarettes
+Can of Dr. Lupo's coffee beans
+Can of Majaica coffee beans
+Malboro Cigarettes
+Pack of Arseniy buckwheat
+Strike Cigarettes
+Wilston cigarettes
 Red Rebel ice pick
-Stark SE-5 Express Forward foregrip
 Leatherman Multitool
 MS2000 Marker
 Signal Jammer
 Vortex Ranger 1500 rangefinder
 WI-FI Camera
-Can of white salt
+GreenBat lithium battery
+Rechargeable battery
+Portable Powerbank
+AA Battery
+D Size battery
+OFZ 30x160mm shell
+Silicon Optoelectronic Integrated Circuits textbook
+TerraGroup "Blue Folders" materials
+Advanced Electronic Materials textbook
+Military circuit board
+Military COFDM Wireless Signal Transmitter
+UHF RFID Reader
+Virtex programmable processor
+VPX Flash Storage Module
+Magpul MOE Carbine rubber buttpad
+AKM/AK-74 Magpul Zhukov-S stock
+==================================================
+==================================================
+Ophthalmoscope
+LEDX Skin Transilluminator
+Portable defibrillator
+Graphics card
+S I C C organizational pouch
+T H I C C item case
 40mm VOG-25 grenade
 40x46mm M381 (HE) grenade
 40x46mm M386 (HE) grenade
@@ -835,10 +885,46 @@ Can of white salt
 40x46mm M433 (HEDP) grenade
 40x46mm M441 (HE) grenade
 40x46mm M576 (MP-APERS) grenade
+RGN hand grenade
+RGO hand grenade
 UZRGM grenade fuze
+Zibbo lighter
+Classic matches
+Crickent lighter
+Ortodontox toothpaste
+Toilet paper
+Toothpaste
+Soap
+Can of white salt
+42 Signature Blend English Tea
+Apollo Soyuz cigarettes
+Can of Dr. Lupo's coffee beans
+Can of Majaica coffee beans
+Malboro Cigarettes
+Pack of Arseniy buckwheat
+Strike Cigarettes
+Wilston cigarettes
+Red Rebel ice pick
+Leatherman Multitool
+MS2000 Marker
+Signal Jammer
+Vortex Ranger 1500 rangefinder
+WI-FI Camera
 GreenBat lithium battery
 Rechargeable battery
 Portable Powerbank
+AA Battery
 D Size battery
+OFZ 30x160mm shell
+Silicon Optoelectronic Integrated Circuits textbook
+TerraGroup "Blue Folders" materials
+Advanced Electronic Materials textbook
+Military circuit board
+Military COFDM Wireless Signal Transmitter
+UHF RFID Reader
+Virtex programmable processor
+VPX Flash Storage Module
+Magpul MOE Carbine rubber buttpad
+AKM/AK-74 Magpul Zhukov-S stock
 ==================================================
 ==================================================

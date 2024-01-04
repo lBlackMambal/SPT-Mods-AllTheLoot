@@ -25,15 +25,13 @@ Based on its value, each item will get a spawn rate assigned.
 Since I was struggling hard to implement a "per-item-price-spawn-logic" (e.g. inverse of the price for each item plus some fancy magic)
 I used a simple value range condition approach.
 The conditions (item value above/below) and the resulting spawn rate are currently set as following:
-0 - 2000        -> 25000	// to avoid super low value items (but mainly ammo rounds) spawning all over
-2000 - 20000    -> 50000
-20000 - 30000   -> 40000
-30000 - 50000   -> 30000
-50000 - 100000  -> 20000
-100000 - 300000 -> 15000
-300000 - 600000 -> 7500
-600000 - 2000000-> 3750
-2000000 -       -> 2000
+0 - 6000         -> 50000	// AMMO_ROUNDS
+0 - 6000		 -> 45000	// Everything else
+6000 - 50000     -> 50000
+50000 - 100000   -> 40000
+100000 - 1000000 -> 20000
+1000000 - 2000000-> 10000
+2000000 -        -> 5000
 
 
 Each item category, e.g. Barters/Electronics can be tuned via the config file (see below).
@@ -48,7 +46,9 @@ Instead I reduced them to defined categories of items that (in my eyes) make sen
 Those categories are as following and managed within the mod implementation:
 -- Drawer --
 -- Jacket --
--- Weapon Box Global --
+-- Weapon Box 4x4 --
+-- Weapon Box 5x2 --
+-- Wooden Crate --
 -- Cache --
 -- Duffle bag --
 -- Medical --
@@ -57,16 +57,19 @@ Those categories are as following and managed within the mod implementation:
 -- PC Block --
 -- Safe --
 -- Ammo --
+-- Grenades --
+-- Money --
 -- Shturman's Stash --
 -- Weapon Box 5x5 --
 -- Weapon Box 6x3 --
 
 
 
-There are 3 files in the config folder:
+There are 4 files in the config folder:
 - clearNames.json
 - config.json
 - config_clearText.txt
+- ContainerAssignment.txt
 
 clearNames.json basically is a copy of the en.json translation file that holds the clear names of everything.
 Regarding the mod this file is only used to retrieve the clear name of an item/ID.
@@ -127,8 +130,7 @@ This means that either 0, 1, 2 or 3 items can spawn with a chance of 0 (for 0 it
 
 
 Additional info:
-Shturman's Stash, Weapon Box 5x5 and Weapon Box 6x3 have items assigned based on a specified value range. Like such chances are much higher that less "garbage" and more "big guns" spawn in those.
-In addition to value ranges for those 3 container types I globally removed some of the weapon mods categories (e.g. Iron sights, Charging Handles, etc.) to make the non-garbage stuff even more likely.
+Shturman's Stash, Weapon Box 5x5 and Weapon Box 6x3 have items assigned based on a specified value range. Like such chances are much higher that less "garbage" and more "worthy" items spawn in those.
 
 The items are currently assigned so it's not really "breaking" some of the game principles, i.e most of the items specific to bosses (e.g. Tagilla, Killa, Kaban, etc.) are blacklisted.
 Feel free to remove them from the config to make them spawn again.
@@ -138,6 +140,17 @@ I hope with that mod you will have even more fun within this awesome project SPT
 
 Any feedback highly appreciated.
 
+
+
+Changelog v1.0.4:
+- fine tuned spawn system (finally a IMHO very good balance :) )
+- added unique item spawn rates per container (i.e. a certain spawn rate only occurs once per container)
+- removed WeaponBox Global assignment for Weapon Box 4x4, Weapon Box 5x2 and Wooden Crate - instead now using dedicated collections for each, for further details please check file "ContainerAssignment.txt"
+- adjusted container item distribution/probability rate similar to default SPT
+- removed Backpacks and Tacticalrigs from Shturman's Stash (to avoid one item only spawns)
+- adjusted value ranges for Shturman's Stash (185 items), Weapon Box 5x5 (546 items) and Weapon Box 6x3 (808 items)
+- high tier Special purpose sights now only spawn in Shturman's stash (T-7, GPNVG, Zeus, REAP-IR, FLIR), Weapon Box 5x5 (GPNVG, Zeus, REAP-IR, FLIR) and Weapon Box 6x3 (GPNVG, Zeus, REAP-IR, FLIR) 
+- added "ContainerAssignment.txt" to config folder
 
 
 Changelog v1.0.3:
@@ -160,3 +173,7 @@ Changelog v1.0.1:
 - final spawn rate is now slightly randomized to decrease chance of multiple items of same type in one container
 - explicit spawn rate adjustment of certain special equipment items (MS2000 Marker, Signal Jammer, Vortex Ranger 1500 rangefinder, WI-FI Camera)
 - further tweaking of category and container spawn rates
+
+
+
+

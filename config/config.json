@@ -49,7 +49,10 @@
 		"5c05300686f7746dce784e5d",
 		"5d1b385e86f774252167b98a",
 		"5900b89686f7744e704a8747",
-		"590c346786f77423e50ed342"
+		"590c346786f77423e50ed342",
+		"6398fd8ad3de3849057f5128",
+		"5937ee6486f77408994ba448",
+		"593962ca86f774068014d9af"
     ],
 	"blacklistedItems_Jacket":[
 		"5bc9be8fd4351e00334cae6e",
@@ -117,12 +120,16 @@
 		"5d1c819a86f774771b0acd6c",
 		"5900b89686f7744e704a8747",
 		"5d1b304286f774253763a528",
-		"590c346786f77423e50ed342"
+		"590c346786f77423e50ed342",
+		"6398fd8ad3de3849057f5128",
+		"5937ee6486f77408994ba448",
+		"593962ca86f774068014d9af"
 	],
 	"blacklistedItems_WeaponBoxGlobal":[
 		"5c0e541586f7747fa54205c9",
 		"5cde8864d7f00c0010373be1",
 		"5d2f2ab648f03550091993ca",
+		"6241c316234b593b5676b637",
 		"619bc61e86e01e16f839a999",
 		"5b3f3af486f774679e752c1f",
 		"5b3f3b0186f774021a2afef7",
@@ -169,7 +176,12 @@
 		"5ae089fb5acfc408fb13989b",
 		"5b3b713c5acfc4330140bd8d",
 		"63626d904aa74b8fe30ab426",
-		"636270263f2495c26f00b007"
+		"636270263f2495c26f00b007",
+		"63fc44e2429a8a166c7f61e6",
+		"5d1b5e94d7ad1a2b865a96b0",
+		"5c0558060db834001b735271",
+		"5c110624d174af029e69734c",
+		"5a1eaa87fcdbcb001865f75e"
 	],
 	"blacklistedItems_Cache":[
 		"5c0e541586f7747fa54205c9",
@@ -229,25 +241,32 @@
 	],
 	"blacklistedItems_DuffleBag":[
 		"6389c85357baa773a825b356",
+		"58ac60eb86f77401897560ff",
+		"62a61bbf8ec41a51b34758d2",
 		"5df8a6a186f77412640e2e80",
 		"5df8a72c86f77412640e2e83",
 		"5df8a77486f77412672a1e3f",
 		"5798a2832459774b53341029",
+		"62963c18dbc8ab5f0d382d0b",		
 		"62e910aaf957f2915e0a5e36",
 		"59f32bb586f774757e1e8442",
 		"59f32c3b86f77472a31742f0",
 		"5f4f9eb969cdc30ff33f09db",
+		"5c1a1e3f2e221602b66cc4c2",
 		"6389c7f115805221fb410466",
 		"5be4038986f774527d3fae60",
 		"6389c7750ef44505c87f5996",
 		"5c052f6886f7746b1e3db148",
 		"5af04c0b86f774138708f78e",
-		"5d03775b86f774203e7e0c4b",
 		"63a0b2eabea67a6d93009e52",
 		"5a80a29286f7742b25692012",
 		"5a8036fb86f77407252ddc02",
 		"5af04e0a86f7743a532b79e2",
-		"5900b89686f7744e704a8747"
+		"60a7ad3a0c5cb24b0134664a",
+		"60a7ad2a2198820d95707a2e",		
+		"5900b89686f7744e704a8747",
+		"63626d904aa74b8fe30ab426",
+		"636270263f2495c26f00b007"
 	],
 	"blacklistedItems_Medical":[
 		""
@@ -267,10 +286,8 @@
 		"59f32c3b86f77472a31742f0",
 		"5734781f24597737e04bf32a",
 		"5f4f9eb969cdc30ff33f09db",
-		"6389c7f115805221fb410466",
 		"5bc9b720d4351e450201234b",
 		"57347ca924597744596b4e71",
-		"5d0377ce86f774186372f689",
 		"573476d324597737da2adc13",
 		"6389c7750ef44505c87f5996",
 		"5c052f6886f7746b1e3db148",
@@ -347,6 +364,7 @@
 	"blacklistedItems_Ammo":[
 		"5cde8864d7f00c0010373be1",
 		"5d2f2ab648f03550091993ca",
+		"6241c316234b593b5676b637",
 		"5996f6fc86f7745e585b4de3",
 		"5996f6d686f77467977ba6cc",
 		"5996f6cb86f774678763a6ca",
@@ -432,7 +450,8 @@
 		"5b3b713c5acfc4330140bd8d",
 		"619bdf9cc9546643a67df6f8",
 		"63626d904aa74b8fe30ab426",
-		"636270263f2495c26f00b007"
+		"636270263f2495c26f00b007",
+		"5c110624d174af029e69734c"
 	],
 	"blacklistedItems_WeaponBox6x3":[
 		"5c0e541586f7747fa54205c9",
@@ -471,7 +490,8 @@
 		"5b3b713c5acfc4330140bd8d",
 		"619bdf9cc9546643a67df6f8",
 		"63626d904aa74b8fe30ab426",
-		"636270263f2495c26f00b007"
+		"636270263f2495c26f00b007",
+		"5c110624d174af029e69734c"
 	],
 	"overwriteContainer_Drawer": true,
 	"overwriteContainer_CashRegister": true,
@@ -507,273 +527,271 @@
 	"overwriteContainer_BankSafe": true,
 	"container_ShturmansStash_MinValuePerItem": 40000,
 	"container_ShturmansStash_MaxValuePerItem": 1660000,
-	"container_WeaponBox5x5_MinValuePerItem": 20000,
+	"container_WeaponBox5x5_MinValuePerItem": 15000,
 	"container_WeaponBox5x5_MaxValuePerItem": 1660000,
-	"container_WeaponBox6x3_MinValuePerItem": 6000,
+	"container_WeaponBox6x3_MinValuePerItem": 7000,
 	"container_WeaponBox6x3_MaxValuePerItem": 400000,
 	"container_Drawer_ItemsDistribution":[
-		"0","1"
+		"1","0"
 	],
 	"container_Drawer_ItemsDistributionProbabilities":[
-		"0","100"
+		"2761721","11522"
 	],
 	"container_CashRegister_ItemsDistribution":[
-		"0","1","2"
+		"2","1","0"
 	],
 	"container_CashRegister_ItemsDistributionProbabilities":[
-		"0","100","80"
+		"234460","235420","41812"
 	],
 	"container_PCBlock_ItemsDistribution":[
-		"0","1","2"
+		"2","1","0"
 	],
 	"container_PCBlock_ItemsDistributionProbabilities":[
-		"0","100","80"
+		"292751","293062","2142"
 	],
 	"container_Jacket_ItemsDistribution":[
-		"0","1"
+		"1","0"
 	],
 	"container_Jacket_ItemsDistributionProbabilities":[
-		"0","100"
+		"802124","198"
 	],
 	"container_Toolbox_ItemsDistribution":[
-		"0","1","2","3"
+		"1","2","3"
 	],
 	"container_Toolbox_ItemsDistributionProbabilities":[
-		"0","100","100","80"
+		"273191","273321","271944"
 	],
 	"container_Medcase_ItemsDistribution":[
-		"0","1","2","3"
+		"2","3","1"
 	],
 	"container_Medcase_ItemsDistributionProbabilities":[
-		"0","80","100","80"
+		"36075","35602","35815"
 	],
 	"container_Safe_ItemsDistribution":[
-		"0","1","2","3","4","5"
+		"5","3","1","2","4","0"
 	],
 	"container_Safe_ItemsDistributionProbabilities":[
-		"0","0","80","100","80","30"
+		"22842","28388","26785","27247","28579","83"
 	],
 	"container_WeaponBox5x5_ItemsDistribution":[
-		"0","1","2","3","4","5","6"
+		"5","3","4","6"
 	],
 	"container_WeaponBox5x5_ItemsDistributionProbabilities":[
-		"0","0","0","80","200","100","100"
+		"20285","20691","21281","20231"
 	],
 	"container_WeaponBox5x2_ItemsDistribution":[
-		"0","1","2","3","4","5"
+		"1","5","2","4","3"
 	],
 	"container_WeaponBox5x2_ItemsDistributionProbabilities":[
-		"0","60","60","100","80","80"
+		"99432","43963","91114","84793","93946"
 	],
 	"container_DuffleBag01_ItemsDistribution":[
-		"0","1","2","3","4"
+		"2","3","1","4"
 	],
 	"container_DuffleBag01_ItemsDistributionProbabilities":[
-		"0","100","100","30","30"
+		"388472","382443","384059","1127"
 	],
 	"container_WeaponBox6x3_ItemsDistribution":[
-		"0","1","2","3","4","5","6"
+		"6","4","3","5"
 	],
 	"container_WeaponBox6x3_ItemsDistributionProbabilities":[
-		"0","0","0","80","200","100","80"
+		"40535","46209","44375","40529"
 	],
 	"container_WeaponBox4x4_ItemsDistribution":[
-		"0","1","2","3","4","5","6","7","8","9"
+		"4","8","2","3","6","7","5","10","9","1"
 	],
 	"container_WeaponBox4x4_ItemsDistributionProbabilities":[
-		"0","0","20","80","80","80","60","30","20","20"
+		"44834","26194","35622","39738","39752","35534","41633","336","12353","35678"
 	],
 	"container_GrenadeBox_ItemsDistribution":[
-		"0","1","2","3"
+		"2","3","1"
 	],
 	"container_GrenadeBox_ItemsDistributionProbabilities":[
-		"0","80","80","80"
+		"78386","78039","77488"
 	],
 	"container_PlasticSuitcase_ItemsDistribution":[
-		"0","1","2","3","4"
+		"3","2","1","4"
 	],
 	"container_PlasticSuitcase_ItemsDistributionProbabilities":[
-		"0","0","100","80","60"
+		"23616","23859","23104","21117"
 	],
 	"container_MedbagSmu0601_ItemsDistribution":[
-		"0","1","2","3"
+		"3","1","2"
 	],
 	"container_MedbagSmu0601_ItemsDistributionProbabilities":[
-		"0","80","200","80"
+		"48227","48285","48421"
 	],
 	"container_WoodenCrate_ItemsDistribution":[
-		"0","1","2","3","4","5"
+		"2","1","4","3"
 	],
 	"container_WoodenCrate_ItemsDistributionProbabilities":[
-		"0","60","100","80","80","80"
+		"229672","168113","188113","260999"
 	],
 	"container_MedicalSupplyCrate_ItemsDistribution":[
-		"0","1","2","3","4","5","6"
+		"2","5","4","3"
 	],
 	"container_MedicalSupplyCrate_ItemsDistributionProbabilities":[
-		"0","20","20","100","100","200","50"
+		"10104","10185","10197","10253"
 	],
 	"container_TechnicalSupplyCrate_ItemsDistribution":[
-		"0","1","2","3","4","5","6"
+		"5","4","3"
 	],
 	"container_TechnicalSupplyCrate_ItemsDistributionProbabilities":[
-		"0","20","20","100","100","200","50"
+		"27564","27311","27557"
 	],
 	"container_DeadScav_ItemsDistribution":[
-		"0","1","2","3","4","5","6"
+		"1","4","3","2","5","6"
 	],
 	"container_DeadScav_ItemsDistributionProbabilities":[
-		"0","80","80","80","80","80","40"
+		"80843","82951","83994","81557","60043","589"
 	],
 	"container_GroundCache_ItemsDistribution":[
-		"0","1","2","3","4","5","6"
+		"5","2","3","4","1","6"
 	],
 	"container_GroundCache_ItemsDistributionProbabilities":[
-		"0","0","0","80","80","80","40"
+		"26520","33525","36643","36181","33393","11880"
 	],
 	"container_BurriedBarrelCache_ItemsDistribution":[
-		"0","1","2","3","4","5"
+		"3","1","2","4","5"
 	],
 	"container_BurriedBarrelCache_ItemsDistributionProbabilities":[
-		"0","0","0","80","60","40"
+		"57771","55617","54217","54131","37357"
 	],
 	"container_WoodenAmmoBox_ItemsDistribution":[
-		"0","1","2","3","4","5"
+		"2","1","3","4"
 	],
 	"container_WoodenAmmoBox_ItemsDistributionProbabilities":[
-		"0","0","0","80","40","20"
+		"34270","34469","33912","33960"
 	],
 	"container_JacketDorms114_ItemsDistribution":[
-		"0","1"
+		"1"
 	],
 	"container_JacketDorms114_ItemsDistributionProbabilities":[
-		"5","100"
+		"3837"
 	],
 	"container_JacketMachineryKey_ItemsDistribution":[
-		"0","1"
+		"1"
 	],
 	"container_JacketMachineryKey_ItemsDistributionProbabilities":[
-		"0","100"
+		"3837"
 	],
 	"container_RationSupplyCrate_ItemsDistribution":[
-		"0","1","2","3","4","5","6","7","8"
+		"4","6","5","2","3","7"
 	],
 	"container_RationSupplyCrate_ItemsDistributionProbabilities":[
-		"0","20","20","100","200","200","100","80","60"
+		"13283","13132","13246","12982","13000","13016"
 	],
 	"container_JacketDorms204_ItemsDistribution":[
-		"0","1"
+		"1"
 	],
 	"container_JacketDorms204_ItemsDistributionProbabilities":[
-		"0","100"
+		"1"
 	],
 	"container_ShturmansStash_ItemsDistribution":[
-		"5","6","7","8","9","10"
+		"7","9","8","6","5"
 	],
 	"container_ShturmansStash_ItemsDistributionProbabilities":[
-		"80","100","80","80","80","10"
+		"421","320","148","465","640"
 	],
 	"container_DuffleBag02_ItemsDistribution":[
-		"0","1","2","3","4"
+		"2","1","3","4"
 	],
 	"container_DuffleBag02_ItemsDistributionProbabilities":[
-		"0","100","100","80","30"
+		"704","669","622","654"
 	],
 	"container_MedbagSmu0602_ItemsDistribution":[
-		"0","1","2","3"
+		"3","4","2","1","5"
 	],
 	"container_MedbagSmu0602_ItemsDistributionProbabilities":[
-		"0","80","200","80"
+		"1618","1693","1491","1612","1626"
 	],
 	"container_CashRegisterTAR_ItemsDistribution":[
-		"0","1","2","3","4"
+		"4","3","1","0","2"
 	],
 	"container_CashRegisterTAR_ItemsDistributionProbabilities":[
-		"0","80","80","80","30"
+		"57560","58445","57793","55569","57817"
 	],
 	"container_BankCashRegister_ItemsDistribution":[
-		"0","1","2","3","4","5","6","7","8","9"
+		"4","5","7","8","9","6"
 	],
 	"container_BankCashRegister_ItemsDistributionProbabilities":[
-		"0","0","0","0","80","80","80","30","20","20"
+		"1122","1203","1173","1112","1153","1137"
 	],
 	"container_BankSafe_ItemsDistribution":[
-		"0","1","2","3","4","5","6","7","8","9",
-		"10","11","12","13","14","15","16"
+		"8","11","15","14","13","16","12","10","9"
 	],
 	"container_BankSafe_ItemsDistributionProbabilities":[
-		"0","0","0","0","0","0","0","80","80","80",
-		"80","80","80","80","80","80","80"
+		"801","802","738","714","830","765","763","718","769"
 	],
-	"rate_BARTER_OTHERS": 0.8,
-	"rate_BARTER_BUILDINGMATERIALS": 1.0,
+	"rate_BARTER_OTHERS": 0.6,
+	"rate_BARTER_BUILDINGMATERIALS": 0.7,
 	"rate_BARTER_ELECTRONICS": 1.0,
-	"rate_BARTER_ENERGYELEMENTS": 1.0,
-	"rate_BARTER_FLAMMABLEMATERIALS": 1.0,
+	"rate_BARTER_ENERGYELEMENTS": 0.3,
+	"rate_BARTER_FLAMMABLEMATERIALS": 0.7,
 	"rate_BARTER_HOUSEHOLDMATERIALS": 1.0,
-	"rate_BARTER_MEDICALSUPPLIES": 0.5,
-	"rate_BARTER_TOOLS": 1.0,
-	"rate_BARTER_VALUABLES": 1.0,
-	"rate_GEAR_BACKPACKS": 1.0,
-	"rate_GEAR_BODYARMOR": 1.2,
-	"rate_GEAR_EYEWEAR": 1.0,
-	"rate_GEAR_FACECOVERS": 1.0,
+	"rate_BARTER_MEDICALSUPPLIES": 1.0,
+	"rate_BARTER_TOOLS": 1.1,
+	"rate_BARTER_VALUABLES": 0.8,
+	"rate_GEAR_BACKPACKS": 0.5,
+	"rate_GEAR_BODYARMOR": 1.0,
+	"rate_GEAR_EYEWEAR": 0.8,
+	"rate_GEAR_FACECOVERS": 0.8,
 	"rate_GEAR_GEARCOMPONENTS": 1.0,
-	"rate_GEAR_HEADGEAR": 1.0,
-	"rate_GEAR_HEADSETS": 1.0,
+	"rate_GEAR_HEADGEAR": 0.9,
+	"rate_GEAR_HEADSETS": 0.5,
 	"rate_GEAR_SECURECONTAINERS": 0.0,
-	"rate_GEAR_STORAGECONTAINERS": 0.1,
-	"rate_GEAR_TACTICALRIGS": 1.2,
-	"rate_WPM_FM_AUXILIARYPARTS": 0.9,
-	"rate_WPM_FM_BIPODS": 0.2,
-	"rate_WPM_FM_FOREGRIPS": 1.2,
-	"rate_WPM_FM_LLD_FLASHLIGHTS": 0.8,
-	"rate_WPM_FM_LLD_LASERTARGETPOINTERS": 0.9,
-	"rate_WPM_FM_LLD_TACTICALCOMBODEVICES": 0.8,
+	"rate_GEAR_STORAGECONTAINERS": 0.05,
+	"rate_GEAR_TACTICALRIGS": 1.0,
+	"rate_WPM_FM_AUXILIARYPARTS": 0.8,
+	"rate_WPM_FM_BIPODS": 0.1,
+	"rate_WPM_FM_FOREGRIPS": 1.0,
+	"rate_WPM_FM_LLD_FLASHLIGHTS": 0.2,
+	"rate_WPM_FM_LLD_LASERTARGETPOINTERS": 0.2,
+	"rate_WPM_FM_LLD_TACTICALCOMBODEVICES": 0.9,
 	"rate_WPM_FM_MD_FLASHHIDERSBRAKES": 0.9,
-	"rate_WPM_FM_MD_MUZZLEADAPTERS": 0.9,
-	"rate_WPM_FM_MD_SUPPRESSORS": 1.2,
-	"rate_WPM_FM_S_ASSAULTSCOPES": 1.0,
-	"rate_WPM_FM_S_COLLIMATORS": 1.0,
-	"rate_WPM_FM_S_COMPACTCOLLIMATORS": 1.0,
-	"rate_WPM_FM_S_IRONSIGHTS": 0.5,
-	"rate_WPM_FM_S_OPTICS": 1.1,
-	"rate_WPM_FM_S_SPECIALPURPOSESIGHTS": 1.0,
-	"rate_WPM_GM_CHARGINGHANDLES": 0.8,
-	"rate_WPM_GM_LAUNCHERS": 0.2,
-	"rate_WPM_GM_MAGAZINES": 1.2,
-	"rate_WPM_GM_MOUNTS": 0.8,
+	"rate_WPM_FM_MD_MUZZLEADAPTERS": 0.7,
+	"rate_WPM_FM_MD_SUPPRESSORS": 0.7,
+	"rate_WPM_FM_S_ASSAULTSCOPES": 0.6,
+	"rate_WPM_FM_S_COLLIMATORS": 0.8,
+	"rate_WPM_FM_S_COMPACTCOLLIMATORS": 0.5,
+	"rate_WPM_FM_S_IRONSIGHTS": 0.6,
+	"rate_WPM_FM_S_OPTICS": 0.9,
+	"rate_WPM_FM_S_SPECIALPURPOSESIGHTS": 0.3,
+	"rate_WPM_GM_CHARGINGHANDLES": 1.0,
+	"rate_WPM_GM_LAUNCHERS": 0.1,
+	"rate_WPM_GM_MAGAZINES": 1.5,
+	"rate_WPM_GM_MOUNTS": 1.0,
 	"rate_WPM_GM_STOCKSCHASSIS": 1.0,
-	"rate_WPM_VP_BARRELS": 0.9,
-	"rate_WPM_VP_GASBLOCKS": 0.9,
-	"rate_WPM_VP_HANDGUARDS": 0.9,
+	"rate_WPM_VP_BARRELS": 0.5,
+	"rate_WPM_VP_GASBLOCKS": 0.5,
+	"rate_WPM_VP_HANDGUARDS": 0.7,
 	"rate_WPM_VP_PISTOLGRIPS": 1.0,
 	"rate_WPM_VP_RECEIVERSSLIDES": 1.0,
-	"rate_WEAPONS_ASSAULTCARBINES": 1.0,
-	"rate_WEAPONS_ASSAULTRIFLES": 1.0,
-	"rate_WEAPONS_BOLTACTIONRIFLES": 0.8,
-	"rate_WEAPONS_GRENADELAUNCHERS": 0.1,
-	"rate_WEAPONS_MACHINEGUNS": 0.4,
-	"rate_WEAPONS_MARKSMANRIFLES": 1.0,
-	"rate_WEAPONS_MELEEWEAPONS": 0.7,
-	"rate_WEAPONS_PISTOLS": 0.7,
-	"rate_WEAPONS_SMGS": 0.8,
-	"rate_WEAPONS_SHOTGUNS": 0.7,
+	"rate_WEAPONS_ASSAULTCARBINES": 0.4,
+	"rate_WEAPONS_ASSAULTRIFLES": 0.6,
+	"rate_WEAPONS_BOLTACTIONRIFLES": 0.9,
+	"rate_WEAPONS_GRENADELAUNCHERS": 0.6,
+	"rate_WEAPONS_MACHINEGUNS": 0.2,
+	"rate_WEAPONS_MARKSMANRIFLES": 0.6,
+	"rate_WEAPONS_MELEEWEAPONS": 0.6,
+	"rate_WEAPONS_PISTOLS": 0.4,
+	"rate_WEAPONS_SMGS": 0.5,
+	"rate_WEAPONS_SHOTGUNS": 0.6,
 	"rate_WEAPONS_SPECIALWEAPONS": 0.2,
 	"rate_WEAPONS_THROWABLES": 1.0,
 	"rate_AMMO_AMMOPACKS": 1.0,
-	"rate_AMMO_ROUNDS": 1.5,
+	"rate_AMMO_ROUNDS": 1.2,
 	"rate_PROVISIONS_DRINKS": 1.0,
 	"rate_PROVISIONS_FOOD": 1.0,
-	"rate_MEDICATION_INJECTORS": 0.2,
+	"rate_MEDICATION_INJECTORS": 0.5,
 	"rate_MEDICATION_INJURYTREATMENT": 1.0,
-	"rate_MEDICATION_MEDKITS": 1.0,
-	"rate_MEDICATION_PILLS": 0.4,
-	"rate_KEYS_ELECTRONICKEYS": 0.1,
-	"rate_KEYS_MECHANICALKEYS": 0.5,
-	"rate_INFOITEMS": 0.5,
-	"rate_SPECIALEQUIPMENT": 0.5,
-	"rate_MAPS": 0.1,
+	"rate_MEDICATION_MEDKITS": 0.5,
+	"rate_MEDICATION_PILLS": 0.3,
+	"rate_KEYS_ELECTRONICKEYS": 0.02,
+	"rate_KEYS_MECHANICALKEYS": 0.2,
+	"rate_INFOITEMS": 0.1,
+	"rate_SPECIALEQUIPMENT": 0.2,
+	"rate_MAPS": 0.0,
 	"rate_MONEY": 1.0,
 	"removeBackpackRestrictions": true,
 	"showItemListing": false,
@@ -785,10 +803,11 @@
 	"debugMode_ShowSpawnRates_Medical": false,
 	"debugMode_ShowSpawnRates_Safe": false,
 	"debugMode_ShowSpawnRates_WeaponBox5x5": false,
-	"debugMode_ShowSpawnRates_WeaponBoxGlobal": false,
+	"debugMode_ShowSpawnRates_WeaponBox5x2": false,
 	"debugMode_ShowSpawnRates_DuffleBag": false,
 	"debugMode_ShowSpawnRates_WeaponBox6x3": false,
 	"debugMode_ShowSpawnRates_WeaponBox4x4": false,
+	"debugMode_ShowSpawnRates_WoodenCrate": false,
 	"debugMode_ShowSpawnRates_GrenadeBox": false,
 	"debugMode_ShowSpawnRates_Caches": false,
 	"debugMode_ShowSpawnRates_WoodenAmmoBox": false,
@@ -796,16 +815,13 @@
 	"debugMode_ShowSpawnRates_RationsSupplyCrate": false,
 	"debugMode_ShowSpawnRates_ShturmansStash": false,
 	"debugMode_ShowSpawnRates_BankCashRegister": false,
-	"randomizerRange": 200,
-	"selectedItems_IncreaseSpawnChance":[
-		"5c0126f40db834002a125382",
-		"5b057b4f5acfc4771e1bd3e9",
-		"544fb5454bdc2df8738b456a",
-		"5991b51486f77447b112d44f",
-		"5ac78a9b86f7741cca0bbd8d",
-		"61605e13ffa6e502ac5e7eef",
-		"5b4391a586f7745321235ab2",
-		"62a09ee4cf4a99369e262453",
+	"selectedItems_AdjustSpawnChance":[
+		"5af0534a86f7743b6f354284",
+		"5c0530ee86f774697952d952",
+		"5c052e6986f7746b207bc3c9",
+		"57347ca924597744596b4e71",
+		"5d235bb686f77443f4331278",
+		"5c0a840b86f7742ffa4f2482",
 		"5656eb674bdc2d35148b457c",
 		"5ede474b0c226a66f5402622",
 		"5ede475b549eed7c6d5c18fb",
@@ -813,32 +829,102 @@
 		"5f0c892565703e5c461894e9",
 		"5ede47405b097655935d7d16",
 		"5ede475339ee016e8c534742",
+		"617fd91e5539a84ec44ce155",
+		"618a431df1eb8e24b8741deb",
 		"5e2af51086f7746d3f3c3402",
+		"56742c2e4bdc2d95058b456d",
+		"57347b8b24597737dd42e192",
+		"56742c284bdc2d98058b456d",
+		"5d4041f086f7743cac3f22a7",
+		"5c13cef886f774072e618e82",
+		"57347c93245977448d35f6e3",
+		"5c13cd2486f774072c757944",
+		"62a09ee4cf4a99369e262453",
+		"5bc9be8fd4351e00334cae6e",
+		"573475fb24597737fb1379e1",
+		"5e54f6af86f7742199090bf3",
+		"5af0484c86f7740f02001f7f",
+		"573476d324597737da2adc13",
+		"6389c6463485cf0eeb260715",
+		"5734770f24597738025ee254",
+		"573476f124597737e04bf328",
+		"5c0126f40db834002a125382",
+		"544fb5454bdc2df8738b456a",
+		"5991b51486f77447b112d44f",
+		"5ac78a9b86f7741cca0bbd8d",
+		"61605e13ffa6e502ac5e7eef",
+		"5b4391a586f7745321235ab2",
 		"5e2aedd986f7746d404f3aa4",
 		"590a358486f77429692b2790",
 		"5af0561e86f7745f5f3ad6ac",
-		"5672cb304bdc2dc2088b456a"
+		"5672cb124bdc2d1a0f8b4568",
+		"5672cb304bdc2dc2088b456a",
+		"5d0379a886f77420407aa271",
+		"6389c8fb46b54c634724d847",
+		"6389c8c5dbfd5e4b95197e6b",
+		"6389c92d52123d5dd17f8876",
+		"5d0376a486f7747d8050965c",
+		"5c052f6886f7746b1e3db148",
+		"5c052fb986f7746b2101e909",
+		"5c05308086f7746b2101e90b",
+		"5c05300686f7746dce784e5d",
+		"58d2912286f7744e27117493",
+		"5b0e794b5acfc47a877359b2"
 	],
 	"selectedItems_spawnChance":[
-		"1.0",
-		"1.0",
 		"0.5",
-		"0.1",
-		"0.1",
-		"0.1",
-		"0.1",
-		"0.5",
-		"0.1",
-		"0.1",
-		"0.1",
-		"0.1",
-		"0.1",
-		"0.1",
-		"0.1",
-		"0.1",
-		"0.5",
+		"0.1",		
 		"0.4",
 		"0.5",
-		"0.5"
+		"0.8",
+		"0.5",
+		"0.2",
+		"0.1",
+		"0.1",
+		"0.1",
+		"0.1",
+		"0.1",
+		"0.1",
+		"0.5",
+		"0.5",
+		"0.8",
+		"0.1",
+		"0.1",
+		"0.1",
+		"0.5",
+		"0.5",
+		"0.5",
+		"0.5",
+		"0.4",
+		"0.9",
+		"1.3",
+		"0.9",
+		"0.9",
+		"1.2",
+		"0.3",
+		"1.2",
+		"1.1",
+		"1.0",
+		"0.1",
+		"0.1",
+		"0.1",
+		"0.1",
+		"0.1",
+		"0.5",
+		"0.5",
+		"0.5",
+		"0.7",
+		"0.7",
+		"1.3",
+		"0.3",
+		"0.1",
+		"0.4",
+		"0.6",
+		"1.4",
+		"1.3",
+		"1.3",
+		"1.3",
+		"1.3",
+		"1.3"
 	]
 }

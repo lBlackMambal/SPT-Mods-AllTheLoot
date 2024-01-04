@@ -105,6 +105,7 @@ var LootGlobalType;
     LootGlobalType["WEAPONBOXGLOBAL"] = "WEAPONBOXGLOBAL";
     LootGlobalType["WEAPONBOX6X3"] = "WEAPONBOX6x3";
     LootGlobalType["WEAPONBOX5X5"] = "WEAPONBOX5x5";
+    LootGlobalType["WEAPONBOX4X4"] = "WEAPONBOX4x4";
     LootGlobalType["CACHE"] = "CACHE";
     LootGlobalType["DUFFLEBAG"] = "DUFFLEBAG";
     LootGlobalType["MEDICAL"] = "MEDICAL";
@@ -184,7 +185,7 @@ class AllTheLoot {
     jsonDataClearNames = JSON.parse(this.jsonStringClearNames);
     postDBLoad(container) {
         this.logger = container.resolve("WinstonLogger");
-        this.logger.warning("AllTheLoot initialized");
+        this.logger.warning("AllTheLoot v1.0.4 initialized");
         // get database from server
         this.database = container.resolve("DatabaseServer");
         const tables = this.database.getTables();
@@ -196,7 +197,7 @@ class AllTheLoot {
         const lootRecordsCalculated = this.createLootRecords(handbook_Items_toModify, handbook_Items_ref, tables);
         this.database.getTables().loot.staticLoot = lootRecordsCalculated;
         const itemsAmount = handbook_Items.length;
-        this.logger.warning("AllTheLoot successfully applied");
+        this.logger.warning("AllTheLoot v1.0.4 successfully applied");
         this.logger.warning("Now you are able to loot most of the " + itemsAmount + " handbook items from containers");
     }
     adjustSpawnRate(data, data_ref, lootType) {
@@ -342,35 +343,34 @@ class AllTheLoot {
         else if (lootType === "MONEY")
             spawnTweaker = this.config.rate_MONEY;
         // simple but somehow working spawn logic :)
-        if (data_ref.Price >= 0 && data_ref.Price < 2000 && data.Price === data_ref.Price)
-            data.Price = Math.floor(25000 * spawnTweaker);
-        else if (data_ref.Price >= 2000 && data_ref.Price < 20000 && data.Price === data_ref.Price)
-            data.Price = Math.floor(50000 * spawnTweaker);
-        else if (data_ref.Price >= 20000 && data_ref.Price < 30000 && data.Price === data_ref.Price)
-            data.Price = Math.floor(40000 * spawnTweaker);
-        else if (data_ref.Price >= 30000 && data_ref.Price < 50000 && data.Price === data_ref.Price)
-            data.Price = Math.floor(30000 * spawnTweaker);
-        else if (data_ref.Price >= 50000 && data_ref.Price < 100000 && data.Price === data_ref.Price)
-            data.Price = Math.floor(20000 * spawnTweaker);
-        else if (data_ref.Price >= 100000 && data_ref.Price < 300000 && data.Price === data_ref.Price)
-            data.Price = Math.floor(15000 * spawnTweaker);
-        else if (data_ref.Price >= 300000 && data_ref.Price < 600000 && data.Price === data_ref.Price)
-            data.Price = Math.floor(7500 * spawnTweaker);
-        else if (data_ref.Price >= 600000 && data_ref.Price < 2000000 && data.Price === data_ref.Price)
-            data.Price = Math.floor(3750 * spawnTweaker);
-        else if (data_ref.Price >= 2000000 && data.Price === data_ref.Price)
-            data.Price = Math.floor(2000 * spawnTweaker);
-        else
-            data.Price = data_ref.Price;
+        spawnTweaker *= 10;
+        if (data_ref.Price < 6000 && data.Price === data_ref.Price && lootType === "AMMO_ROUNDS") // - 6000 (Ammo rounds)
+            data.Price = (50000 * spawnTweaker);
+        else if (data_ref.Price < 6000 && data.Price === data_ref.Price && lootType !== "AMMO_ROUNDS") // - 6000 (Everything aside from Ammo Rounds)
+            data.Price = (45000 * spawnTweaker);
+        else if (data_ref.Price >= 6000 && data_ref.Price < 50000 && data.Price === data_ref.Price) // 6000 - 50000
+            data.Price = (50000 * spawnTweaker);
+        else if (data_ref.Price >= 50000 && data_ref.Price < 100000 && data.Price === data_ref.Price) // 50000 - 100000
+            data.Price = (40000 * spawnTweaker);
+        else if (data_ref.Price >= 100000 && data_ref.Price < 1000000 && data.Price === data_ref.Price) // 100000 - 1000000
+            data.Price = (20000 * spawnTweaker);
+        else if (data_ref.Price >= 1000000 && data_ref.Price < 2000000 && data.Price === data_ref.Price) // 1000000 - 2000000
+            data.Price = (10000 * spawnTweaker);
+        else if (data_ref.Price >= 2000000 && data.Price === data_ref.Price) // 2000000+
+            data.Price = (5000 * spawnTweaker);
+        else {
+            return;
+        }
+        if (data_ref.Price < 100000) {
+            const randomFraction = (Math.random() - 0.5) * 0.1;
+            data.Price += (data.Price * randomFraction);
+        }
         // Increase spawn rate for selected items
-        if (this.config.selectedItems_IncreaseSpawnChance.includes(data.Id)) {
-            const index = this.config.selectedItems_IncreaseSpawnChance.indexOf(data.Id);
+        if (this.config.selectedItems_AdjustSpawnChance.includes(data.Id)) {
+            const index = this.config.selectedItems_AdjustSpawnChance.indexOf(data.Id);
             data.Price *= this.config.selectedItems_spawnChance[index];
         }
-        const randomValue = Math.floor(Math.random() * (this.config.randomizerRange + 1)) - this.config.randomizerRange / 2;
-        const scaleFactor = 1 / (1 + (data_ref.Price / 100000));
-        if (!(data.Price + randomValue < 0))
-            data.Price += Math.floor(randomValue * scaleFactor);
+        data.Price = Math.floor(data.Price);
     }
     adjustItemSpawnRateForEachContainerType(lootData) {
         const allCategoriesInContainer = [];
@@ -399,6 +399,34 @@ class AllTheLoot {
                 lootData[i][j].Price *= finalScaleFactorsPerCategory[i];
                 lootData[i][j].Price = Math.floor(lootData[i][j].Price);
             }
+        }
+    }
+    createUniqueSpawnrate(data) {
+        const uniqueValueSet = new Set();
+        const adjustedArray = [];
+        for (let value of data) {
+            if (value !== 0) {
+                if (!uniqueValueSet.has(value)) {
+                    uniqueValueSet.add(value);
+                    adjustedArray.push(Math.floor(value));
+                }
+                else {
+                    let adjustmentPercentage = (Math.random() - 0.5) * 0.05;
+                    let adjustedValue = value * (1 + adjustmentPercentage);
+                    while (uniqueValueSet.has(adjustedValue)) {
+                        adjustmentPercentage = (Math.random() - 0.5) * 0.05;
+                        adjustedValue = value * (1 + adjustmentPercentage);
+                    }
+                    uniqueValueSet.add(adjustedValue);
+                    adjustedArray.push(Math.floor(adjustedValue));
+                }
+            }
+            else {
+                adjustedArray.push(0);
+            }
+        }
+        for (let i = 0; i < adjustedArray.length; i++) {
+            data[i] = adjustedArray[i];
         }
     }
     removeBlacklistedItems(data, lootType) {
@@ -537,9 +565,10 @@ class AllTheLoot {
         // ===== SPECIAL ITEMS =====
         const category_MachineryKey = [];
         const category_Ammo_Grenades = [];
+        const category_DrawerAddOn = [];
         const category_MedicalAddOn = [];
         const category_RationsAddOn = [];
-        const category_WeaponBox5x5AddOn = [];
+        const category_WeaponBoxAddOn = [];
         const category_DEBUG = [];
         // ===== REF ARRAY (used to keep original data) =====
         // ===== BARTER ITEMS =====
@@ -627,9 +656,10 @@ class AllTheLoot {
         // ===== SPECIAL ITEMS =====
         const category_MachineryKey_ref = [];
         const category_Ammo_Grenades_ref = [];
+        const category_DrawerAddOn_ref = [];
         const category_MedicalAddOn_ref = [];
         const category_RationsAddOn_ref = [];
-        const category_WeaponBox5x5AddOn_ref = [];
+        const category_WeaponBoxAddOn_ref = [];
         const category_DEBUG_ref = [];
         for (let i = 0; i < data.length; i++) {
             // ===== BARTER ITEMS =====
@@ -936,6 +966,11 @@ class AllTheLoot {
                 category_Ammo_Grenades.push(data[i]);
                 category_Ammo_Grenades_ref.push(data_ref[i]);
             }
+            // ===== DRAWER ADDON =====                                                // used instead of blacklisting categories from type barter
+            if (data[i].Id === "56742c2e4bdc2d95058b456d" || data[i].Id === "57347b8b24597737dd42e192" || data[i].Id === "56742c284bdc2d98058b456d") {
+                category_DrawerAddOn.push(data[i]);
+                category_DrawerAddOn_ref.push(data_ref[i]);
+            }
             // ===== MEDICAL ADDON =====                                                // used instead of blacklisting categories from type barter
             if (data[i].Id === "5d4041f086f7743cac3f22a7" || data[i].Id === "5c13cef886f774072e618e82" || data[i].Id === "57347c93245977448d35f6e3" ||
                 data[i].Id === "5c13cd2486f774072c757944") {
@@ -952,9 +987,9 @@ class AllTheLoot {
             // ===== WEAPONBOX5x5 ADDON =====
             if (data[i].Id === "6389c85357baa773a825b356" || data[i].Id === "6389c7f115805221fb410466" || data[i].Id === "6389c7750ef44505c87f5996" ||
                 data[i].Id === "5c052f6886f7746b1e3db148" || data[i].Id === "5c052fb986f7746b2101e909" || data[i].Id === "5c05308086f7746b2101e90b" ||
-                data[i].Id === "5c05300686f7746dce784e5d") {
-                category_WeaponBox5x5AddOn.push(data[i]);
-                category_WeaponBox5x5AddOn_ref.push(data_ref[i]);
+                data[i].Id === "5c05300686f7746dce784e5d" || data[i].Id === "5d0379a886f77420407aa271") {
+                category_WeaponBoxAddOn.push(data[i]);
+                category_WeaponBoxAddOn_ref.push(data_ref[i]);
             }
             // DEBUG
             /* if(data[i].Id === "5c0a840b86f7742ffa4f2482") {
@@ -974,11 +1009,9 @@ class AllTheLoot {
         const maxValueWeaponShturmansStash = this.config.container_ShturmansStash_MaxValuePerItem;
         const preSelectionForShturmansStash = [];
         preSelectionForShturmansStash.push(category_Barter_Valuables);
-        preSelectionForShturmansStash.push(category_Gear_Backpacks);
         preSelectionForShturmansStash.push(category_Gear_BodyArmor);
         preSelectionForShturmansStash.push(category_Gear_Headgear);
         preSelectionForShturmansStash.push(category_Gear_Headsets);
-        preSelectionForShturmansStash.push(category_Gear_TacticalRigs);
         preSelectionForShturmansStash.push(category_WeaponPartsMods_FM_Bipods);
         preSelectionForShturmansStash.push(category_WeaponPartsMods_FM_Foregrips);
         preSelectionForShturmansStash.push(category_WeaponPartsMods_FM_LLD_Flashlights);
@@ -992,8 +1025,9 @@ class AllTheLoot {
         preSelectionForShturmansStash.push(category_WeaponPartsMods_FM_S_Optics);
         preSelectionForShturmansStash.push(category_WeaponPartsMods_FM_S_SpecialPurposeSights);
         preSelectionForShturmansStash.push(category_WeaponPartsMods_GM_Launchers);
-        preSelectionForShturmansStash.push(category_WeaponPartsMods_GM_Magazines);
-        preSelectionForShturmansStash.push(category_WeaponPartsMods_VP_Barrels);
+        //preSelectionForShturmansStash.push(category_WeaponPartsMods_GM_Magazines);
+        preSelectionForShturmansStash.push(category_WeaponPartsMods_GM_StocksChassis);
+        //preSelectionForShturmansStash.push(category_WeaponPartsMods_VP_Barrels);
         preSelectionForShturmansStash.push(category_WeaponPartsMods_VP_Handguards);
         preSelectionForShturmansStash.push(category_WeaponPartsMods_VP_PistolGrips);
         preSelectionForShturmansStash.push(category_WeaponPartsMods_VP_ReceiversSlides);
@@ -1009,6 +1043,7 @@ class AllTheLoot {
         preSelectionForShturmansStash.push(category_Weapons_Shotguns);
         preSelectionForShturmansStash.push(category_Weapons_SpecialWeapons);
         preSelectionForShturmansStash.push(category_InfoItems);
+        preSelectionForShturmansStash.push(category_WeaponBoxAddOn);
         for (let i = 0; i < preSelectionForShturmansStash.length; i++) {
             for (let j = 0; j < preSelectionForShturmansStash[i].length; j++) {
                 if (preSelectionForShturmansStash[i][j].Price > minValueWeaponShturmansStash && preSelectionForShturmansStash[i][j].Price < maxValueWeaponShturmansStash)
@@ -1040,6 +1075,7 @@ class AllTheLoot {
         preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_FM_S_SpecialPurposeSights);
         preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_GM_Launchers);
         preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_GM_Magazines);
+        preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_GM_StocksChassis);
         preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_VP_Barrels);
         preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_VP_Handguards);
         preSelectionForWeaponBox5x5.push(category_WeaponPartsMods_VP_PistolGrips);
@@ -1055,6 +1091,7 @@ class AllTheLoot {
         preSelectionForWeaponBox5x5.push(category_Weapons_SMGs);
         preSelectionForWeaponBox5x5.push(category_Weapons_Shotguns);
         preSelectionForWeaponBox5x5.push(category_Weapons_SpecialWeapons);
+        preSelectionForWeaponBox5x5.push(category_WeaponBoxAddOn);
         for (let i = 0; i < preSelectionForWeaponBox5x5.length; i++) {
             for (let j = 0; j < preSelectionForWeaponBox5x5[i].length; j++) {
                 if (preSelectionForWeaponBox5x5[i][j].Price > minValueWeaponBox5x5 && preSelectionForWeaponBox5x5[i][j].Price < maxValueWeaponBox5x5)
@@ -1067,7 +1104,6 @@ class AllTheLoot {
         const minValueWeaponBox6x3 = this.config.container_WeaponBox6x3_MinValuePerItem;
         const maxValueWeaponBox6x3 = this.config.container_WeaponBox6x3_MaxValuePerItem;
         const preSelectionForWeaponBox6x3 = [];
-        preSelectionForWeaponBox6x3.push(category_Gear_Backpacks);
         preSelectionForWeaponBox6x3.push(category_Gear_BodyArmor);
         preSelectionForWeaponBox6x3.push(category_Gear_Headgear);
         preSelectionForWeaponBox6x3.push(category_Gear_Headsets);
@@ -1086,6 +1122,7 @@ class AllTheLoot {
         preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_FM_S_SpecialPurposeSights);
         preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_GM_Launchers);
         preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_GM_Magazines);
+        preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_GM_StocksChassis);
         preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_VP_Barrels);
         preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_VP_Handguards);
         preSelectionForWeaponBox6x3.push(category_WeaponPartsMods_VP_PistolGrips);
@@ -1093,7 +1130,6 @@ class AllTheLoot {
         preSelectionForWeaponBox6x3.push(category_Weapons_AssaultCarbines);
         preSelectionForWeaponBox6x3.push(category_Weapons_AssaultRifles);
         preSelectionForWeaponBox6x3.push(category_Weapons_BoltActionRifles);
-        preSelectionForWeaponBox6x3.push(category_Weapons_GrenadeLaunchers);
         preSelectionForWeaponBox6x3.push(category_Weapons_MachineGuns);
         preSelectionForWeaponBox6x3.push(category_Weapons_MarksmanRifles);
         preSelectionForWeaponBox6x3.push(category_Weapons_MeleeWeapons);
@@ -1123,18 +1159,17 @@ class AllTheLoot {
             // Item IDs only
             /* allHandbookItems.forEach(item => {
                 this.logger.warning(item.Id);
-            });
-
+            }); */
             // Item names only
-            allHandbookItems.forEach(item => {
+            /* allHandbookItems.forEach(item => {
                 const propertyName = `${item.Id} Name`;
-                const value = jsonData[propertyName];
+                const value = this.jsonDataClearNames[propertyName];
                 this.logger.warning(value);
             }); */
             // Item prices only
-            // allHandbookItems.forEach(item => {
-            //     this.logger.warning(item.Price);
-            // }); 
+            /* allHandbookItems.forEach(item => {
+                this.logger.warning(item.Price);
+            });  */
         }
         // adjust the spawn rate here (so it's easier to assign rates to certain categories)
         // ===== BARTER ITEMS =====
@@ -1301,6 +1336,7 @@ class AllTheLoot {
         loot_DrawersArray.push(category_InfoItems);
         loot_DrawersArray.push(category_SpecialEquipment);
         loot_DrawersArray.push(category_Maps);
+        loot_DrawersArray.push(category_DrawerAddOn);
         let loot_Drawers_Final = deepCopy(loot_DrawersArray);
         this.adjustItemSpawnRateForEachContainerType(loot_Drawers_Final);
         loot_Drawers_Final = this.removeBlacklistedItems(loot_Drawers_Final, LootGlobalType.DRAWER);
@@ -1317,56 +1353,141 @@ class AllTheLoot {
         let loot_Jackets_Final = deepCopy(loot_JacketsArray);
         this.adjustItemSpawnRateForEachContainerType(loot_Jackets_Final);
         loot_Jackets_Final = this.removeBlacklistedItems(loot_Jackets_Final, LootGlobalType.JACKET);
+        // ===== Loot - Weapon Box 4x4 =====
+        const loot_WeaponBox4x4Array = [];
+        loot_WeaponBox4x4Array.push(category_Gear_BodyArmor);
+        loot_WeaponBox4x4Array.push(category_Gear_Eyewear);
+        loot_WeaponBox4x4Array.push(category_Gear_Facecovers);
+        loot_WeaponBox4x4Array.push(category_Gear_GearComponents);
+        loot_WeaponBox4x4Array.push(category_Gear_Headgear);
+        loot_WeaponBox4x4Array.push(category_Gear_Headsets);
+        loot_WeaponBox4x4Array.push(category_Gear_TacticalRigs);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_FM_AuxiliaryParts);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_FM_Bipods);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_FM_Foregrips);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_FM_LLD_Flashlights);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_FM_LLD_LaserTargetPointers);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_FM_LLD_TacticalComboDevices);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_FM_MD_FlashhidersBrakes);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_FM_MD_MuzzleAdapters);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_FM_MD_Suppressors);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_FM_S_AssaultScopes);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_FM_S_Collimators);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_FM_S_CompactCollimators);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_FM_S_IronSights);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_FM_S_Optics);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_FM_S_SpecialPurposeSights);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_GM_ChargingHandles);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_GM_Launchers);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_GM_Magazines);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_GM_Mounts);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_GM_StocksChassis);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_VP_Barrels);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_VP_GasBlocks);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_VP_Handguards);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_VP_PistolGrips);
+        loot_WeaponBox4x4Array.push(category_WeaponPartsMods_VP_ReceiversSlides);
+        loot_WeaponBox4x4Array.push(category_Weapons_AssaultRifles);
+        loot_WeaponBox4x4Array.push(category_Weapons_MeleeWeapons);
+        loot_WeaponBox4x4Array.push(category_Weapons_Pistols);
+        loot_WeaponBox4x4Array.push(category_Weapons_SMGs);
+        loot_WeaponBox4x4Array.push(category_Weapons_SpecialWeapons);
+        loot_WeaponBox4x4Array.push(category_Weapons_Throwables);
+        loot_WeaponBox4x4Array.push(category_Ammo_AmmoPacks);
+        loot_WeaponBox4x4Array.push(category_Ammo_Rounds);
+        let loot_WeaponBox4x4_Final = deepCopy(loot_WeaponBox4x4Array);
+        this.adjustItemSpawnRateForEachContainerType(loot_WeaponBox4x4_Final);
+        loot_WeaponBox4x4_Final = this.removeBlacklistedItems(loot_WeaponBox4x4_Final, LootGlobalType.WEAPONBOXGLOBAL);
+        // ===== Loot - Weapon Box 5x2 =====
+        const loot_WeaponBox5x2Array = [];
+        loot_WeaponBox5x2Array.push(category_Gear_Eyewear);
+        loot_WeaponBox5x2Array.push(category_Gear_Facecovers);
+        loot_WeaponBox5x2Array.push(category_Gear_GearComponents);
+        loot_WeaponBox5x2Array.push(category_Gear_Headgear);
+        loot_WeaponBox5x2Array.push(category_Gear_Headsets);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_FM_AuxiliaryParts);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_FM_Bipods);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_FM_Foregrips);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_FM_LLD_Flashlights);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_FM_LLD_LaserTargetPointers);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_FM_LLD_TacticalComboDevices);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_FM_MD_FlashhidersBrakes);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_FM_MD_MuzzleAdapters);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_FM_MD_Suppressors);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_FM_S_AssaultScopes);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_FM_S_Collimators);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_FM_S_CompactCollimators);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_FM_S_IronSights);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_FM_S_Optics);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_FM_S_SpecialPurposeSights);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_GM_ChargingHandles);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_GM_Launchers);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_GM_Magazines);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_GM_Mounts);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_GM_StocksChassis);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_VP_Barrels);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_VP_GasBlocks);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_VP_Handguards);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_VP_PistolGrips);
+        loot_WeaponBox5x2Array.push(category_WeaponPartsMods_VP_ReceiversSlides);
+        loot_WeaponBox5x2Array.push(category_Weapons_AssaultCarbines);
+        loot_WeaponBox5x2Array.push(category_Weapons_AssaultRifles);
+        loot_WeaponBox5x2Array.push(category_Weapons_BoltActionRifles);
+        loot_WeaponBox5x2Array.push(category_Weapons_MachineGuns);
+        loot_WeaponBox5x2Array.push(category_Weapons_MarksmanRifles);
+        loot_WeaponBox5x2Array.push(category_Weapons_MeleeWeapons);
+        loot_WeaponBox5x2Array.push(category_Weapons_Pistols);
+        loot_WeaponBox5x2Array.push(category_Weapons_SMGs);
+        loot_WeaponBox5x2Array.push(category_Weapons_SpecialWeapons);
+        loot_WeaponBox5x2Array.push(category_Weapons_Throwables);
+        loot_WeaponBox5x2Array.push(category_Ammo_AmmoPacks);
+        loot_WeaponBox5x2Array.push(category_Ammo_Rounds);
+        let loot_WeaponBox5x2_Final = deepCopy(loot_WeaponBox5x2Array);
+        this.adjustItemSpawnRateForEachContainerType(loot_WeaponBox5x2_Final);
+        loot_WeaponBox5x2_Final = this.removeBlacklistedItems(loot_WeaponBox5x2_Final, LootGlobalType.WEAPONBOXGLOBAL);
         // ===== Loot - Weapon cases =====
-        const loot_WeaponBoxGlobalArray = [];
-        loot_WeaponBoxGlobalArray.push(category_Gear_BodyArmor);
-        loot_WeaponBoxGlobalArray.push(category_Gear_Eyewear);
-        loot_WeaponBoxGlobalArray.push(category_Gear_Facecovers);
-        loot_WeaponBoxGlobalArray.push(category_Gear_GearComponents);
-        loot_WeaponBoxGlobalArray.push(category_Gear_Headgear);
-        loot_WeaponBoxGlobalArray.push(category_Gear_Headsets);
-        loot_WeaponBoxGlobalArray.push(category_Gear_TacticalRigs);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_AuxiliaryParts);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_Bipods);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_Foregrips);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_LLD_Flashlights);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_LLD_LaserTargetPointers);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_LLD_TacticalComboDevices);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_MD_FlashhidersBrakes);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_MD_MuzzleAdapters);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_MD_Suppressors);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_S_AssaultScopes);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_S_Collimators);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_S_CompactCollimators);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_S_IronSights);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_S_Optics);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_FM_S_SpecialPurposeSights);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_GM_ChargingHandles);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_GM_Launchers);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_GM_Magazines);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_GM_Mounts);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_GM_StocksChassis);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_VP_Barrels);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_VP_GasBlocks);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_VP_Handguards);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_VP_PistolGrips);
-        loot_WeaponBoxGlobalArray.push(category_WeaponPartsMods_VP_ReceiversSlides);
-        loot_WeaponBoxGlobalArray.push(category_Weapons_AssaultCarbines);
-        loot_WeaponBoxGlobalArray.push(category_Weapons_AssaultRifles);
-        loot_WeaponBoxGlobalArray.push(category_Weapons_BoltActionRifles);
-        loot_WeaponBoxGlobalArray.push(category_Weapons_GrenadeLaunchers);
-        loot_WeaponBoxGlobalArray.push(category_Weapons_MachineGuns);
-        loot_WeaponBoxGlobalArray.push(category_Weapons_MarksmanRifles);
-        loot_WeaponBoxGlobalArray.push(category_Weapons_MeleeWeapons);
-        loot_WeaponBoxGlobalArray.push(category_Weapons_Pistols);
-        loot_WeaponBoxGlobalArray.push(category_Weapons_SMGs);
-        loot_WeaponBoxGlobalArray.push(category_Weapons_Shotguns);
-        loot_WeaponBoxGlobalArray.push(category_Weapons_SpecialWeapons);
-        loot_WeaponBoxGlobalArray.push(category_Ammo_AmmoPacks);
-        loot_WeaponBoxGlobalArray.push(category_Ammo_Rounds);
-        let loot_WeaponBoxGlobal_Final = deepCopy(loot_WeaponBoxGlobalArray);
-        this.adjustItemSpawnRateForEachContainerType(loot_WeaponBoxGlobal_Final);
-        loot_WeaponBoxGlobal_Final = this.removeBlacklistedItems(loot_WeaponBoxGlobal_Final, LootGlobalType.WEAPONBOXGLOBAL);
+        const loot_WoodenCrateArray = [];
+        loot_WoodenCrateArray.push(category_Gear_Headgear);
+        loot_WoodenCrateArray.push(category_Gear_Headsets);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_FM_AuxiliaryParts);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_FM_Bipods);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_FM_Foregrips);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_FM_LLD_Flashlights);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_FM_LLD_LaserTargetPointers);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_FM_LLD_TacticalComboDevices);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_FM_MD_FlashhidersBrakes);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_FM_MD_MuzzleAdapters);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_FM_MD_Suppressors);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_FM_S_AssaultScopes);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_FM_S_Collimators);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_FM_S_CompactCollimators);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_FM_S_IronSights);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_FM_S_Optics);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_FM_S_SpecialPurposeSights);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_GM_ChargingHandles);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_GM_Launchers);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_GM_Magazines);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_GM_Mounts);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_GM_StocksChassis);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_VP_GasBlocks);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_VP_Handguards);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_VP_PistolGrips);
+        loot_WoodenCrateArray.push(category_WeaponPartsMods_VP_ReceiversSlides);
+        loot_WoodenCrateArray.push(category_Weapons_AssaultCarbines);
+        loot_WoodenCrateArray.push(category_Weapons_AssaultRifles);
+        loot_WoodenCrateArray.push(category_Weapons_BoltActionRifles);
+        loot_WoodenCrateArray.push(category_Weapons_MachineGuns);
+        loot_WoodenCrateArray.push(category_Weapons_MarksmanRifles);
+        loot_WoodenCrateArray.push(category_Weapons_Pistols);
+        loot_WoodenCrateArray.push(category_Weapons_SMGs);
+        loot_WoodenCrateArray.push(category_Weapons_Shotguns);
+        loot_WoodenCrateArray.push(category_Weapons_SpecialWeapons);
+        loot_WoodenCrateArray.push(category_Weapons_Throwables);
+        loot_WoodenCrateArray.push(category_Ammo_AmmoPacks);
+        loot_WoodenCrateArray.push(category_Ammo_Rounds);
+        let loot_WoodenCrate_Final = deepCopy(loot_WoodenCrateArray);
+        this.adjustItemSpawnRateForEachContainerType(loot_WoodenCrate_Final);
+        loot_WoodenCrate_Final = this.removeBlacklistedItems(loot_WoodenCrate_Final, LootGlobalType.WEAPONBOXGLOBAL);
         // ===== Loot - Cashes =====
         const loot_CachesArray = [];
         loot_CachesArray.push(category_Barter_Others);
@@ -1392,7 +1513,6 @@ class AllTheLoot {
         loot_CachesArray.push(category_Medication_InjuryTreatment);
         loot_CachesArray.push(category_Medication_Medkits);
         loot_CachesArray.push(category_Medication_Pills);
-        loot_CachesArray.push(category_Keys_ElectronicKeys);
         loot_CachesArray.push(category_InfoItems);
         loot_CachesArray.push(category_SpecialEquipment);
         loot_CachesArray.push(category_Maps);
@@ -1410,6 +1530,7 @@ class AllTheLoot {
         loot_DuffleBagArray.push(category_Barter_MedicalSupplies);
         loot_DuffleBagArray.push(category_Barter_Tools);
         loot_DuffleBagArray.push(category_Barter_Valuables);
+        loot_DuffleBagArray.push(category_Gear_Facecovers);
         loot_DuffleBagArray.push(category_Provisions_Drinks);
         loot_DuffleBagArray.push(category_Provisions_Food);
         loot_DuffleBagArray.push(category_Medication_Injectors);
@@ -1507,7 +1628,21 @@ class AllTheLoot {
         let loot_ShturmansStash_Final = deepCopy(loot_ShturmansStashArray);
         this.adjustItemSpawnRateForEachContainerType(loot_ShturmansStash_Final);
         loot_ShturmansStash_Final = this.removeBlacklistedItems(loot_ShturmansStash_Final, LootGlobalType.SHTURMANSSTASH);
-        // ===== Loot - Weapon Box 6x3 =====
+        // Fine tuning to add another level for the extremely high tier items (like e.g. Red Rebel, Taiga, certain Info items, etc.)
+        for (const item of loot_ShturmansStash_Final) {
+            let tmpValue = 0;
+            for (const obj of data_ref) {
+                if (obj.Id === item.Id)
+                    tmpValue = obj.Price;
+            }
+            if (tmpValue < 100000)
+                item.Price = 10000;
+            else if (tmpValue >= 100000 && tmpValue < 400000)
+                item.Price = 8000;
+            else
+                item.Price = 5000;
+        }
+        // ===== Loot - Weapon Box 5x5 =====
         const loot_WeaponBox5x5Array = [];
         loot_WeaponBox5x5Array.push(category_WeaponBox5x5_Final);
         let loot_WeaponBox5x5_Final = deepCopy(loot_WeaponBox5x5Array);
@@ -1527,6 +1662,7 @@ class AllTheLoot {
             drawerItems.push(item.Id);
             drawerItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(drawerItemsProbabilities);
         const container_Drawer_ItemsDistribution = [];
         const container_Drawer_ItemsDistributionProbabilities = [];
         this.config.container_Drawer_ItemsDistribution.forEach(item => {
@@ -1542,6 +1678,7 @@ class AllTheLoot {
             cashRegisterItems.push(item.Id);
             cashRegisterItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(cashRegisterItemsProbabilities);
         const container_CashRegister_ItemsDistribution = [];
         const container_CashRegister_ItemsDistributionProbabilities = [];
         this.config.container_CashRegister_ItemsDistribution.forEach(item => {
@@ -1557,6 +1694,7 @@ class AllTheLoot {
             pcBlockItems.push(item.Id);
             pcBlockItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(pcBlockItemsProbabilities);
         const container_PCBlock_ItemsDistribution = [];
         const container_PCBlock_ItemsDistributionProbabilities = [];
         this.config.container_PCBlock_ItemsDistribution.forEach(item => {
@@ -1572,6 +1710,7 @@ class AllTheLoot {
             jacketItems.push(item.Id);
             jacketItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(jacketItemsProbabilities);
         const container_Jacket_ItemsDistribution = [];
         const container_Jacket_ItemsDistributionProbabilities = [];
         this.config.container_Jacket_ItemsDistribution.forEach(item => {
@@ -1587,6 +1726,7 @@ class AllTheLoot {
             toolboxItems.push(item.Id);
             toolboxItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(toolboxItemsProbabilities);
         const container_Toolbox_ItemsDistribution = [];
         const container_Toolbox_ItemsDistributionProbabilities = [];
         this.config.container_Toolbox_ItemsDistribution.forEach(item => {
@@ -1602,6 +1742,7 @@ class AllTheLoot {
             medcaseItems.push(item.Id);
             medcaseItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(medcaseItemsProbabilities);
         const container_Medcase_ItemsDistribution = [];
         const container_Medcase_ItemsDistributionProbabilities = [];
         this.config.container_Medcase_ItemsDistribution.forEach(item => {
@@ -1617,6 +1758,7 @@ class AllTheLoot {
             safeItems.push(item.Id);
             safeItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(safeItemsProbabilities);
         const container_Safe_ItemsDistribution = [];
         const container_Safe_ItemsDistributionProbabilities = [];
         this.config.container_Safe_ItemsDistribution.forEach(item => {
@@ -1632,6 +1774,7 @@ class AllTheLoot {
             weaponBox5x5Items.push(item.Id);
             weaponBox5x5ItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(weaponBox5x5ItemsProbabilities);
         const container_WeaponBox5x5_ItemsDistribution = [];
         const container_WeaponBox5x5_ItemsDistributionProbabilities = [];
         this.config.container_WeaponBox5x5_ItemsDistribution.forEach(item => {
@@ -1643,10 +1786,11 @@ class AllTheLoot {
         // ===== Weapon box (5x2) =====
         const weaponBox5x2Items = [];
         const weaponBox5x2ItemsProbabilities = [];
-        loot_WeaponBoxGlobal_Final.forEach(item => {
+        loot_WeaponBox5x2_Final.forEach(item => {
             weaponBox5x2Items.push(item.Id);
             weaponBox5x2ItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(weaponBox5x2ItemsProbabilities);
         const container_WeaponBox5x2_ItemsDistribution = [];
         const container_WeaponBox5x2_ItemsDistributionProbabilities = [];
         this.config.container_WeaponBox5x2_ItemsDistribution.forEach(item => {
@@ -1662,6 +1806,7 @@ class AllTheLoot {
             duffleBag01Items.push(item.Id);
             duffleBag01ItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(duffleBag01ItemsProbabilities);
         const container_DuffleBag01_ItemsDistribution = [];
         const container_DuffleBag01_ItemsDistributionProbabilities = [];
         this.config.container_DuffleBag01_ItemsDistribution.forEach(item => {
@@ -1677,6 +1822,7 @@ class AllTheLoot {
             weaponBox6x3Items.push(item.Id);
             weaponBox6x3ItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(weaponBox6x3ItemsProbabilities);
         const container_WeaponBox6x3_ItemsDistribution = [];
         const container_WeaponBox6x3_ItemsDistributionProbabilities = [];
         this.config.container_WeaponBox6x3_ItemsDistribution.forEach(item => {
@@ -1688,10 +1834,11 @@ class AllTheLoot {
         // ===== Weapon box (4x4) =====
         const weaponBox4x4Items = [];
         const weaponBox4x4ItemsProbabilities = [];
-        loot_WeaponBoxGlobal_Final.forEach(item => {
+        loot_WeaponBox4x4_Final.forEach(item => {
             weaponBox4x4Items.push(item.Id);
             weaponBox4x4ItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(weaponBox4x4ItemsProbabilities);
         const container_WeaponBox4x4_ItemsDistribution = [];
         const container_WeaponBox4x4_ItemsDistributionProbabilities = [];
         this.config.container_WeaponBox4x4_ItemsDistribution.forEach(item => {
@@ -1707,6 +1854,7 @@ class AllTheLoot {
             grenadeBoxItems.push(item.Id);
             grenadeBoxItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(grenadeBoxItemsProbabilities);
         const container_GrenadeBox_ItemsDistribution = [];
         const container_GrenadeBox_ItemsDistributionProbabilities = [];
         this.config.container_GrenadeBox_ItemsDistribution.forEach(item => {
@@ -1722,6 +1870,7 @@ class AllTheLoot {
             plasticSuitcaseItems.push(item.Id);
             plasticSuitcaseItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(plasticSuitcaseItemsProbabilities);
         const container_PlasticSuitcase_ItemsDistribution = [];
         const container_PlasticSuitcase_ItemsDistributionProbabilities = [];
         this.config.container_PlasticSuitcase_ItemsDistribution.forEach(item => {
@@ -1737,6 +1886,7 @@ class AllTheLoot {
             medbagSmu0601Items.push(item.Id);
             medbagSmu0601ItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(medbagSmu0601ItemsProbabilities);
         const container_MedbagSmu0601_ItemsDistribution = [];
         const container_MedbagSmu0601_ItemsDistributionProbabilities = [];
         this.config.container_MedbagSmu0601_ItemsDistribution.forEach(item => {
@@ -1748,10 +1898,11 @@ class AllTheLoot {
         // ===== Wooden crate =====
         const woodenCrateItems = [];
         const woodenCrateItemsProbabilities = [];
-        loot_WeaponBoxGlobal_Final.forEach(item => {
+        loot_WoodenCrate_Final.forEach(item => {
             woodenCrateItems.push(item.Id);
             woodenCrateItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(woodenCrateItemsProbabilities);
         const container_WoodenCrate_ItemsDistribution = [];
         const container_WoodenCrate_ItemsDistributionProbabilities = [];
         this.config.container_WoodenCrate_ItemsDistribution.forEach(item => {
@@ -1767,6 +1918,7 @@ class AllTheLoot {
             medicalSupplyCrateItems.push(item.Id);
             medicalSupplyCrateItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(medicalSupplyCrateItemsProbabilities);
         const container_MedicalSupplyCrate_ItemsDistribution = [];
         const container_MedicalSupplyCrate_ItemsDistributionProbabilities = [];
         this.config.container_MedicalSupplyCrate_ItemsDistribution.forEach(item => {
@@ -1782,6 +1934,7 @@ class AllTheLoot {
             technicalSupplyCrateItems.push(item.Id);
             technicalSupplyCrateItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(technicalSupplyCrateItemsProbabilities);
         const container_TechnicalSupplyCrate_ItemsDistribution = [];
         const container_TechnicalSupplyCrate_ItemsDistributionProbabilities = [];
         this.config.container_TechnicalSupplyCrate_ItemsDistribution.forEach(item => {
@@ -1797,6 +1950,7 @@ class AllTheLoot {
             deadScavItems.push(item.Id);
             deadScavItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(deadScavItemsProbabilities);
         const container_DeadScav_ItemsDistribution = [];
         const container_DeadScav_ItemsDistributionProbabilities = [];
         this.config.container_DeadScav_ItemsDistribution.forEach(item => {
@@ -1812,6 +1966,7 @@ class AllTheLoot {
             groundCacheItems.push(item.Id);
             groundCacheItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(groundCacheItemsProbabilities);
         const container_GroundCache_ItemsDistribution = [];
         const container_GroundCache_ItemsDistributionProbabilities = [];
         this.config.container_GroundCache_ItemsDistribution.forEach(item => {
@@ -1827,6 +1982,7 @@ class AllTheLoot {
             burriedBarrelCacheItems.push(item.Id);
             burriedBarrelCacheItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(burriedBarrelCacheItemsProbabilities);
         const container_BurriedBarrelCache_ItemsDistribution = [];
         const container_BurriedBarrelCache_ItemsDistributionProbabilities = [];
         this.config.container_BurriedBarrelCache_ItemsDistribution.forEach(item => {
@@ -1842,6 +1998,7 @@ class AllTheLoot {
             woodenAmmoBoxItems.push(item.Id);
             woodenAmmoBoxItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(woodenAmmoBoxItemsProbabilities);
         const container_WoodenAmmoBox_ItemsDistribution = [];
         const container_WoodenAmmoBox_ItemsDistributionProbabilities = [];
         this.config.container_WoodenAmmoBox_ItemsDistribution.forEach(item => {
@@ -1857,6 +2014,7 @@ class AllTheLoot {
             jacketDorms114Items.push(item.Id);
             jacketDorms114ItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(jacketDorms114ItemsProbabilities);
         const container_JacketDorms114_ItemsDistribution = [];
         const container_JacketDorms114_ItemsDistributionProbabilities = [];
         this.config.container_JacketDorms114_ItemsDistribution.forEach(item => {
@@ -1872,6 +2030,7 @@ class AllTheLoot {
             jacketMachineryKeyItems.push(item.Id);
             jacketMachineryKeyItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(jacketMachineryKeyItemsProbabilities);
         const container_JacketMachineryKey_ItemsDistribution = [];
         const container_JacketMachineryKey_ItemsDistributionProbabilities = [];
         this.config.container_JacketMachineryKey_ItemsDistribution.forEach(item => {
@@ -1887,6 +2046,7 @@ class AllTheLoot {
             rationSupplyCrateItems.push(item.Id);
             rationSupplyCrateItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(rationSupplyCrateItemsProbabilities);
         const container_RationSupplyCrate_ItemsDistribution = [];
         const container_RationSupplyCrate_ItemsDistributionProbabilities = [];
         this.config.container_RationSupplyCrate_ItemsDistribution.forEach(item => {
@@ -1902,6 +2062,7 @@ class AllTheLoot {
             jacketDorms204Items.push(item.Id);
             jacketDorms204ItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(jacketDorms204ItemsProbabilities);
         const container_JacketDorms204_ItemsDistribution = [];
         const container_JacketDorms204_ItemsDistributionProbabilities = [];
         this.config.container_JacketDorms204_ItemsDistribution.forEach(item => {
@@ -1917,6 +2078,7 @@ class AllTheLoot {
             commonFundStashItems.push(item.Id);
             commonFundStashItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(commonFundStashItemsProbabilities);
         const container_ShturmansStash_ItemsDistribution = [];
         const container_ShturmansStash_ItemsDistributionProbabilities = [];
         this.config.container_ShturmansStash_ItemsDistribution.forEach(item => {
@@ -1932,6 +2094,7 @@ class AllTheLoot {
             duffleBag02Items.push(item.Id);
             duffleBag02ItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(duffleBag02ItemsProbabilities);
         const container_DuffleBag02_ItemsDistribution = [];
         const container_DuffleBag02_ItemsDistributionProbabilities = [];
         this.config.container_DuffleBag02_ItemsDistribution.forEach(item => {
@@ -1947,6 +2110,7 @@ class AllTheLoot {
             medbagSmu0602Items.push(item.Id);
             medbagSmu0602ItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(medbagSmu0602ItemsProbabilities);
         const container_MedbagSmu0602_ItemsDistribution = [];
         const container_MedbagSmu0602_ItemsDistributionProbabilities = [];
         this.config.container_MedbagSmu0602_ItemsDistribution.forEach(item => {
@@ -1962,6 +2126,7 @@ class AllTheLoot {
             cashRegisterTARItems.push(item.Id);
             cashRegisterTARItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(cashRegisterTARItemsProbabilities);
         const container_CashRegisterTAR_ItemsDistribution = [];
         const container_CashRegisterTAR_ItemsDistributionProbabilities = [];
         this.config.container_CashRegisterTAR_ItemsDistribution.forEach(item => {
@@ -1977,6 +2142,7 @@ class AllTheLoot {
             bankCashRegisterItems.push(item.Id);
             bankCashRegisterItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(bankCashRegisterItemsProbabilities);
         const container_BankCashRegister_ItemsDistribution = [];
         const container_BankCashRegister_ItemsDistributionProbabilities = [];
         this.config.container_BankCashRegister_ItemsDistribution.forEach(item => {
@@ -1992,6 +2158,7 @@ class AllTheLoot {
             bankSafeItems.push(item.Id);
             bankSafeItemsProbabilities.push(item.Price);
         });
+        this.createUniqueSpawnrate(bankSafeItemsProbabilities);
         const container_BankSafe_ItemsDistribution = [];
         const container_BankSafe_ItemsDistributionProbabilities = [];
         this.config.container_BankSafe_ItemsDistribution.forEach(item => {
@@ -2583,173 +2750,182 @@ class AllTheLoot {
         if (this.config.debugMode_ShowSpawnRates_Drawer) {
             this.logger.error("Amount of Drawer items: " + drawerItems.length.toString());
             this.logger.error("All " + drawerItems.length.toString() + " drawer items with adjusted spawn rates");
-            loot_Drawers_Final.forEach(item => {
-                const propertyName = `${item.Id} Name`;
+            for (let i = 0; i < drawerItems.length; i++) {
+                const propertyName = `${drawerItems[i]} Name`;
                 const value = this.jsonDataClearNames[propertyName];
-                this.logger.warning(value + " Spawn rate: " + item.Price);
-            });
+                this.logger.warning(value + " Spawn rate: " + drawerItemsProbabilities[i]);
+            }
         }
         if (this.config.debugMode_ShowSpawnRates_CashRegister) {
             this.logger.error("Amount of Cash Register items: " + cashRegisterItems.length.toString());
             this.logger.error("All " + cashRegisterItems.length.toString() + " cash register items with adjusted spawn rates");
-            loot_Money_RoublesOnly_Final.forEach(item => {
-                const propertyName = `${item.Id} Name`;
+            for (let i = 0; i < cashRegisterItems.length; i++) {
+                const propertyName = `${cashRegisterItems[i]} Name`;
                 const value = this.jsonDataClearNames[propertyName];
-                this.logger.warning(value + " Spawn rate: " + item.Price);
-            });
+                this.logger.warning(value + " Spawn rate: " + cashRegisterItemsProbabilities[i]);
+            }
         }
         if (this.config.debugMode_ShowSpawnRates_PCBlock) {
             this.logger.error("Amount of PC Block items: " + pcBlockItems.length.toString());
             this.logger.error("All " + pcBlockItems.length.toString() + " PC block items with adjusted spawn rates");
-            loot_PCBlock_Final.forEach(item => {
-                const propertyName = `${item.Id} Name`;
+            for (let i = 0; i < pcBlockItems.length; i++) {
+                const propertyName = `${pcBlockItems[i]} Name`;
                 const value = this.jsonDataClearNames[propertyName];
-                this.logger.warning(value + " Spawn rate: " + item.Price);
-            });
+                this.logger.warning(value + " Spawn rate: " + pcBlockItemsProbabilities[i]);
+            }
         }
         if (this.config.debugMode_ShowSpawnRates_Jacket) {
             this.logger.error("Amount of Jacket items: " + jacketItems.length.toString());
             this.logger.error("All " + jacketItems.length.toString() + " jacket items with adjusted spawn rates");
-            loot_Jackets_Final.forEach(item => {
-                const propertyName = `${item.Id} Name`;
+            for (let i = 0; i < jacketItems.length; i++) {
+                const propertyName = `${jacketItems[i]} Name`;
                 const value = this.jsonDataClearNames[propertyName];
-                this.logger.warning(value + " Spawn rate: " + item.Price);
-            });
+                this.logger.warning(value + " Spawn rate: " + jacketItemsProbabilities[i]);
+            }
         }
         if (this.config.debugMode_ShowSpawnRates_Technical) {
             this.logger.error("Amount of Toolbox items: " + toolboxItems.length.toString());
             this.logger.error("All " + toolboxItems.length.toString() + " toolbox items with adjusted spawn rates");
-            loot_Technical_Final.forEach(item => {
-                const propertyName = `${item.Id} Name`;
+            for (let i = 0; i < toolboxItems.length; i++) {
+                const propertyName = `${toolboxItems[i]} Name`;
                 const value = this.jsonDataClearNames[propertyName];
-                this.logger.warning(value + " Spawn rate: " + item.Price);
-            });
+                this.logger.warning(value + " Spawn rate: " + toolboxItemsProbabilities[i]);
+            }
         }
         if (this.config.debugMode_ShowSpawnRates_Medical) {
             this.logger.error("Amount of Medcase items: " + medcaseItems.length.toString());
             this.logger.error("All " + medcaseItems.length.toString() + " medcase items with adjusted spawn rates");
-            loot_Medical_Final.forEach(item => {
-                const propertyName = `${item.Id} Name`;
+            for (let i = 0; i < medcaseItems.length; i++) {
+                const propertyName = `${medcaseItems[i]} Name`;
                 const value = this.jsonDataClearNames[propertyName];
-                this.logger.warning(value + " Spawn rate: " + item.Price);
-            });
+                this.logger.warning(value + " Spawn rate: " + medcaseItemsProbabilities[i]);
+            }
         }
         if (this.config.debugMode_ShowSpawnRates_Safe) {
             this.logger.error("Amount of Safe items: " + safeItems.length.toString());
             this.logger.error("All " + safeItems.length.toString() + " safe items with adjusted spawn rates");
-            loot_Safes_Final.forEach(item => {
-                const propertyName = `${item.Id} Name`;
+            for (let i = 0; i < safeItems.length; i++) {
+                const propertyName = `${safeItems[i]} Name`;
                 const value = this.jsonDataClearNames[propertyName];
-                this.logger.warning(value + " Spawn rate: " + item.Price);
-            });
+                this.logger.warning(value + " Spawn rate: " + safeItemsProbabilities[i]);
+            }
         }
         if (this.config.debugMode_ShowSpawnRates_WeaponBox5x5) {
             this.logger.error("Amount of Weapon box 5x5 items: " + weaponBox5x5Items.length.toString());
             this.logger.error("All " + weaponBox5x5Items.length.toString() + " weapon box 5x5 items with adjusted spawn rates");
-            loot_WeaponBox5x5_Final.forEach(item => {
-                const propertyName = `${item.Id} Name`;
+            for (let i = 0; i < weaponBox5x5Items.length; i++) {
+                const propertyName = `${weaponBox5x5Items[i]} Name`;
                 const value = this.jsonDataClearNames[propertyName];
-                this.logger.warning(value + " Spawn rate: " + item.Price);
-            });
+                this.logger.warning(value + " Spawn rate: " + weaponBox5x5ItemsProbabilities[i]);
+            }
         }
-        if (this.config.debugMode_ShowSpawnRates_WeaponBoxGlobal) {
+        if (this.config.debugMode_ShowSpawnRates_WeaponBox5x2) {
             this.logger.error("Amount of Weapon box 5x2 items: " + weaponBox5x2Items.length.toString());
             this.logger.error("All " + weaponBox5x2Items.length.toString() + " weapon box 5x2 items with adjusted spawn rates");
-            loot_WeaponBoxGlobal_Final.forEach(item => {
-                const propertyName = `${item.Id} Name`;
+            for (let i = 0; i < weaponBox5x2Items.length; i++) {
+                const propertyName = `${weaponBox5x2Items[i]} Name`;
                 const value = this.jsonDataClearNames[propertyName];
-                this.logger.warning(value + " Spawn rate: " + item.Price);
-            });
+                this.logger.warning(value + " Spawn rate: " + weaponBox5x2ItemsProbabilities[i]);
+            }
         }
         if (this.config.debugMode_ShowSpawnRates_DuffleBag) {
             this.logger.error("Amount of Dufflebag items: " + duffleBag01Items.length.toString());
             this.logger.error("All " + weaponBox5x2Items.length.toString() + " dufflebag items with adjusted spawn rates");
-            loot_DuffleBag_Final.forEach(item => {
-                const propertyName = `${item.Id} Name`;
+            for (let i = 0; i < duffleBag01Items.length; i++) {
+                const propertyName = `${duffleBag01Items[i]} Name`;
                 const value = this.jsonDataClearNames[propertyName];
-                this.logger.warning(value + " Spawn rate: " + item.Price);
-            });
+                this.logger.warning(value + " Spawn rate: " + duffleBag01ItemsProbabilities[i]);
+            }
         }
         if (this.config.debugMode_ShowSpawnRates_WeaponBox6x3) {
             this.logger.error("Amount of Weapon box 6x3 items: " + weaponBox6x3Items.length.toString());
             this.logger.error("All " + weaponBox6x3Items.length.toString() + " weapon box 6x3 items with adjusted spawn rates");
-            loot_WeaponBox6x3_Final.forEach(item => {
-                const propertyName = `${item.Id} Name`;
+            for (let i = 0; i < weaponBox6x3Items.length; i++) {
+                const propertyName = `${weaponBox6x3Items[i]} Name`;
                 const value = this.jsonDataClearNames[propertyName];
-                this.logger.warning(value + " Spawn rate: " + item.Price);
-            });
+                this.logger.warning(value + " Spawn rate: " + weaponBox6x3ItemsProbabilities[i]);
+            }
         }
         if (this.config.debugMode_ShowSpawnRates_WeaponBox4x4) {
             this.logger.error("Amount of Weapon box 4x4 items: " + weaponBox4x4Items.length.toString());
             this.logger.error("All " + weaponBox4x4Items.length.toString() + " weapon box 4x4 items with adjusted spawn rates");
-            loot_WeaponBoxGlobal_Final.forEach(item => {
-                const propertyName = `${item.Id} Name`;
+            for (let i = 0; i < weaponBox4x4Items.length; i++) {
+                const propertyName = `${weaponBox4x4Items[i]} Name`;
                 const value = this.jsonDataClearNames[propertyName];
-                this.logger.warning(value + " Spawn rate: " + item.Price);
-            });
+                this.logger.warning(value + " Spawn rate: " + weaponBox4x4ItemsProbabilities[i]);
+            }
+        }
+        if (this.config.debugMode_ShowSpawnRates_WoodenCrate) {
+            this.logger.error("Amount of Wooden Crate items: " + woodenCrateItems.length.toString());
+            this.logger.error("All " + woodenCrateItems.length.toString() + " wooden crate items with adjusted spawn rates");
+            for (let i = 0; i < woodenCrateItems.length; i++) {
+                const propertyName = `${woodenCrateItems[i]} Name`;
+                const value = this.jsonDataClearNames[propertyName];
+                this.logger.warning(value + " Spawn rate: " + woodenCrateItemsProbabilities[i]);
+            }
         }
         if (this.config.debugMode_ShowSpawnRates_GrenadeBox) {
             this.logger.error("Amount of Grenade Box items: " + grenadeBoxItems.length.toString());
             this.logger.error("All " + grenadeBoxItems.length.toString() + " grenade box items with adjusted spawn rates");
-            loot_Grenades_Final.forEach(item => {
-                const propertyName = `${item.Id} Name`;
+            for (let i = 0; i < grenadeBoxItems.length; i++) {
+                const propertyName = `${grenadeBoxItems[i]} Name`;
                 const value = this.jsonDataClearNames[propertyName];
-                this.logger.warning(value + " Spawn rate: " + item.Price);
-            });
+                this.logger.warning(value + " Spawn rate: " + grenadeBoxItemsProbabilities[i]);
+            }
         }
         if (this.config.debugMode_ShowSpawnRates_Caches) {
             this.logger.error("Amount of Caches items: " + groundCacheItems.length.toString());
             this.logger.error("All " + groundCacheItems.length.toString() + " caches items with adjusted spawn rates");
-            loot_Caches_Final.forEach(item => {
-                const propertyName = `${item.Id} Name`;
+            for (let i = 0; i < groundCacheItems.length; i++) {
+                const propertyName = `${groundCacheItems[i]} Name`;
                 const value = this.jsonDataClearNames[propertyName];
-                this.logger.warning(value + " Spawn rate: " + item.Price);
-            });
+                this.logger.warning(value + " Spawn rate: " + groundCacheItemsProbabilities[i]);
+            }
         }
         if (this.config.debugMode_ShowSpawnRates_WoodenAmmoBox) {
             this.logger.error("Amount of Wooden Ammo Box items: " + woodenAmmoBoxItems.length.toString());
             this.logger.error("All " + woodenAmmoBoxItems.length.toString() + " wooden ammo box items with adjusted spawn rates");
-            loot_Ammo_Final.forEach(item => {
-                const propertyName = `${item.Id} Name`;
+            for (let i = 0; i < woodenAmmoBoxItems.length; i++) {
+                const propertyName = `${woodenAmmoBoxItems[i]} Name`;
                 const value = this.jsonDataClearNames[propertyName];
-                this.logger.warning(value + " Spawn rate: " + item.Price);
-            });
+                this.logger.warning(value + " Spawn rate: " + woodenAmmoBoxItemsProbabilities[i]);
+            }
         }
         if (this.config.debugMode_ShowSpawnRates_JacketMachineryKey) {
             this.logger.error("Amount of JacketMachineryKey items: " + jacketMachineryKeyItems.length.toString());
             this.logger.error("All " + jacketMachineryKeyItems.length.toString() + " jacket machinery key items with adjusted spawn rates");
-            loot_JacketMachineryKey_Final.forEach(item => {
-                const propertyName = `${item.Id} Name`;
+            for (let i = 0; i < jacketMachineryKeyItems.length; i++) {
+                const propertyName = `${jacketMachineryKeyItems[i]} Name`;
                 const value = this.jsonDataClearNames[propertyName];
-                this.logger.warning(value + " Spawn rate: " + item.Price);
-            });
+                this.logger.warning(value + " Spawn rate: " + jacketMachineryKeyItemsProbabilities[i]);
+            }
         }
         if (this.config.debugMode_ShowSpawnRates_RationsSupplyCrate) {
             this.logger.error("Amount of Rations Supply Crate items: " + rationSupplyCrateItems.length.toString());
             this.logger.error("All " + rationSupplyCrateItems.length.toString() + " rations supply crate items with adjusted spawn rates");
-            loot_Rations_Final.forEach(item => {
-                const propertyName = `${item.Id} Name`;
+            for (let i = 0; i < rationSupplyCrateItems.length; i++) {
+                const propertyName = `${rationSupplyCrateItems[i]} Name`;
                 const value = this.jsonDataClearNames[propertyName];
-                this.logger.warning(value + " Spawn rate: " + item.Price);
-            });
+                this.logger.warning(value + " Spawn rate: " + rationSupplyCrateItemsProbabilities[i]);
+            }
         }
         if (this.config.debugMode_ShowSpawnRates_ShturmansStash) {
             this.logger.error("Amount of Shturman's Stash items: " + commonFundStashItems.length.toString());
             this.logger.error("All " + commonFundStashItems.length.toString() + " shturman's stash items with adjusted spawn rates");
-            loot_ShturmansStash_Final.forEach(item => {
-                const propertyName = `${item.Id} Name`;
+            for (let i = 0; i < commonFundStashItems.length; i++) {
+                const propertyName = `${commonFundStashItems[i]} Name`;
                 const value = this.jsonDataClearNames[propertyName];
-                this.logger.warning(value + " Spawn rate: " + item.Price);
-            });
+                this.logger.warning(value + " Spawn rate: " + commonFundStashItemsProbabilities[i]);
+            }
         }
         if (this.config.debugMode_ShowSpawnRates_BankCashRegister) {
             this.logger.error("Amount of Bank Cash Register items: " + bankCashRegisterItems.length.toString());
             this.logger.error("All " + cashRegisterTARItems.length.toString() + " bank cash register items with adjusted spawn rates");
-            loot_Money_Final.forEach(item => {
-                const propertyName = `${item.Id} Name`;
+            for (let i = 0; i < bankCashRegisterItems.length; i++) {
+                const propertyName = `${bankCashRegisterItems[i]} Name`;
                 const value = this.jsonDataClearNames[propertyName];
-                this.logger.warning(value + " Spawn rate: " + item.Price);
-            });
+                this.logger.warning(value + " Spawn rate: " + bankCashRegisterItemsProbabilities[i]);
+            }
         }
         return lootRecordsAll;
     }

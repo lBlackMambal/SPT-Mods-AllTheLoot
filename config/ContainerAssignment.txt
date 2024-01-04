@@ -1,0 +1,468 @@
+Container assignment (Detailed listing)
+
+Drawer:
+	Barter_Others
+	Barter_BuildingMaterials
+	Barter_Electronics
+	Barter_EnergyElements
+	Keys_ElectronicKeys
+	Keys_MechanicalKeys
+	InfoItems
+	SpecialEquipment
+	Maps
+	DrawerAddOn
+
+
+Jacket:
+	Barter_Others
+	Barter_BuildingMaterials
+	Barter_Electronics
+	Barter_EnergyElements
+	Barter_FlammableMaterials
+	Barter_Tools
+	Keys_MechanicalKeys
+	SpecialEquipment
+
+
+Weapon Box 4x4:
+("Weapon case" section used to blacklist)
+	Gear_BodyArmor
+	Gear_Eyewear
+	Gear_Facecovers
+	Gear_GearComponents
+	Gear_Headgear
+	Gear_Headsets
+	Gear_TacticalRigs
+	WeaponPartsMods_FM_AuxiliaryParts
+	WeaponPartsMods_FM_Bipods
+	WeaponPartsMods_FM_Foregrips
+	WeaponPartsMods_FM_LLD_Flashlights
+	WeaponPartsMods_FM_LLD_LaserTargetPointers
+	WeaponPartsMods_FM_LLD_TacticalComboDevices
+	WeaponPartsMods_FM_MD_FlashhidersBrakes
+	WeaponPartsMods_FM_MD_MuzzleAdapters
+	WeaponPartsMods_FM_MD_Suppressors
+	WeaponPartsMods_FM_S_AssaultScopes
+	WeaponPartsMods_FM_S_Collimators
+	WeaponPartsMods_FM_S_CompactCollimators
+	WeaponPartsMods_FM_S_IronSights
+	WeaponPartsMods_FM_S_Optics
+	WeaponPartsMods_FM_S_SpecialPurposeSights
+	WeaponPartsMods_GM_ChargingHandles
+	WeaponPartsMods_GM_Launchers
+	WeaponPartsMods_GM_Magazines
+	WeaponPartsMods_GM_Mounts
+	WeaponPartsMods_GM_StocksChassis
+	WeaponPartsMods_VP_Barrels
+	WeaponPartsMods_VP_GasBlocks
+	WeaponPartsMods_VP_Handguards
+	WeaponPartsMods_VP_PistolGrips
+	WeaponPartsMods_VP_ReceiversSlides
+	Weapons_AssaultRifles
+	Weapons_MeleeWeapons
+	Weapons_Pistols
+	Weapons_SMGs
+	Weapons_SpecialWeapons
+	Weapons_Throwables
+	Ammo_AmmoPacks
+	Ammo_Rounds
+
+
+Weapon Box 5x2:
+("Weapon case" section used to blacklist)
+	Gear_Eyewear
+	Gear_Facecovers
+	Gear_GearComponents
+	Gear_Headgear
+	Gear_Headsets
+	WeaponPartsMods_FM_AuxiliaryParts
+	WeaponPartsMods_FM_Bipods
+	WeaponPartsMods_FM_Foregrips
+	WeaponPartsMods_FM_LLD_Flashlights
+	WeaponPartsMods_FM_LLD_LaserTargetPointers
+	WeaponPartsMods_FM_LLD_TacticalComboDevices
+	WeaponPartsMods_FM_MD_FlashhidersBrakes
+	WeaponPartsMods_FM_MD_MuzzleAdapters
+	WeaponPartsMods_FM_MD_Suppressors
+	WeaponPartsMods_FM_S_AssaultScopes
+	WeaponPartsMods_FM_S_Collimators
+	WeaponPartsMods_FM_S_CompactCollimators
+	WeaponPartsMods_FM_S_IronSights
+	WeaponPartsMods_FM_S_Optics
+	WeaponPartsMods_FM_S_SpecialPurposeSights
+	WeaponPartsMods_GM_ChargingHandles
+	WeaponPartsMods_GM_Launchers
+	WeaponPartsMods_GM_Magazines
+	WeaponPartsMods_GM_Mounts
+	WeaponPartsMods_GM_StocksChassis
+	WeaponPartsMods_VP_Barrels
+	WeaponPartsMods_VP_GasBlocks
+	WeaponPartsMods_VP_Handguards
+	WeaponPartsMods_VP_PistolGrips
+	WeaponPartsMods_VP_ReceiversSlides
+	Weapons_AssaultCarbines
+	Weapons_AssaultRifles
+	Weapons_BoltActionRifles
+	Weapons_MachineGuns
+	Weapons_MarksmanRifles
+	Weapons_MeleeWeapons
+	Weapons_Pistols
+	Weapons_SMGs
+	Weapons_SpecialWeapons
+	Weapons_Throwables
+	Ammo_AmmoPacks
+	Ammo_Rounds
+
+
+Wooden Crate:
+("Weapon case" section used to blacklist)
+	Gear_Headgear
+	Gear_Headsets
+	WeaponPartsMods_FM_AuxiliaryParts
+	WeaponPartsMods_FM_Bipods
+	WeaponPartsMods_FM_Foregrips
+	WeaponPartsMods_FM_LLD_Flashlights
+	WeaponPartsMods_FM_LLD_LaserTargetPointers
+	WeaponPartsMods_FM_LLD_TacticalComboDevices
+	WeaponPartsMods_FM_MD_FlashhidersBrakes
+	WeaponPartsMods_FM_MD_MuzzleAdapters
+	WeaponPartsMods_FM_MD_Suppressors
+	WeaponPartsMods_FM_S_AssaultScopes
+	WeaponPartsMods_FM_S_Collimators
+	WeaponPartsMods_FM_S_CompactCollimators
+	WeaponPartsMods_FM_S_IronSights
+	WeaponPartsMods_FM_S_Optics
+	WeaponPartsMods_FM_S_SpecialPurposeSights
+	WeaponPartsMods_GM_ChargingHandles
+	WeaponPartsMods_GM_Launchers
+	WeaponPartsMods_GM_Magazines
+	WeaponPartsMods_GM_Mounts
+	WeaponPartsMods_GM_StocksChassis
+	WeaponPartsMods_VP_GasBlocks
+	WeaponPartsMods_VP_Handguards
+	WeaponPartsMods_VP_PistolGrips
+	WeaponPartsMods_VP_ReceiversSlides
+	Weapons_AssaultCarbines
+	Weapons_AssaultRifles
+	Weapons_BoltActionRifles
+	Weapons_MachineGuns
+	Weapons_MarksmanRifles
+	Weapons_Pistols
+	Weapons_SMGs
+	Weapons_Shotguns
+	Weapons_SpecialWeapons
+	Weapons_Throwables
+	Ammo_AmmoPacks
+	Ammo_Rounds
+
+
+Cache (Burried Barrel Cache, Ground Cache):
+	Barter_Others
+	Barter_BuildingMaterials
+	Barter_Electronics
+	Barter_EnergyElements
+	Barter_FlammableMaterials
+	Barter_HouseholdMaterials
+	Barter_MedicalSupplies
+	Barter_Tools
+	Barter_Valuables
+	Gear_BodyArmor
+	Gear_Eyewear
+	Gear_Facecovers
+	Gear_GearComponents
+	Gear_Headgear
+	Gear_Headsets
+	Gear_StorageContainers
+	Gear_TacticalRigs
+	Provisions_Drinks
+	Provisions_Food
+	Medication_Injectors
+	Medication_InjuryTreatment
+	Medication_Medkits
+	Medication_Pills
+	InfoItems
+	SpecialEquipment
+	Maps
+		
+
+Duffle Bag:
+	Barter_Others
+	Barter_BuildingMaterials
+	Barter_Electronics
+	Barter_EnergyElements
+	Barter_FlammableMaterials
+	Barter_HouseholdMaterials
+	Barter_MedicalSupplies
+	Barter_Tools
+	Barter_Valuables
+	Gear_Facecovers
+	Provisions_Drinks
+	Provisions_Food
+	Medication_Injectors
+	Medication_InjuryTreatment
+	Medication_Medkits
+	Medication_Pills
+	InfoItems
+	SpecialEquipment
+	Maps
+
+
+Plastic Suitcase:
+("Duffle bag" section used to blacklist)
+	Barter_Others
+	Barter_BuildingMaterials
+	Barter_Electronics
+	Barter_EnergyElements
+	Barter_FlammableMaterials
+	Barter_HouseholdMaterials
+	Barter_MedicalSupplies
+	Barter_Tools
+	Barter_Valuables
+	Gear_Facecovers
+	Provisions_Drinks
+	Provisions_Food
+	Medication_Injectors
+	Medication_InjuryTreatment
+	Medication_Medkits
+	Medication_Pills
+	InfoItems
+	SpecialEquipment
+	Maps
+
+
+Dead Scav:
+("Duffle bag" section used to blacklist)
+	Barter_Others
+	Barter_BuildingMaterials
+	Barter_Electronics
+	Barter_EnergyElements
+	Barter_FlammableMaterials
+	Barter_HouseholdMaterials
+	Barter_MedicalSupplies
+	Barter_Tools
+	Barter_Valuables
+	Gear_Facecovers
+	Provisions_Drinks
+	Provisions_Food
+	Medication_Injectors
+	Medication_InjuryTreatment
+	Medication_Medkits
+	Medication_Pills
+	InfoItems
+	SpecialEquipment
+	Maps
+
+
+Medical (Medbag SMU06, Medcase, Medical Supply Crate):
+	Barter_MedicalSupplies
+	Medication_Injectors
+	Medication_InjuryTreatment
+	Medication_Medkits
+	Medication_Pills
+	MedicalAddOn
+
+
+Technical (Toolbox, Technical Supply Crate):
+	Barter_Others
+	Barter_BuildingMaterials
+	Barter_Electronics
+	Barter_EnergyElements
+	Barter_FlammableMaterials
+	Barter_Tools
+	Gear_SecureContainers
+	Gear_StorageContainers
+	SpecialEquipment
+
+
+Rations (Ration Supply Crate):
+	Provisions_Drinks
+	Provisions_Food
+	RationsAddOn
+
+
+PC Block:
+	Barter_Electronics
+
+
+Safes (Safe):
+	Barter_Valuables
+	InfoItems
+	Money
+
+
+Ammo (Wooden Ammo Box):
+	Ammo_AmmoPacks
+	Ammo_Rounds
+
+
+Grenades (Grenade Box):
+	Weapons_Throwables
+	Ammo_Grenades
+
+
+Money (Bank Cash Register, Bank Safe):
+	Roubles
+	Dollars
+	Euros
+
+
+Money - Roubles Only (Cash Register, Cash Register TAR2-2):
+	Roubles
+
+
+Common Fund Stash (Shturman's Stash):
+	Barter_Valuables
+	Gear_BodyArmor
+	Gear_Headgear
+	Gear_Headsets
+	WeaponPartsMods_FM_Bipods
+	WeaponPartsMods_FM_Foregrips
+	WeaponPartsMods_FM_LLD_Flashlights
+	WeaponPartsMods_FM_LLD_LaserTargetPointers
+	WeaponPartsMods_FM_LLD_TacticalComboDevices
+	WeaponPartsMods_FM_MD_FlashhidersBrakes
+	WeaponPartsMods_FM_MD_Suppressors
+	WeaponPartsMods_FM_S_AssaultScopes
+	WeaponPartsMods_FM_S_Collimators
+	WeaponPartsMods_FM_S_CompactCollimators
+	WeaponPartsMods_FM_S_Optics
+	WeaponPartsMods_FM_S_SpecialPurposeSights
+	WeaponPartsMods_GM_Launchers
+	WeaponPartsMods_GM_StocksChassis
+	WeaponPartsMods_VP_Handguards
+	WeaponPartsMods_VP_PistolGrips
+	WeaponPartsMods_VP_ReceiversSlides
+	Weapons_AssaultCarbines
+	Weapons_AssaultRifles
+	Weapons_BoltActionRifles
+	Weapons_GrenadeLaunchers
+	Weapons_MachineGuns
+	Weapons_MarksmanRifles
+	Weapons_MeleeWeapons
+	Weapons_Pistols
+	Weapons_SMGs
+	Weapons_Shotguns
+	Weapons_SpecialWeapons
+	InfoItems
+	WeaponBoxAddOn
+
+
+Weapon Box 5x5:
+	Gear_Backpacks
+	Gear_BodyArmor
+	Gear_Headgear
+	Gear_Headsets
+	Gear_TacticalRigs
+	WeaponPartsMods_FM_Bipods
+	WeaponPartsMods_FM_Foregrips
+	WeaponPartsMods_FM_LLD_Flashlights
+	WeaponPartsMods_FM_LLD_LaserTargetPointers
+	WeaponPartsMods_FM_LLD_TacticalComboDevices
+	WeaponPartsMods_FM_MD_FlashhidersBrakes
+	WeaponPartsMods_FM_MD_Suppressors
+	WeaponPartsMods_FM_S_AssaultScopes
+	WeaponPartsMods_FM_S_Collimators
+	WeaponPartsMods_FM_S_CompactCollimators
+	WeaponPartsMods_FM_S_Optics
+	WeaponPartsMods_FM_S_SpecialPurposeSights
+	WeaponPartsMods_GM_Launchers
+	WeaponPartsMods_GM_Magazines
+	WeaponPartsMods_GM_StocksChassis
+	WeaponPartsMods_VP_Barrels
+	WeaponPartsMods_VP_Handguards
+	WeaponPartsMods_VP_PistolGrips
+	WeaponPartsMods_VP_ReceiversSlides
+	Weapons_AssaultCarbines
+	Weapons_AssaultRifles
+	Weapons_BoltActionRifles
+	Weapons_GrenadeLaunchers
+	Weapons_MachineGuns
+	Weapons_MarksmanRifles
+	Weapons_MeleeWeapons
+	Weapons_Pistols
+	Weapons_SMGs
+	Weapons_Shotguns
+	Weapons_SpecialWeapons
+	WeaponBoxAddOn
+
+
+Weapon Box 6x3:
+	Gear_BodyArmor
+	Gear_Headgear
+	Gear_Headsets
+	Gear_TacticalRigs
+	WeaponPartsMods_FM_Bipods
+	WeaponPartsMods_FM_Foregrips
+	WeaponPartsMods_FM_LLD_Flashlights
+	WeaponPartsMods_FM_LLD_LaserTargetPointers
+	WeaponPartsMods_FM_LLD_TacticalComboDevices
+	WeaponPartsMods_FM_MD_FlashhidersBrakes
+	WeaponPartsMods_FM_MD_Suppressors
+	WeaponPartsMods_FM_S_AssaultScopes
+	WeaponPartsMods_FM_S_Collimators
+	WeaponPartsMods_FM_S_CompactCollimators
+	WeaponPartsMods_FM_S_Optics
+	WeaponPartsMods_FM_S_SpecialPurposeSights
+	WeaponPartsMods_GM_Launchers
+	WeaponPartsMods_GM_Magazines
+	WeaponPartsMods_GM_StocksChassis
+	WeaponPartsMods_VP_Barrels
+	WeaponPartsMods_VP_Handguards
+	WeaponPartsMods_VP_PistolGrips
+	WeaponPartsMods_VP_ReceiversSlides
+	Weapons_AssaultCarbines
+	Weapons_AssaultRifles
+	Weapons_BoltActionRifles
+	Weapons_MachineGuns
+	Weapons_MarksmanRifles
+	Weapons_MeleeWeapons
+	Weapons_Pistols
+	Weapons_SMGs
+	Weapons_Shotguns
+	Weapons_SpecialWeapons
+
+
+
+The following items are specifically added via their corresponding IDs:
+
+Ammo_Grenades:
+	5656eb674bdc2d35148b457c		40mm VOG-25 grenade
+	5ede474b0c226a66f5402622		40x46mm M381 (HE) grenade
+	5ede475b549eed7c6d5c18fb		40x46mm M386 (HE) grenade
+	5ede4739e0350d05467f73e8		40x46mm M406 (HE) grenade
+	5f0c892565703e5c461894e9		40x46mm M433 (HEDP) grenade
+	5ede47405b097655935d7d16		40x46mm M441 (HE) grenade
+	5ede475339ee016e8c534742		40x46mm M576 (MP-APERS) grenade
+	5e2af51086f7746d3f3c3402		UZRGM grenade fuze
+
+DrawerAddOn:
+	56742c2e4bdc2d95058b456d		Zibbo lighter
+	57347b8b24597737dd42e192		Classic matches
+	56742c284bdc2d98058b456d		Crickent lighter
+
+MedicalAddOn:
+	5d4041f086f7743cac3f22a7		Ortodontox toothpaste
+	5c13cef886f774072e618e82		Toilet paper
+	57347c93245977448d35f6e3		Toothpaste
+	5c13cd2486f774072c757944		Soap
+
+RationsAddOn:
+	62a09ee4cf4a99369e262453		Can of white salt
+	5bc9be8fd4351e00334cae6e		42 Signature Blend English Tea
+	573475fb24597737fb1379e1		Apollo Soyuz cigarettes
+	5e54f6af86f7742199090bf3		Can of Dr. Lupo's coffee beans
+	5af0484c86f7740f02001f7f		Can of Majaica coffee beans
+	573476d324597737da2adc13		Malboro Cigarettes
+	6389c6463485cf0eeb260715		Pack of Arseniy buckwheat
+	5734770f24597738025ee254		Strike Cigarettes
+	573476f124597737e04bf328		Wilston cigarettes
+
+WeaponBoxAddOn:
+	6389c85357baa773a825b356		Advanced current converter
+	6389c7f115805221fb410466		Far-forward GPS Signal Amplifier Unit
+	6389c7750ef44505c87f5996		Microcontroller board
+	5c052f6886f7746b1e3db148		Military COFDM Wireless Signal Transmitter
+	5c052fb986f7746b2101e909		UHF RFID Reader
+	5c05308086f7746b2101e90b		Virtex programmable processor
+	5c05300686f7746dce784e5d		VPX Flash Storage Module
+	5d0379a886f77420407aa271		OFZ 30x160mm shell
