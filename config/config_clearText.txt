@@ -182,6 +182,7 @@ FLIR RS-32 2.25-9x 35mm 60Hz thermal riflescope
 GPNVG-18 Night Vision goggles
 T-7 Thermal Goggles with a Night Vision mount
 Trijicon REAP-IR thermal scope
+5.56x45 Magpul PMAG 30 GEN M3 STANAG 30-round magazine (FDE) - Airsoft Version
 ==================================================
 -- Cache --			|| Others, Building, Electronics, Energy, Flammable, Household, Medical supplies, Tools, Valuables, Gear, Provisions, Medication, Keycards, Info, Maps
 6B13 M modified assault armor (Tan)
@@ -412,6 +413,7 @@ TT-33 7.62x25 TT pistol (Golden)
 UNTAR Armband
 Zryachiy's balaclava
 Zryachiy's balaclava (folded)
+5.56x45 Magpul PMAG 30 GEN M3 STANAG 30-round magazine (FDE) - Airsoft Version
 ==================================================
 -- Weapon Box 5x5 -- || Valuables, Body Armor, Gear Components, Headgear, all Weapon Categories except: Auxiliary parts, Compact collimators, Muzzle adapters, Iron sights, Charging handles, Mounts, Stocks Chassis, Gas blocks, All weapons except: Throwables
 6B13 M modified assault armor (Tan)
@@ -452,6 +454,7 @@ UNTAR Armband
 Zryachiy's balaclava
 Zryachiy's balaclava (folded)
 T-7 Thermal Goggles with a Night Vision mount
+5.56x45 Magpul PMAG 30 GEN M3 STANAG 30-round magazine (FDE) - Airsoft Version
 ==================================================
 -- Weapon Box 6x3 -- || Valuables, Body Armor, Gear Components, Headgear, all Weapon Categories except: Auxiliary parts, Compact collimators, Muzzle adapters, Iron sights, Charging handles, Mounts, Stocks Chassis, Gas blocks, All weapons except: Throwables
 6B13 M modified assault armor (Tan)
@@ -492,6 +495,7 @@ UNTAR Armband
 Zryachiy's balaclava
 Zryachiy's balaclava (folded)
 T-7 Thermal Goggles with a Night Vision mount
+5.56x45 Magpul PMAG 30 GEN M3 STANAG 30-round magazine (FDE) - Airsoft Version
 ==================================================
 ==================================================
 ==================================================

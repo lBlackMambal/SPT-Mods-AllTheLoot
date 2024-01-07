@@ -185,7 +185,7 @@ class AllTheLoot {
     jsonDataClearNames = JSON.parse(this.jsonStringClearNames);
     postDBLoad(container) {
         this.logger = container.resolve("WinstonLogger");
-        this.logger.warning("AllTheLoot v1.0.4 initialized");
+        this.logger.warning("AllTheLoot v1.0.5 initialized");
         // get database from server
         this.database = container.resolve("DatabaseServer");
         const tables = this.database.getTables();
@@ -197,7 +197,7 @@ class AllTheLoot {
         const lootRecordsCalculated = this.createLootRecords(handbook_Items_toModify, handbook_Items_ref, tables);
         this.database.getTables().loot.staticLoot = lootRecordsCalculated;
         const itemsAmount = handbook_Items.length;
-        this.logger.warning("AllTheLoot v1.0.4 successfully applied");
+        this.logger.warning("AllTheLoot v1.0.5 successfully applied");
         this.logger.warning("Now you are able to loot most of the " + itemsAmount + " handbook items from containers");
     }
     adjustSpawnRate(data, data_ref, lootType) {
@@ -661,7 +661,11 @@ class AllTheLoot {
         const category_RationsAddOn_ref = [];
         const category_WeaponBoxAddOn_ref = [];
         const category_DEBUG_ref = [];
+        // to catch the incompatibility with custom ammo mods
         const sptItems = tables.templates.items;
+        const ammoCaliber = [];
+        const staticAmmo = {};
+        // caliber  // ammo ID, spawn rate
         for (let i = 0; i < data.length; i++) {
             // ===== BARTER ITEMS =====
             if (data[i].ParentId === "5b47574386f77428ca22b2f4") { // Barter Items||Others
@@ -896,21 +900,31 @@ class AllTheLoot {
                 category_Ammo_AmmoPacks.push(data[i]);
                 category_Ammo_AmmoPacks_ref.push(data_ref[i]);
             }
-            if (data[i].ParentId === "5b47574386f77428ca22b33b") {
-                category_Ammo_Rounds.push(data[i]); // Ammo||Rounds
+            if (data[i].ParentId === "5b47574386f77428ca22b33b") // Ammo||Rounds
+             {
+                category_Ammo_Rounds.push(data[i]);
                 category_Ammo_Rounds_ref.push(data_ref[i]);
-                /* if (tables.templates.items(data[i].Id) === "Caliber12g" || data[i]._props === "Caliber20g" || data[i]._props === "Caliber23x75" || data[i]._props === "Caliber26x75"
-                || data[i]._props === "Caliber30x29" || data[i]._props === "Caliber366TKM" || data[i]._props === "Caliber40x46" || data[i]._props === "Caliber46x30"
-                || data[i]._props === "Caliber40mmRU" || data[i]._props === "Caliber545x39" || data[i]._props === "Caliber556x45NATO" || data[i]._props === "Caliber57x28"
-                || data[i]._props === "Caliber762x39" || data[i]._props === "Caliber762x25TT" || data[i]._props === "Caliber762x35" || data[i]._props === "Caliber762x51"
-                || data[i]._props === "Caliber762x54R" || data[i]._props === "Caliber86x70" || data[i]._props === "Caliber9x18PM" || data[i]._props === "Caliber9x19PARA"
-                || data[i]._props === "Caliber9x21" || data[i]._props === "Caliber9x33R" || data[i]._props === "Caliber9x39" || data[i]._props === "Caliber127x55"
-                || data[i]._props === "Caliber127x108" || data[i]._props === "Caliber1143x23ACP")
-                {
-                    this.logger.error("Adding ammo round");
-                    category_Ammo_Rounds.push(data[i]);                                 // Ammo||Rounds
-                    category_Ammo_Rounds_ref.push(data_ref[i]);
-                } */
+                // fix for custom ammo types
+                let probabilityAmmo = 0;
+                if (this.config.noAmmoValueWeightingForMagazines) {
+                    probabilityAmmo = 1000;
+                }
+                else {
+                    if (data[i].Price < 100)
+                        probabilityAmmo = 1000;
+                    else if (data[i].Price >= 100 && data[i].Price < 1000)
+                        probabilityAmmo = 500;
+                    else
+                        probabilityAmmo = 200;
+                }
+                let currentCaliberType = tables.templates.items[data[i].Id]._props.Caliber;
+                if (!(currentCaliberType in staticAmmo)) {
+                    staticAmmo[currentCaliberType] = [
+                        { tpl: data[i].Id, relativeProbability: probabilityAmmo },
+                    ];
+                }
+                else
+                    staticAmmo[currentCaliberType].push({ tpl: data[i].Id, relativeProbability: probabilityAmmo });
             }
             // ===== PROVISIONS =====
             if (data[i].ParentId === "5b47574386f77428ca22b335") { // Provisions||Drinks
@@ -1009,6 +1023,16 @@ class AllTheLoot {
                 category_DEBUG.push(data[i]);
                 category_DEBUG_ref.push(data_ref[i]);} */
         }
+        tables.loot.staticAmmo = staticAmmo;
+        // Calculate the number of different calibers in staticAmmo
+        if (this.config.debugMode_ShowAmmoCalibers) {
+            let counterAmmoCalibers = 0;
+            for (const caliber in staticAmmo) {
+                this.logger.warning(caliber);
+                counterAmmoCalibers++;
+            }
+            this.logger.info(counterAmmoCalibers.toString());
+        }
         if (this.config.removeBackpackRestrictions === true) {
             const backpacks = tables.templates.items;
             category_Gear_Backpacks.forEach(item => {
@@ -1038,9 +1062,7 @@ class AllTheLoot {
         preSelectionForShturmansStash.push(category_WeaponPartsMods_FM_S_Optics);
         preSelectionForShturmansStash.push(category_WeaponPartsMods_FM_S_SpecialPurposeSights);
         preSelectionForShturmansStash.push(category_WeaponPartsMods_GM_Launchers);
-        //preSelectionForShturmansStash.push(category_WeaponPartsMods_GM_Magazines);
         preSelectionForShturmansStash.push(category_WeaponPartsMods_GM_StocksChassis);
-        //preSelectionForShturmansStash.push(category_WeaponPartsMods_VP_Barrels);
         preSelectionForShturmansStash.push(category_WeaponPartsMods_VP_Handguards);
         preSelectionForShturmansStash.push(category_WeaponPartsMods_VP_PistolGrips);
         preSelectionForShturmansStash.push(category_WeaponPartsMods_VP_ReceiversSlides);
@@ -2212,7 +2234,6 @@ class AllTheLoot {
         const overwriteContainer_CashRegisterTAR = this.config.overwriteContainer_CashRegisterTAR;
         const overwriteContainer_BankCashRegister = this.config.overwriteContainer_BankCashRegister;
         const overwriteContainer_BankSafe = this.config.overwriteContainer_BankSafe;
-        const tmpVar = this.database.getTables().loot.staticLoot[0];
         const lootRecordsAll = {
             ...(overwriteContainer_Drawer ? {
                 [SPTLootContainer.DRAWER]: {

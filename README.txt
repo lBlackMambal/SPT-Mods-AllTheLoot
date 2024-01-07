@@ -143,8 +143,8 @@ Any feedback highly appreciated.
 
 
 Changelog v1.0.5:
-- added function to properly process non SPT-default ammo types, i.e. custom ammo types
-- added config option "noAmmoValueWeightingForMagazines", when set "true" every ammo type can equally spawn in magazines (no longer the rare chance of finding a magazine stacked with 762x39 BP or similar high class ammo)
+- added the functionality to properly process non SPT-default ammo types, i.e. custom ammo rounds
+- added the config option "noAmmoValueWeightingForMagazines" - when set to "true" every ammo type can equally spawn in magazines or magazines attached to weapons
 
 
 Changelog v1.0.4:
