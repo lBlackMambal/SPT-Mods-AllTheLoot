@@ -11,7 +11,6 @@ import * as path from "path";
 import { count } from "console";
 
 
-
 enum LootType
 {
     BARTER_OTHERS = "BARTER_OTHERS",
