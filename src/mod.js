@@ -661,6 +661,7 @@ class AllTheLoot {
         const category_RationsAddOn_ref = [];
         const category_WeaponBoxAddOn_ref = [];
         const category_DEBUG_ref = [];
+        const sptItems = tables.templates.items;
         for (let i = 0; i < data.length; i++) {
             // ===== BARTER ITEMS =====
             if (data[i].ParentId === "5b47574386f77428ca22b2f4") { // Barter Items||Others
@@ -895,9 +896,21 @@ class AllTheLoot {
                 category_Ammo_AmmoPacks.push(data[i]);
                 category_Ammo_AmmoPacks_ref.push(data_ref[i]);
             }
-            if (data[i].ParentId === "5b47574386f77428ca22b33b") { // Ammo||Rounds
-                category_Ammo_Rounds.push(data[i]);
+            if (data[i].ParentId === "5b47574386f77428ca22b33b") {
+                category_Ammo_Rounds.push(data[i]); // Ammo||Rounds
                 category_Ammo_Rounds_ref.push(data_ref[i]);
+                /* if (tables.templates.items(data[i].Id) === "Caliber12g" || data[i]._props === "Caliber20g" || data[i]._props === "Caliber23x75" || data[i]._props === "Caliber26x75"
+                || data[i]._props === "Caliber30x29" || data[i]._props === "Caliber366TKM" || data[i]._props === "Caliber40x46" || data[i]._props === "Caliber46x30"
+                || data[i]._props === "Caliber40mmRU" || data[i]._props === "Caliber545x39" || data[i]._props === "Caliber556x45NATO" || data[i]._props === "Caliber57x28"
+                || data[i]._props === "Caliber762x39" || data[i]._props === "Caliber762x25TT" || data[i]._props === "Caliber762x35" || data[i]._props === "Caliber762x51"
+                || data[i]._props === "Caliber762x54R" || data[i]._props === "Caliber86x70" || data[i]._props === "Caliber9x18PM" || data[i]._props === "Caliber9x19PARA"
+                || data[i]._props === "Caliber9x21" || data[i]._props === "Caliber9x33R" || data[i]._props === "Caliber9x39" || data[i]._props === "Caliber127x55"
+                || data[i]._props === "Caliber127x108" || data[i]._props === "Caliber1143x23ACP")
+                {
+                    this.logger.error("Adding ammo round");
+                    category_Ammo_Rounds.push(data[i]);                                 // Ammo||Rounds
+                    category_Ammo_Rounds_ref.push(data_ref[i]);
+                } */
             }
             // ===== PROVISIONS =====
             if (data[i].ParentId === "5b47574386f77428ca22b335") { // Provisions||Drinks

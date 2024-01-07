@@ -4,10 +4,11 @@ import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { IPostDBLoadMod } from "@spt-aki/models/external/IPostDBLoadMod";
 
-import { IStaticLootDetails } from "@spt-aki/models/eft/common/tables/ILootBase";
+import { IStaticAmmoDetails, IStaticLootDetails } from "@spt-aki/models/eft/common/tables/ILootBase";
 
 import * as fs from "fs";
 import * as path from "path";
+import { count } from "console";
 
 
 
@@ -188,7 +189,7 @@ class AllTheLoot implements IPostDBLoadMod
     {
         this.logger = container.resolve<ILogger>("WinstonLogger");
 
-        this.logger.warning("AllTheLoot v1.0.4 initialized");
+        this.logger.warning("AllTheLoot v1.0.5 initialized");
 
 
         // get database from server
@@ -206,10 +207,11 @@ class AllTheLoot implements IPostDBLoadMod
   
 
         const lootRecordsCalculated = this.createLootRecords(handbook_Items_toModify, handbook_Items_ref, tables);
+        
         this.database.getTables().loot.staticLoot = lootRecordsCalculated;
 
         const itemsAmount = handbook_Items.length;
-        this.logger.warning("AllTheLoot v1.0.4 successfully applied");
+        this.logger.warning("AllTheLoot v1.0.5 successfully applied");
         this.logger.warning("Now you are able to loot most of the " + itemsAmount + " handbook items from containers");
 	
     }
@@ -746,6 +748,11 @@ class AllTheLoot implements IPostDBLoadMod
 
         const category_DEBUG_ref = [];
     
+        // to catch the incompatibility with custom ammo mods
+        const sptItems = tables.templates.items;
+        const ammoCaliber = [];
+        const staticAmmo: Record<string, IStaticAmmoDetails[]> = {};
+                            // caliber  // ammo ID, spawn rate
 
         for (let i=0; i<data.length; i++)
         {
@@ -915,7 +922,7 @@ class AllTheLoot implements IPostDBLoadMod
             if (data[i].ParentId === "5b5f794b86f77409407a7f92") {                       // Weapons||Shotguns
                 category_Weapons_Shotguns.push(data[i]);
                 category_Weapons_Shotguns_ref.push(data_ref[i]);}
-            if (data[i].ParentId === "5b5f79eb86f77447ed5636b7") {                       // Weapons||Special weapons
+            if (data[i].ParentId === "5b5f79eb86f77447ed5636b7") {                        // Weapons||Special weapons
                 category_Weapons_SpecialWeapons.push(data[i]);
                 category_Weapons_SpecialWeapons_ref.push(data_ref[i]);}
             if (data[i].ParentId === "5b5f7a2386f774093f2ed3c4") {                       // Weapons||Throwables
@@ -925,9 +932,39 @@ class AllTheLoot implements IPostDBLoadMod
             if (data[i].ParentId === "5b47574386f77428ca22b33c") {                       // Ammo||Ammo packs
                 category_Ammo_AmmoPacks.push(data[i]);
                 category_Ammo_AmmoPacks_ref.push(data_ref[i]);}
-            if (data[i].ParentId === "5b47574386f77428ca22b33b") {                       // Ammo||Rounds
-                category_Ammo_Rounds.push(data[i]);
-                category_Ammo_Rounds_ref.push(data_ref[i]);}
+            if (data[i].ParentId === "5b47574386f77428ca22b33b")                         // Ammo||Rounds
+            {
+                category_Ammo_Rounds.push(data[i]);                                    
+                category_Ammo_Rounds_ref.push(data_ref[i]);
+
+                // fix for custom ammo types
+                let probabilityAmmo = 0;
+                if (this.config.noAmmoValueWeightingForMagazines)
+                {
+                    probabilityAmmo = 1000;
+                }
+                else
+                {
+                    if (data[i].Price < 100)
+                        probabilityAmmo = 1000;
+                    else if (data[i].Price >= 100 && data[i].Price < 1000)
+                        probabilityAmmo = 500;
+                    else
+                        probabilityAmmo = 200;
+                }
+
+                let currentCaliberType = tables.templates.items[data[i].Id]._props.Caliber;
+                if (!(currentCaliberType in staticAmmo))
+                {
+                    staticAmmo[currentCaliberType] = [
+                        { tpl: data[i].Id, relativeProbability: probabilityAmmo},
+                    ]
+                }
+                else
+                    staticAmmo[currentCaliberType].push({ tpl: data[i].Id, relativeProbability: probabilityAmmo});
+            }
+         
+                
             // ===== PROVISIONS =====
             if (data[i].ParentId === "5b47574386f77428ca22b335") {                       // Provisions||Drinks
                 category_Provisions_Drinks.push(data[i]);
@@ -1017,6 +1054,21 @@ class AllTheLoot implements IPostDBLoadMod
         }
 
 
+        tables.loot.staticAmmo = staticAmmo;
+        
+        // Calculate the number of different calibers in staticAmmo
+        if (this.config.debugMode_ShowAmmoCalibers)
+        {
+            let counterAmmoCalibers = 0;
+            
+            for (const caliber in staticAmmo)
+            {
+                this.logger.warning(caliber);
+                counterAmmoCalibers++;
+            }
+            this.logger.info(counterAmmoCalibers.toString());
+        }
+        
 
         if(this.config.removeBackpackRestrictions === true)
         {
@@ -1051,9 +1103,7 @@ class AllTheLoot implements IPostDBLoadMod
         preSelectionForShturmansStash.push(category_WeaponPartsMods_FM_S_Optics);
         preSelectionForShturmansStash.push(category_WeaponPartsMods_FM_S_SpecialPurposeSights);
         preSelectionForShturmansStash.push(category_WeaponPartsMods_GM_Launchers);
-        //preSelectionForShturmansStash.push(category_WeaponPartsMods_GM_Magazines);
         preSelectionForShturmansStash.push(category_WeaponPartsMods_GM_StocksChassis);
-        //preSelectionForShturmansStash.push(category_WeaponPartsMods_VP_Barrels);
         preSelectionForShturmansStash.push(category_WeaponPartsMods_VP_Handguards);
         preSelectionForShturmansStash.push(category_WeaponPartsMods_VP_PistolGrips);
         preSelectionForShturmansStash.push(category_WeaponPartsMods_VP_ReceiversSlides);
@@ -2263,7 +2313,6 @@ class AllTheLoot implements IPostDBLoadMod
         const overwriteContainer_BankCashRegister = this.config.overwriteContainer_BankCashRegister;
         const overwriteContainer_BankSafe = this.config.overwriteContainer_BankSafe;
 
-        const tmpVar = this.database.getTables().loot.staticLoot[0];
 
 
         const lootRecordsAll: Record<string, IStaticLootDetails> = {
