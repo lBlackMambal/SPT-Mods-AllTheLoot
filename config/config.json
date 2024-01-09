@@ -823,7 +823,7 @@
 	"debugMode_ShowSpawnRates_Technical": false,
 	"debugMode_ShowSpawnRates_Medical": false,
 	"debugMode_ShowSpawnRates_Safe": false,
-	"debugMode_ShowSpawnRates_WeaponBox5x5": true,
+	"debugMode_ShowSpawnRates_WeaponBox5x5": false,
 	"debugMode_ShowSpawnRates_WeaponBox5x2": false,
 	"debugMode_ShowSpawnRates_DuffleBag": false,
 	"debugMode_ShowSpawnRates_WeaponBox6x3": false,
