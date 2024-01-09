@@ -183,6 +183,9 @@ GPNVG-18 Night Vision goggles
 T-7 Thermal Goggles with a Night Vision mount
 Trijicon REAP-IR thermal scope
 5.56x45 Magpul PMAG 30 GEN M3 STANAG 30-round magazine (FDE) - Airsoft Version
+Crash Axe
+Miller Bros. Blades M-2 Tactical Sword
+UVSR Taiga-1 survival machete
 ==================================================
 -- Cache --			|| Others, Building, Electronics, Energy, Flammable, Household, Medical supplies, Tools, Valuables, Gear, Provisions, Medication, Keycards, Info, Maps
 6B13 M modified assault armor (Tan)
@@ -239,6 +242,11 @@ Weapon case
 Woods plan map
 Zryachiy's balaclava
 Zryachiy's balaclava (folded)
+Guilded Key Storage - Golden Keychain Mk. I
+Guilded Key Storage - Golden Keychain Mk. II
+Guilded Key Storage - Golden Keychain Mk. III
+Guilded Key Storage - Golden Keycard Holder
+Guilded Key Storage - Secure Key Box
 ==================================================
 -- Duffle bag --	|| Others, Building, Electronics, Energy, Flammable, Household, Medical supplies, Tools, Valuables, Provisions, Medication, Info, Special Equipment, Maps
 Advanced current converter
@@ -316,6 +324,11 @@ UZRGM grenade fuze
 VPX Flash Storage Module
 Virtex programmable processor
 Wilston cigarettes
+Guilded Key Storage - Golden Keychain Mk. I
+Guilded Key Storage - Golden Keychain Mk. II
+Guilded Key Storage - Golden Keychain Mk. III
+Guilded Key Storage - Golden Keycard Holder
+Guilded Key Storage - Secure Key Box
 ==================================================
 -- Rations -- || Drinks, Food
 Canister with purified water
@@ -496,6 +509,9 @@ Zryachiy's balaclava
 Zryachiy's balaclava (folded)
 T-7 Thermal Goggles with a Night Vision mount
 5.56x45 Magpul PMAG 30 GEN M3 STANAG 30-round magazine (FDE) - Airsoft Version
+Crash Axe
+Miller Bros. Blades M-2 Tactical Sword
+UVSR Taiga-1 survival machete
 ==================================================
 ==================================================
 ==================================================
@@ -876,6 +892,9 @@ Virtex programmable processor
 VPX Flash Storage Module
 Magpul MOE Carbine rubber buttpad
 AKM/AK-74 Magpul Zhukov-S stock
+Crash Axe
+Miller Bros. Blades M-2 Tactical Sword
+UVSR Taiga-1 survival machete
 ==================================================
 ==================================================
 Ophthalmoscope
@@ -932,5 +951,8 @@ Virtex programmable processor
 VPX Flash Storage Module
 Magpul MOE Carbine rubber buttpad
 AKM/AK-74 Magpul Zhukov-S stock
+Crash Axe
+Miller Bros. Blades M-2 Tactical Sword
+UVSR Taiga-1 survival machete
 ==================================================
 ==================================================

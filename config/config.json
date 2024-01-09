@@ -182,7 +182,10 @@
 		"5c0558060db834001b735271",
 		"5c110624d174af029e69734c",
 		"5a1eaa87fcdbcb001865f75e",
-		"6241c2c2117ad530666a5108"
+		"6241c2c2117ad530666a5108",
+		"5bffe7930db834001b734a39",
+		"5bffdd7e0db834001b734a1a",
+		"601948682627df266209af05"
 	],
 	"blacklistedItems_Cache":[
 		"5c0e541586f7747fa54205c9",
@@ -238,7 +241,12 @@
 		"59fb023c86f7746d0d4b423c",
 		"5900b89686f7744e704a8747",
 		"63626d904aa74b8fe30ab426",
-		"636270263f2495c26f00b007"
+		"636270263f2495c26f00b007",
+		"Golden_Keychain1",
+		"Golden_Keychain2",
+		"Golden_Keychain3",
+		"Golden_Keycard_Case",
+		"Golden_Key_Pouch"
 	],
 	"blacklistedItems_DuffleBag":[
 		"6389c85357baa773a825b356",
@@ -315,7 +323,12 @@
 		"5e2af51086f7746d3f3c3402",
 		"5c05300686f7746dce784e5d",
         "5c05308086f7746b2101e90b",
-		"573476f124597737e04bf328"
+		"573476f124597737e04bf328",
+		"Golden_Keychain1",
+		"Golden_Keychain2",
+		"Golden_Keychain3",
+		"Golden_Keycard_Case",
+		"Golden_Key_Pouch"
 	],
 	"blacklistedItems_Rations":[
 		"5d1b33a686f7742523398398"
@@ -495,7 +508,10 @@
 		"63626d904aa74b8fe30ab426",
 		"636270263f2495c26f00b007",
 		"5c110624d174af029e69734c",
-		"6241c2c2117ad530666a5108"
+		"6241c2c2117ad530666a5108",
+		"5bffe7930db834001b734a39",
+		"5bffdd7e0db834001b734a1a",
+		"601948682627df266209af05"
 	],
 	"overwriteContainer_Drawer": true,
 	"overwriteContainer_CashRegister": true,
@@ -807,7 +823,7 @@
 	"debugMode_ShowSpawnRates_Technical": false,
 	"debugMode_ShowSpawnRates_Medical": false,
 	"debugMode_ShowSpawnRates_Safe": false,
-	"debugMode_ShowSpawnRates_WeaponBox5x5": false,
+	"debugMode_ShowSpawnRates_WeaponBox5x5": true,
 	"debugMode_ShowSpawnRates_WeaponBox5x2": false,
 	"debugMode_ShowSpawnRates_DuffleBag": false,
 	"debugMode_ShowSpawnRates_WeaponBox6x3": false,
@@ -875,7 +891,10 @@
 		"5c05308086f7746b2101e90b",
 		"5c05300686f7746dce784e5d",
 		"58d2912286f7744e27117493",
-		"5b0e794b5acfc47a877359b2"
+		"5b0e794b5acfc47a877359b2",
+		"5bffe7930db834001b734a39",
+		"5bffdd7e0db834001b734a1a",
+		"601948682627df266209af05"
 	],
 	"selectedItems_spawnChance":[
 		"0.5",
@@ -910,7 +929,7 @@
 		"0.3",
 		"1.2",
 		"1.1",
-		"1.0",
+		"1.1",
 		"0.1",
 		"0.1",
 		"0.1",
@@ -931,6 +950,9 @@
 		"1.3",
 		"1.3",
 		"1.3",
-		"1.3"
+		"1.3",
+		"0.8",
+		"0.7",
+		"0.5"
 	]
 }
